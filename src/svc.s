@@ -52,10 +52,21 @@ simple_svc svcHardReset                  38 noreturn
 simple_svc svcSoundDriverVSyncOff        40
 simple_svc svcSoundDriverVSyncOn         41
 
-func svcReset thumb
-    movs        r0, #0xFF
-    svc         #1
-    svc         #0
+func svcSoftResetEx thumb
+    ldr         r3, =#0x04000208
+    movs        r2, #0
+    strh        r2, [r3]
+    movs        r2, #1
+    movs        r1, r1
+    beq         1f
+    bics        r0, r2
+1:
+    ldr         r3, =#0x03007FFA
+    strb        r1, [r3]
+    subs        r3, #0xFA
+    mov         sp, r3
+    swi         #1
+    swi         #0
 endf
 
 func svcDiv thumb

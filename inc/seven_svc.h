@@ -70,11 +70,16 @@ enum SupervisorCallNumber
 extern void NORETURN svcSoftReset(void);
 extern void NORETURN svcHardReset(void);
 
-// Equivalent to:
-//
-// svcRegisterRamReset(RRR_EVERYTHING);
-// svcSoftReset();
-extern void NORETURN svcReset(void);
+enum SoftResetExFlags
+{
+    SRE_FROM_ROM = 0,
+    SRE_FROM_RAM = 1,
+};
+
+// Combines svcRegisterRamReset and svcSoftReset
+// Allows reset from EWRAM, automatically unsets RRR_EWRAM
+// Disables IME to prevent IRQs crashing from a dangling handler
+extern void NORETURN svcSoftResetEx(u8 reset_flags, bool from_ewram)
 
 enum RegisterRamResetFlags
 {
