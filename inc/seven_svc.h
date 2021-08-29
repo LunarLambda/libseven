@@ -112,7 +112,19 @@ extern u16 svcSqrt(u32 x);
 extern i16 ArcTan(i16 tan);
 extern u16 ArcTan2(i16 x, i16 y);
 
+enum CpuSetFlags
+{
+    CS_SRC_FIXED        = BIT(24),
+    CS_32BIT            = BIT(26),
+};
+
 extern void svcCpuSet(const void *src, void *dst, u32 ctrl);
+
+enum CpuFastSetFlags
+{
+    CFS_SRC_FIXED       = BIT(24),
+};
+
 extern void svcCpuFastSet(const void *src, void *dst, u32 ctrl);
 
 extern u32 svcBiosChecksum(void);
