@@ -116,6 +116,7 @@ enum CpuSetFlags
 {
     CS_SRC_FIXED        = BIT(24),
     CS_32BIT            = BIT(26),
+    CS_16BIT            = !CS_32BIT,
 };
 
 extern void svcCpuSet(const void *src, void *dst, u32 ctrl);
