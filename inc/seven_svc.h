@@ -159,6 +159,12 @@ struct ObjAffineDstData
     i16 v_diff_y;
 };
 
+enum ObjAffineSetOffset
+{
+    OAS_LIKE_DSTDATA    = 2,
+    OAS_LIKE_OAM        = 8,
+};
+
 extern void svcObjAffineSet(
         const struct ObjAffineSrcData *src,
         void *dst,
