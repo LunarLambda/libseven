@@ -118,6 +118,53 @@ extern void svcCpuFastSet(const void *src, void *dst, u32 ctrl);
 extern u32 svcBiosChecksum(void);
 extern bool svcIsSystemDS(void);
 
+struct BgAffineSrcData
+{
+    i32 src_center_x;
+    i32 src_center_y;
+    i16 disp_center_x;
+    i16 disp_center_y;
+    i16 ratio_x;
+    i16 ratio_y;
+    u16 theta;
+};
+
+struct BgAffineDstData
+{
+    i16 h_diff_x;
+    i16 v_diff_x;
+    i16 h_diff_y;
+    i16 v_diff_y;
+    i32 start_x;
+    i32 start_y;
+};
+
+extern void svcBgAffineSet(
+    const struct BgAffineSrcData *src,
+    struct BgAffineDstData *dst,
+    u32 num);
+
+struct ObjAffineSrcData
+{
+    i16 ratio_x;
+    i16 ratio_y;
+    u16 theta;
+};
+
+struct ObjAffineDstData
+{
+    i16 h_diff_x;
+    i16 v_diff_x;
+    i16 h_diff_y;
+    i16 v_diff_y;
+};
+
+extern void svcObjAffineSet(
+        const struct ObjAffineSrcData *src,
+        void *dst,
+        u32 num,
+        u32 offset);
+
 // TODO: Separate header? Need extra structures.
 extern void svcLZ77UnCompWram(const void *src, void *dst);
 extern void svcLZ77UnCompVram(const void *src, void *dst);
