@@ -171,6 +171,20 @@ extern void svcObjAffineSet(
         u32 num,
         u32 offset);
 
+struct BitUnPackParam
+{
+    u16 src_length;     // in bytes
+    u8  src_width;      // width of each src element (1, 2, 4, 8)
+    u8  dst_width;      // width of each dst element (1, 2, 4, 8, 16, 32)
+    u32 offset:31;      // value to add to each dst element
+    u32 keep_zeroes:1;  // whether to add offset to zero elements too
+};
+
+extern void svcBitUnPack(
+        const void *src,
+        void *dst,
+        const struct BitUnPackParam *param);
+
 // TODO: Separate header? Need extra structures.
 extern void svcLZ77UnCompWram(const void *src, void *dst);
 extern void svcLZ77UnCompVram(const void *src, void *dst);
