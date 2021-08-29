@@ -65,8 +65,8 @@ func svcSoftResetEx thumb
     strb        r1, [r3]
     subs        r3, #0xFA
     mov         sp, r3
-    swi         #1
-    swi         #0
+    svc         #1
+    svc         #0
 endf
 
 func svcDiv thumb
