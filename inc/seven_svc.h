@@ -61,10 +61,6 @@ enum SupervisorCallNumber
 
     SVC_SOUNDDRIVERVSYNCOFF     = 40,
     SVC_SOUNDDRIVERVSYNCON      = 41,
-
-    // Undocumented and most likely not useful
-     SVC_INTERNALHALT         = 39,
-     SVC_SOUNDGETFUNCTIONS    = 42,
 };
 
 extern void NORETURN svcSoftReset(void);
