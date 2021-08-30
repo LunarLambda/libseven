@@ -78,6 +78,30 @@ func svcDiv thumb
     bx          lr
 endf
 
+func svcCpuSetFixed thumb
+    sub         sp, #8
+    str         r0, [sp]
+    mov         r0, sp
+    movs        r3, #1
+    lsls        r3, r3, #24
+    orrs        r2, r2, r3
+    svc         #11
+    add         sp, #8
+    bx          lr
+endf
+
+func svcCpuFastSetFixed thumb
+    sub         sp, #8
+    str         r0, [sp]
+    mov         r0, sp
+    movs        r3, #1
+    lsls        r3, r3, #24
+    orrs        r2, r2, r3
+    svc         #12
+    add         sp, #8
+    bx          lr
+endf
+
 func svcIsSystemDS thumb
     svc         #13
     ldr         r1, =#0x4551E780

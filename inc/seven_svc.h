@@ -116,6 +116,7 @@ enum CpuSetFlags
 };
 
 extern void svcCpuSet(const void *src, void *dst, u32 ctrl);
+extern void svcCpuSetFixed(u32 value, void *dst, u32 ctrl);
 
 enum CpuFastSetFlags
 {
@@ -123,6 +124,7 @@ enum CpuFastSetFlags
 };
 
 extern void svcCpuFastSet(const void *src, void *dst, u32 ctrl);
+extern void svcCpuFastSetFixed(u32 value, void *dst, u32 ctrl);
 
 extern u32 svcBiosChecksum(void);
 extern bool svcIsSystemDS(void);
