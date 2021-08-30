@@ -18,7 +18,7 @@ TODO: Coding Philosophy Blurb Here
 - [ ] DMA
 - [ ] SIO
 - [ ] Input
-- [ ] IRQ
+- [x] IRQ (incomplete)
 - [x] BIOS Functions (incomplete)
     - [x] Reset
     - [x] Halt and IRQ Waiting
