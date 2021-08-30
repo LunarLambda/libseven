@@ -196,7 +196,6 @@ extern void svcBitUnPack(
         void *dst,
         const struct BitUnPackParam *param);
 
-// TODO: Separate header? Need extra structures.
 extern void svcLZ77UnCompWram(const void *src, void *dst);
 extern void svcLZ77UnCompVram(const void *src, void *dst);
 extern void svcHuffUnComp(const void *src, void *dst);

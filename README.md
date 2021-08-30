@@ -26,7 +26,7 @@ TODO: Coding Philosophy Blurb Here
     - [x] Memory Copy
     - [x] BIOS Checksum & Checksum-based DS detection
     - [x] AffineSet
-    - [ ] Decompression (incomplete)
+    - [x] Decompression
     - [ ] Sound/MP2000 (incomplete)
     - [ ] Multiboot
 
