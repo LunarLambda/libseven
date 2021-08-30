@@ -10,7 +10,7 @@ TODO: Coding Philosophy Blurb Here
 ## GBA Features
 
 - [x] Basic Data Types & Limits
-- [ ] Memory
+- [x] Memory
 - [ ] I/O Registers
 - [ ] Video
 - [ ] Sound
