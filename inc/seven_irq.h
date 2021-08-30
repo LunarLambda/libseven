@@ -37,7 +37,7 @@ enum IRQFlags
 #define irqEnableIME()          do { REG_IME = 1; } while(0)
 #define irqDisableIME()         do { REG_IME = 0; } while(0)
 
-typedef void __attribute__((interrupt("IRQ"))) IRQHandler(void);
+typedef void IRQHandler(void);
 
 #define IRQ_HANDLER (*(volatile IRQHandler*)0x03FFFFFC)
 
