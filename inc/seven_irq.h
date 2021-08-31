@@ -34,19 +34,36 @@ enum IRQFlags
 // Interrupt Flags (for BIOS IntrWait functions)
 #define REG_IFBIOS      REG16(0x03FFFFF8)
 
-#define irqEnable(flags)        do { REG_IE |=  (flags); } while(0)
-#define irqDisable(flags)       do { REG_IE &= ~(flags); } while(0)
-#define irqEnableIME()          do { REG_IME = 1; } while(0)
-#define irqDisableIME()         do { REG_IME = 0; } while(0)
-
 typedef void IRQHandler(void);
 
 extern IRQHandler irqDefaultHandler;
 
 #define IRQ_HANDLER (*(IRQHandler **volatile)0x03FFFFFC)
 
-#define irqInit(f) do { \
-    irqEnableIME(); \
-    IRQ_HANDLER = (f) ? (f) : irqDefaultHandler; } while(0)
+static inline void irqEnableIME(void)
+{
+    REG_IME = 1;
+}
+
+static inline void irqDisableIME(void)
+{
+    REG_IME = 0;
+}
+
+static inline void irqEnable(u16 flags)
+{
+    REG_IE |= flags;
+}
+
+static inline void irqDisable(u16 flags)
+{
+    REG_IE &= ~flags;
+}
+
+static inline void irqInit(IRQHandler *isr)
+{
+    irqEnableIME();
+    IRQ_HANDLER = isr ? isr : irqDefaultHandler;
+}
 
 #endif /* !_LIBSEVEN_IRQ_H */
