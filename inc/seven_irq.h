@@ -23,16 +23,16 @@ enum IRQFlags
 };
 
 // Interrupt Enable
-#define REG_IE          (*(reg16*)0x04000200)
+#define REG_IE          REG16(0x04000200)
 
 // Interrupt Flags
-#define REG_IF          (*(reg16*)0x04000202)
+#define REG_IF          REG16(0x04000202)
 
 // Interrupt Master Enable
-#define REG_IME         (*(reg16*)0x04000208)
+#define REG_IME         REG16(0x04000208)
 
 // Interrupt Flags (for BIOS IntrWait functions)
-#define REG_IFBIOS      (*(reg16*)0x03FFFFF8)
+#define REG_IFBIOS      REG16(0x03FFFFF8)
 
 #define irqEnable(flags)        do { REG_IE |=  (flags); } while(0)
 #define irqDisable(flags)       do { REG_IE &= ~(flags); } while(0)

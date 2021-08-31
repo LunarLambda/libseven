@@ -17,7 +17,7 @@ enum Key
     KEY_L       = BIT(9),
 };
 
-#define REG_KEYINPUT (*(reg16*)0x04000130)
+#define REG_KEYINPUT REG16(0x04000130)
 
 enum KeycntFlags
 {
@@ -26,6 +26,6 @@ enum KeycntFlags
     KC_IRQ_OR           = !KC_IRQ_AND,
 };
 
-#define REG_KEYCNT (*(reg16*)0x04000132)
+#define REG_KEYCNT REG16(0x04000132)
 
 #endif /* !_LIBSEVEN_INPUT_H */
