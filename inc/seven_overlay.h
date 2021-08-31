@@ -1,0 +1,4 @@
+#ifndef _LIBSEVEN_OVERLAY_H
+#define _LIBSEVEN_OVERLAY_H
+
+#endif /* !_LIBSEVEN_OVERLAY_H */
