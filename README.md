@@ -17,7 +17,7 @@ TODO: Coding Philosophy Blurb Here
 - [ ] Timers
 - [ ] DMA
 - [ ] SIO
-- [ ] Input
+- [x] Input (incomplete)
 - [x] IRQ (incomplete)
 - [x] BIOS Functions (incomplete)
     - [x] Reset
