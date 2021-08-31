@@ -53,18 +53,17 @@ simple_svc svcSoundDriverVSyncOff        40
 simple_svc svcSoundDriverVSyncOn         41
 
 func svcSoftResetEx thumb
-    ldr         r3, =#0x04000208
-    movs        r2, #0
-    strh        r2, [r3]
-    movs        r2, #1
+    ldr         r2, =#0x04000208
+    strh        r2, [r2]
     movs        r1, r1
     beq         1f
+    movs        r2, #1
     bics        r0, r2
 1:
-    ldr         r3, =#0x03007FFA
-    strb        r1, [r3]
-    subs        r3, #0xFA
-    mov         sp, r3
+    ldr         r2, =#0x03007FFA
+    strb        r1, [r2]
+    subs        r2, #0xFA
+    mov         sp, r2
     svc         #1
     svc         #0
 endf
@@ -73,8 +72,9 @@ func svcDiv thumb
     movs        r3, r0
     movs        r0, r1
     movs        r1, r2
+    movs        r2, r3
     svc         #6
-    stmia       r3!, {r0, r1}
+    stmia       r2!, {r0, r1}
     bx          lr
 endf
 
