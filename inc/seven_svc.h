@@ -75,7 +75,7 @@ enum SoftResetExFlags
 // Combines svcRegisterRamReset and svcSoftReset
 // Allows reset from EWRAM, automatically unsets RRR_EWRAM
 // Disables IME to prevent IRQs crashing from a dangling handler
-extern void NORETURN svcSoftResetEx(u8 reset_flags, bool from_ewram)
+extern void NORETURN svcSoftResetEx(u8 reset_flags, bool from_ewram);
 
 enum RegisterRamResetFlags
 {

@@ -17,4 +17,28 @@
     \name\():
 .endm
 
+.macro data name:req rw:req section
+    .ifc                \rw,rw
+        .ifb            \section
+            .section    .data.\name,"aw",%progbits
+        .else
+            .section    \section\().\name,"aw",%progbits
+        .endif
+    .else
+        .ifb            \section
+            .section    .rdata.\name,"a",%progbits
+        .else
+            .section    \section\().\name,"a",%progbits
+        .endif
+    .endif
+    .global             \name
+    .type               \name STT_OBJECT
+    .macro              endd
+        .size           \name,.-\name
+        .previous
+        .purgem         endd
+    .endm
+    \name\():
+.endm
+
 @ vim:ft=armv4 et sta sw=4 sts=8

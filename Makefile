@@ -2,6 +2,7 @@ CC = arm-none-eabi-gcc
 AR = arm-none-eabi-ar
 
 SOURCES = \
+	src/irq.s \
 	src/svc.s
 
 
