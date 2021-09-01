@@ -17,15 +17,34 @@ enum Key
     KEY_L       = BIT(9),
 };
 
+enum KeyGroups
+{
+    KEYS_DPAD_X         = KEY_LEFT      | KEY_RIGHT,
+    KEYS_DPAD_Y         = KEY_UP        | KEY_DOWN,
+    KEYS_DPAD           = KEYS_DPAD_X   | KEYS_DPAD_Y,
+    KEYS_AB             = KEY_A         | KEY_B,
+    KEYS_LR             = KEY_L         | KEY_R,
+    KEYS_STARTSELECT    = KEY_START     | KEY_SELECT,
+    KEYS_ANYBUTTON      = KEYS_AB       | KEYS_LR       | KEYS_STARTSELECT,
+};
+
 #define REG_KEYINPUT REG16(0x04000130)
 
-enum KeycntFlags
+enum KeyIRQFlags
 {
-    KC_IRQ_ENABLE       = BIT(14),
-    KC_IRQ_AND          = BIT(15),
-    KC_IRQ_OR           = !KC_IRQ_AND,
+    KEY_IRQ_ENABLE       = BIT(14),
+    KEY_IRQ_PRESS_ALL    = BIT(15),
+    KEY_IRQ_PRESS_ANY    = !KEY_IRQ_PRESS_ALL,
 };
 
 #define REG_KEYCNT REG16(0x04000132)
+
+extern void inputPoll(void);
+
+extern u16 inputKeysDown(void);
+extern u16 inputKeysUp(void);
+extern u16 inputKeysHeld(void);
+
+extern void inputSetKeyIRQ(u16 keys, u16 op);
 
 #endif /* !_LIBSEVEN_INPUT_H */

@@ -2,8 +2,9 @@ CC = arm-none-eabi-gcc
 AR = arm-none-eabi-ar
 
 SOURCES = \
+	src/svc.s \
 	src/irq.s \
-	src/svc.s
+	src/input.c
 
 
 INCLUDES = \
