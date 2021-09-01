@@ -8,13 +8,13 @@
 #define THUMB_CODE      __attribute__((target("thumb")))
 
 #define IWRAM_FUNC(func) \
-    __attribute__((section(".iwram." #func, long_call))) func
+    __attribute__((section(".iwram." #func))) func
 #define IWRAM_DATA(data) \
     __attribute__((section(".iwram." #data))) data
 #define IWRAM_BSS(data) \
     __attribute__((section(".bss." #data))) data
 #define EWRAM_FUNC(func) \
-    __attribute__((section(".ewram." #func), long_call)) func
+    __attribute__((section(".ewram." #func))) func
 #define EWRAM_DATA(data) \
     __attribute__((section(".ewram." #data))) data
 #define EWRAM_BSS(data) \
