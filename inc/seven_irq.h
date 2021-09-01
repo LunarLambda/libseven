@@ -1,6 +1,10 @@
 #ifndef _LIBSEVEN_IRQ_H
 #define _LIBSEVEN_IRQ_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <seven_base.h>
 
 // IRQ Flags. Used with IE, IF and IFBIOS registers, and IntrWait functions.
@@ -65,5 +69,9 @@ static inline void irqInit(IRQHandler *isr)
     irqEnableIME();
     IRQ_HANDLER = isr ? isr : irqDefaultHandler;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_LIBSEVEN_IRQ_H */

@@ -1,6 +1,10 @@
 #ifndef _LIBSEVEN_ATTRIBUTES_H
 #define _LIBSEVEN_ATTRIBUTES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define ALIGN(n)        __attribute__((aligned(n)))
 #define NORETURN        __attribute__((__noreturn__))
 #define NOINLINE        __attribute__((noinline))
@@ -19,5 +23,9 @@
     __attribute__((section(".ewram." #data))) data
 #define EWRAM_BSS(data) \
     __attribute__((section(".sbss." #data))) data
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_LIBSEVEN_ATTRIBUTES_H */

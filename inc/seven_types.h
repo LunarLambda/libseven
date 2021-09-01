@@ -1,6 +1,10 @@
 #ifndef _LIBSEVEN_TYPES_H
 #define _LIBSEVEN_TYPES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -72,5 +76,9 @@ typedef volatile u32    reg32;
 #define U64_MAX         UINT64_MAX
 #define USIZE_MAX       SIZE_MAX
 #define UPTR_MAX        UINTPTR_MAX
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_LIBSEVEN_TYPES_H */

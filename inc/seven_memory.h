@@ -1,6 +1,10 @@
 #ifndef _LIBSEVEN_MEMORY_H
 #define _LIBSEVEN_MEMORY_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // BIOS ROM (16K)
 #define MEM_BIOS                ((const void*)0x00000000)
 #define MEM_BIOS_SIZE           ((size_t)0x4000)
@@ -37,5 +41,9 @@
 // Cartridge Static RAM (64K)
 #define MEM_SRAM                ((void*)0x0E000000)
 #define MEM_SRAM_SIZE           ((size_t)0x10000)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_LIBSEVEN_MEMORY_H */

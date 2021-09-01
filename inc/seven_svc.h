@@ -1,6 +1,10 @@
 #ifndef _LIBSEVEN_SVC_H
 #define _LIBSEVEN_SVC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <seven_base.h>
 
 // Just for reference, or if you want to use an inline SVC macro.
@@ -213,5 +217,9 @@ extern void svcSoundDriverVSyncOff(void);
 extern void svcSoundDriverVSyncOn(void);
 
 // TODO: MusicPlayer* functions
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_LIBSEVEN_SVC_H */
