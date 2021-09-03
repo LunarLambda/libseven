@@ -35,6 +35,7 @@ TODO: Coding Philosophy Blurb Here
 - [x] GNU LD --gc-sections support
 - [x] devkitARM RAM section support
 - [ ] devkitARM RAM overlay support
+- [ ] LTO support (needs testing)
 
 ## Extra Features
 
@@ -44,10 +45,15 @@ TODO: Coding Philosophy Blurb Here
 
 ## "Maybe Some Day" Features
 
-- [ ] Custom allocators for RAM and video resources
-- [ ] Custom text engine
+- [ ] Custom allocators for RAM and video resources (\*)
+- [ ] Custom text engine (\*)
+- [ ] Savefile support library (\*)
+- [ ] ROM-filesystem (GBFS replacement) (\*)
 - [ ] Replacement for devkitARM's awful makefiles
 - [ ] crt0/linker script replacement to fully ditch devkitARM
+
+\* These will be separate projects and libraries. `libseven` will only provide
+"must-have" features.
 
 # Documentation
 
