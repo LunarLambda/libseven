@@ -4,7 +4,8 @@ AR = arm-none-eabi-ar
 SOURCES = \
 	src/svc.s \
 	src/irq.s \
-	src/input.c
+	src/input.c \
+	src/timer.c
 
 
 INCLUDES = \
