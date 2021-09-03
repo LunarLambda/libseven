@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 #include <seven_types.h>
-#include <seven_memory.h>
 #include <seven_attributes.h>
 #include <seven_bits.h>
 #include <seven_registers.h>
