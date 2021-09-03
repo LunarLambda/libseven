@@ -2,18 +2,9 @@
 #include <seven_timer.h>
 #include <seven_irq.h>
 
-// TODO: Consider adding these into timer.h
-// Maybe integrate macros like this into registers.h
-//
-// #define REG_TM REG32_ARRAY(0x04000100)
-// => (&REG32(0x04000100))
-//
-// #define REG_TMRLD(num) REG16_ARRAY_STRIDE(0x04000100, 4, num)
-// => REG16((addr) + (stride) * (num))
-//
-#define REG_TM ((reg32*)0x04000100)
-#define REG_TMVAL(num) (*(reg16*)(&REG_TM0VAL + (num) * 4))
-#define REG_TMCNT(num) (*(reg16*)(&REG_TM0CNT + (num) * 4))
+#define REG_TM          REG32_ARRAY(0x04000100)
+#define REG_TMVAL(num)  REG16_ARRAY_STRIDE(0x04000100, 4, num)
+#define REG_TMCNT(num)  REG16_ARRAY_STRIDE(0x04000102, 4, num)
 
 extern void timerSet(u32 num, u16 reload, u16 flags)
 {
