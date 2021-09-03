@@ -14,7 +14,7 @@ TODO: Coding Philosophy Blurb Here
 - [ ] I/O Registers
 - [ ] Video
 - [ ] Sound
-- [ ] Timers
+- [x] Timers
 - [ ] DMA
 - [ ] SIO
 - [x] Input
