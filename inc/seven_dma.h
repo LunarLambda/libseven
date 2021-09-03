@@ -48,14 +48,14 @@ extern "C" {
 
 enum DMAFlags
 {
-    DMA_DST_INCREMENT   = 0 << 5,
-    DMA_DST_DECREMENT   = 1 << 5,
-    DMA_DST_FIXED       = 2 << 5,
-    DNA_DST_REPEAT      = 3 << 5,
+    DMA_DST_INCREMENT   = BITFIELD(5, 0)
+    DMA_DST_DECREMENT   = BITFIELD(5, 1),
+    DMA_DST_FIXED       = BITFIELD(5, 2),
+    DNA_DST_REPEAT      = BITFIELD(5, 3),
 
-    DMA_SRC_INCREMENT   = 0 << 7,
-    DMA_SRC_DECREMENT   = 1 << 7,
-    DMA_SRC_FIXED       = 2 << 7,
+    DMA_SRC_INCREMENT   = BITFIELD(7, 0),
+    DMA_SRC_DECREMENT   = BITFIELD(7, 1),
+    DMA_SRC_FIXED       = BITFIELD(7, 2),
 
     DMA_REPEAT          = BIT(9),
 
@@ -65,13 +65,12 @@ enum DMAFlags
     // What's this? DMA3 only.
     DMA_CARTRIDGE_DRQ   = BIT(11),
 
-    DMA_START_NOW       = 0 << 12,
-    DMA_START_HBLANK    = 1 << 12,
-    DMA_START_VBLANK    = 2 << 12,
+    DMA_START_NOW       = BITFIELD(12, 0),
+    DMA_START_HBLANK    = BITFIELD(12, 1),
+    DMA_START_VBLANK    = BITFIELD(12, 2),
 
     // Forbidden on DMA0
-    DMA_START_SPECIAL   = 3 << 12,
-
+    DMA_START_SPECIAL   = BITFIELD(12, 3),
     // DMA1, DMA2
     DMA_START_SOUND     = DMA_START_SPECIAL,
     // DMA3

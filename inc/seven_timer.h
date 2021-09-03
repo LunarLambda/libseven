@@ -21,10 +21,10 @@ extern "C" {
 
 enum TimerFlags
 {
-    TIMER_FREQ_16M      = 0,
-    TIMER_FREQ_262K     = 1,
-    TIMER_FREQ_64K      = 2,
-    TIMER_FREQ_16K      = 3,
+    TIMER_FREQ_16M      = BITFIELD(0, 0),
+    TIMER_FREQ_262K     = BITFIELD(0, 1),
+    TIMER_FREQ_64K      = BITFIELD(0, 2),
+    TIMER_FREQ_16K      = BITFIELD(0, 3),
     TIMER_CASCADE       = BIT(2),
     TIMER_IRQ_ENABLE    = BIT(6),
     TIMER_ENABLE        = BIT(7),

@@ -8,6 +8,7 @@ extern "C" {
 #define BIT(n) (1 << (n))
 #define BITS(s, l) ((BIT(l) - 1) << (s))
 #define BIC(v, b) ((v) & ~(b))
+#define BITFIELD(o, v) ((v) << (o))
 
 #ifdef __cplusplus
 }
