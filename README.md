@@ -11,14 +11,13 @@ TODO: Coding Philosophy Blurb Here
 
 - [x] Basic Data Types & Limits
 - [x] Memory
-- [ ] I/O Registers
 - [ ] Video
 - [ ] Sound
 - [x] Timers
-- [ ] DMA
+- [x] DMA (base definitions)
 - [ ] SIO
 - [x] Input
-- [x] IRQ (incomplete)
+- [x] IRQ (base definitions, base functions)
 - [x] BIOS Functions (incomplete)
     - [x] Reset
     - [x] Halt and IRQ Waiting
@@ -27,7 +26,7 @@ TODO: Coding Philosophy Blurb Here
     - [x] BIOS Checksum & Checksum-based DS detection
     - [x] AffineSet
     - [x] Decompression
-    - [ ] Sound/MP2000 (incomplete)
+    - [ ] Sound/MP2000
     - [ ] Multiboot
 
 ## Compiler Features
