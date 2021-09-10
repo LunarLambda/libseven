@@ -5,7 +5,8 @@ SOURCES = \
 	src/svc.s \
 	src/irq.s \
 	src/input.c \
-	src/timer.c
+	src/timer.c \
+	src/dma.s
 
 
 INCLUDES = \
