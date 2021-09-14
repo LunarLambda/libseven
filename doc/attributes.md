@@ -71,7 +71,7 @@ Expands to `__attribute__((section(".iwram." #name))) name`.
 ### IWRAM\_BSS(name)
 
 Causes the variable `name` to be placed in zero-initialized IWRAM.
-Included for partiy with `EWRAM_BSS`.
+Included for parity with `EWRAM_BSS`.
 
 Expands to `__attribute__((section(".bss." #name))) name`.
 
