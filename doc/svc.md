@@ -10,6 +10,8 @@ BIOS, also known as SWIs (Software Interrupts) or SVCs (Supervisor Calls).
 1. [SoftReset][svcSoftReset]
 2. [SoftResetEx][svcSoftResetEx]
 3. [RegisterRamReset][svcRegisterRamReset]
+4. [CpuSet][svcCpuSet]
+5. [CpuSetFixed][svcCpuSetFixed]
 
 ## Functions
 
@@ -92,6 +94,56 @@ Clears the selected RAM and I/O register areas.
 ⚠️ When clearing RAM, make sure to disable interrupts if your handler resides
 there.
 
+### svcCpuSet
+
+#### SVC Number
+
+\#11 (THUMB), \#720896 (ARM)
+
+#### C Synopsis
+
+```c
+enum CpuSetFlags
+{
+    CS_SRC_FIXED        = 0x1000000,
+    CS_32BIT            = 0x4000000,
+    CS_16BIT            = !CS_32BIT,
+};
+
+void svcCpuSet(const void *src, void *dst, u32 ctrl);
+```
+
+#### Description
+
+Copies 16-bit halfwords or 32-bit words from the source address in `src` to the
+destination address in `dst`. Both addresses must be aligned to 2 or 4 bytes
+respectively. `ctrl` holds the number of units to copy/set, as well as a
+combination of the flags defined in `CpuSetFlags`. If `CS_SRC_FIXED` is used,
+the value pointed to  by `src` is used to fill the destination instead.
+See also [svcCpuSetFixed].
+
+⚠️ The transfer count is limited to 20 bits, or 1048576 units. In practice this
+limit should not cause any problems, however.
+
+### svcCpuSetFixed
+
+#### SVC Number
+
+N/A
+
+#### C Synopsis
+
+```c
+void svcCpuSetFixed(u32 value, void *dst, u32 ctrl);
+```
+
+#### Description
+
+Wrapper around [svcCpuSet] that pushes `value` onto the stack and uses the
+`CS_SRC_FIXED` flag to fill the destination memory.
+
 [svcSoftReset]: #svcsoftreset
 [svcSoftResetEx]: #svcsoftresetex
 [svcRegisterRamReset]: #svcregisterramreset
+[svcCpuSet]: #svccpuset
+[svcCpuSetFixed]: #svccpusetfixed
