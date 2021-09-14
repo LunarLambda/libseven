@@ -24,7 +24,7 @@ These functions pass their arguments to the BIOS unmodified.
 ## Custom SVCs
 
 These functions are custom to libseven and mainly provide safer or more
-convenient ways to use certain SVCs
+convenient ways to use certain SVCs.
 
 1. [SoftResetEx][svcSoftResetEx]
 2. [CpuSetFixed][svcCpuSetFixed]
