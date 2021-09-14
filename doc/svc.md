@@ -20,6 +20,7 @@ These functions pass their arguments to the BIOS unmodified.
 2. [RegisterRamReset][svcRegisterRamReset]
 3. [CpuSet][svcCpuSet]
 4. [BiosChecksum][svcBiosChecksum]
+5. [HardReset][svcHardReset]
 
 ## Custom SVCs
 
@@ -77,6 +78,27 @@ if execution starts in EWRAM or ROM. If EWRAM is chosen, the `RRR_EWRAM`
 flag is automatically cleared, such that using `RRR_EVERYTHING` is safe.
 Additionally, the `IME` register is set to 0, to avoid the IRQ handler jumping
 into zeroed-out memory.
+
+---
+
+
+## svcHardReset
+
+### SVC Number
+
+\#38 (THUMB), \#2490368 (ARM)
+
+### C Synopsis
+
+```c
+void NORETURN svcHardReset(void)
+```
+
+### Description
+
+Hard-resets the console, causing the BIOS to go through the full boot process.
+There's really no need to use this, unless you can find a cool way to exploit
+the startup animation.
 
 ---
 
@@ -214,3 +236,4 @@ of the BIOS used in the DS family of devices.
 [svcCpuSetFixed]: #svccpusetfixed
 [svcBiosChecksum]: #svcbioschecksum
 [svcIsSystemDS]: #svcissystemds
+[svcHardReset]: #svchardreset
