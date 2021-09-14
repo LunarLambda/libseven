@@ -29,6 +29,8 @@ convenient ways to use certain SVCs
 1. [SoftResetEx][svcSoftResetEx]
 2. [CpuSetFixed][svcCpuSetFixed]
 
+---
+
 
 ## svcSoftReset
 
@@ -66,7 +68,7 @@ enum SoftResetExFlags
     SRE_FROM_RAM = 1,
 };
 
-void NORETURN svcSoftResetEx(u32 reset_flags, bool from_ewram);
+void NORETURN svcSoftResetEx(u8 reset_flags, bool from_ewram);
 ```
 
 ### Description
