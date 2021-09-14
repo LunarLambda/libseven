@@ -11,6 +11,8 @@ BIOS, also known as SWIs (Software Interrupts) or SVCs (Supervisor Calls).
 See the [SVC FAQ](./svc_faq.md) for common questions around libseven's
 implementation of these functions.
 
+See [SVC Numbers](./svc_numbers.md) for a more compact table.
+
 
 ## Standard SVCs
 
@@ -18,9 +20,11 @@ These functions pass their arguments to the BIOS unmodified.
 
 1. [SoftReset][svcSoftReset]
 2. [RegisterRamReset][svcRegisterRamReset]
-3. [CpuSet][svcCpuSet]
-4. [BiosChecksum][svcBiosChecksum]
-5. [HardReset][svcHardReset]
+3. [Halt][svcHalt]
+4. [Stop][svcStop]
+5. [CpuSet][svcCpuSet]
+6. [BiosChecksum][svcBiosChecksum]
+7. [HardReset][svcHardReset]
 
 ## Custom SVCs
 
@@ -139,6 +143,56 @@ there.
 ---
 
 
+## svcHalt
+
+### SVC Number
+
+\#2 (THUMB), \#131072 (ARM)
+
+### C Synopsis
+
+```c
+void svcHalt(void);
+```
+
+### Description
+
+Pauses the CPU until an enabled interrupt is requested, that is IE & IF != 0.
+This works regardless of if the CPSR I bit is set, or if the IME register is
+enabled.
+
+All other hardware is left running, and should be disabled if appropriate.
+
+TODO: Add links to IRQ and CPU documentation
+
+---
+
+
+## svcStop
+
+### SVC Number
+
+\#3 (THUMB), \#196608 (ARM)
+
+### C Synopsis
+
+```c
+void svcStop(void);
+```
+
+### Description
+
+Pauses all hardware until one of the following interrupts occurs, if enabled:
+
+- Keypad
+- Cartridge
+- Serial I/O
+
+The IF register is not set following a return from the stop state.
+
+
+---
+
 ## svcCpuSet
 
 ### SVC Number
@@ -237,3 +291,5 @@ of the BIOS used in the DS family of devices.
 [svcBiosChecksum]: #svcbioschecksum
 [svcIsSystemDS]: #svcissystemds
 [svcHardReset]: #svchardreset
+[svcHalt]: #svchalt
+[svcStop]: #svcstop
