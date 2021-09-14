@@ -19,7 +19,7 @@ These functions pass their arguments to the BIOS unmodified.
 1. [SoftReset][svcSoftReset]
 2. [RegisterRamReset][svcRegisterRamReset]
 3. [CpuSet][svcCpuSet]
-
+4. [BiosChecksum][svcBiosChecksum]
 
 ## Custom SVCs
 
@@ -28,6 +28,7 @@ convenient ways to use certain SVCs.
 
 1. [SoftResetEx][svcSoftResetEx]
 2. [CpuSetFixed][svcCpuSetFixed]
+3. [IsSystemDS][svcIsSystemDS]
 
 ---
 
@@ -54,10 +55,6 @@ on the value in MULTIBOOT\_FLAG (TODO: document this better)
 
 
 ## svcSoftResetEx
-
-### SVC Number
-
-N/A
 
 ### C Synopsis
 
@@ -156,10 +153,6 @@ limit should not cause any problems, however.
 
 ## svcCpuSetFixed
 
-### SVC Number
-
-N/A
-
 ### C Synopsis
 
 ```c
@@ -174,8 +167,50 @@ Wrapper around [svcCpuSet] that pushes `value` onto the stack and uses the
 ---
 
 
+## svcBiosChecksum
+
+### SVC Number
+
+\#13 (THUMB), \#851968 (ARM)
+
+### C Synopsis
+
+```c
+u32 svcBiosChecksum(void);
+```
+
+### Description
+
+Returns the BIOS checksum. Common return values are:
+
+- 0xBAEE187F - Used in all models of the GBA, including the GBA
+Player addon for the GameCube.
+- 0xBAEE1880 - Used in all models of the DS that support GBA games, including
+the 3DS family of consoles.
+
+---
+
+
+## svcIsSystemDS
+
+### C Synopsis
+
+```c
+bool svcIsSystemDS(void);
+```
+
+### Description
+
+Wrapper around [svcBiosChecksum] that checks if the BIOS checksum matches that
+of the BIOS used in the DS family of devices.
+
+---
+
+
 [svcSoftReset]: #svcsoftreset
 [svcSoftResetEx]: #svcsoftresetex
 [svcRegisterRamReset]: #svcregisterramreset
 [svcCpuSet]: #svccpuset
 [svcCpuSetFixed]: #svccpusetfixed
+[svcBiosChecksum]: #svcbioschecksum
+[svcIsSystemDS]: #svcissystemds
