@@ -109,8 +109,8 @@ struct Div
 
 extern struct Div svcDiv(i32 numerator, i32 denominator);
 extern u16 svcSqrt(u32 x);
-extern i16 ArcTan(i16 tan);
-extern u16 ArcTan2(i16 x, i16 y);
+extern i16 svcArcTan(i16 tan);
+extern u16 svcArcTan2(i16 x, i16 y);
 
 enum CpuSetFlags
 {
