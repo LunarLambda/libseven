@@ -86,5 +86,10 @@ TODO: Coding style documentation. Possibly do clang-format.
 
 # License
 
-This project is licensed under the Mozilla Public License Version 2.0.
-See [LICENSE.txt](./LICENSE.txt) for more information.
+All source code in this project is licensed under the
+Mozilla Public License Version 2.0.
+See [LICENSE\_SRC.txt](./LICENSE\_SRC.txt) for more information.
+
+All documentation in this project is licensed under the
+CC0 1.0 Universal license.
+See [LICENSE\_DOC.txt](./LICENSE_DOC.txt) for more information.
