@@ -1,5 +1,8 @@
 # SVC Numbers
 
+This table lists all SVCs implemented by libseven.
+Note that the ARM #s are the same as the THUMB #s, just shifted left 16 bits.
+
 Name                    | # (THUMB) | # Hex (THUMB) | # (ARM) | # Hex (ARM)
 :-----------------------|----------:|--------------:|--------:|-----------:
 [SoftReset]             |         0 |          0x00 |       0 |   0x000000
