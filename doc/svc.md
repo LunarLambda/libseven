@@ -19,12 +19,14 @@ See [SVC Numbers](./svc_numbers.md) for a more compact table.
 These functions pass their arguments to the BIOS unmodified.
 
 1. [SoftReset][svcSoftReset]
-2. [RegisterRamReset][svcRegisterRamReset]
-3. [Halt][svcHalt]
-4. [Stop][svcStop]
-5. [CpuSet][svcCpuSet]
-6. [BiosChecksum][svcBiosChecksum]
-7. [HardReset][svcHardReset]
+1. [RegisterRamReset][svcRegisterRamReset]
+1. [Halt][svcHalt]
+1. [Stop][svcStop]
+1. [IntrWait][svcIntrWait]
+1. [VBlankIntrWait][svcVBlankIntrWait]
+1. [CpuSet][svcCpuSet]
+1. [BiosChecksum][svcBiosChecksum]
+1. [HardReset][svcHardReset]
 
 ## Custom SVCs
 
@@ -32,13 +34,14 @@ These functions are custom to libseven and mainly provide safer or more
 convenient ways to use certain SVCs.
 
 1. [SoftResetEx][svcSoftResetEx]
-2. [CpuSetFixed][svcCpuSetFixed]
-3. [IsSystemDS][svcIsSystemDS]
+1. [IntrWaitEx][svcIntrWaitEx]
+1. [CpuSetFixed][svcCpuSetFixed]
+1. [IsSystemDS][svcIsSystemDS]
 
 ---
 
 
-## svcSoftReset
+## SoftReset
 
 ### SVC Number
 
@@ -59,7 +62,7 @@ on the value in MULTIBOOT\_FLAG (TODO: document this better)
 ---
 
 
-## svcSoftResetEx
+## SoftResetEx
 
 ### C Synopsis
 
@@ -86,7 +89,7 @@ into zeroed-out memory.
 ---
 
 
-## svcHardReset
+## HardReset
 
 ### SVC Number
 
@@ -107,7 +110,7 @@ the startup animation.
 ---
 
 
-## svcRegisterRamReset
+## RegisterRamReset
 
 ### SVC Number
 
@@ -143,7 +146,7 @@ there.
 ---
 
 
-## svcHalt
+## Halt
 
 ### SVC Number
 
@@ -168,7 +171,7 @@ TODO: Add links to IRQ and CPU documentation
 ---
 
 
-## svcStop
+## Stop
 
 ### SVC Number
 
@@ -190,10 +193,80 @@ Pauses all hardware until one of the following interrupts occurs, if enabled:
 
 The IF register is not set following a return from the stop state.
 
+---
+
+
+## IntrWait
+
+### SVC Number
+
+\#4 (THUMB), \#262144 (ARM)
+
+### C Synopsis
+
+```c
+void svcIntrWait(u8 wait_next, u16 intr_flags);
+```
+
+### Description
+
+Wait for the interrupts specified in `intr_flags` to occur. If `wait_next` is
+non-zero, previously unacknowledged interrupts are ignored.
+
+TODO: Show IRQ flags
+
+⚠️ This function only waits for interrupts actually enabled in the IE register.
+Use [svcIntrWaitEx] to automatically adjust IE as needed.
 
 ---
 
-## svcCpuSet
+
+## VBlankIntrWait
+
+### SVC Number
+
+\#5 (THUMB), \#327680 (ARM)
+
+### C Synopsis
+
+```c
+void svcVBlankIntrWait(void);
+```
+
+### Description
+
+Shorthand for `IntrWait(1, 1)`. See [svcIntrWait] for details.
+
+---
+
+
+## IntrWaitEx
+
+### C Synopsis
+
+```c
+enum IntrWaitExFlags
+{
+    IWE_WAIT_NEXT       = 0x01,
+    IWE_SET_IE          = 0x02,
+    IWE_OR_IE           = 0x00,
+};
+
+void svcIntrWaitEx(u8 op, u16 intr_flags);
+```
+
+### Description
+
+Wrapper around [svcIntrWait] that temporarily adds the given `intr_flags` to
+the IE register. If `op` contains the `IWE_SET_IE` flag, the IE register is
+temporarily overwritten with `intr_flags`.
+
+See [svcIntrWait] for details.
+
+---
+
+
+## CpuSet
 
 ### SVC Number
 
@@ -227,7 +300,7 @@ limit should not cause any problems, however.
 ---
 
 
-## svcCpuSetFixed
+## CpuSetFixed
 
 ### C Synopsis
 
@@ -243,7 +316,7 @@ Wrapper around [svcCpuSet] that pushes `value` onto the stack and uses the
 ---
 
 
-## svcBiosChecksum
+## BiosChecksum
 
 ### SVC Number
 
@@ -267,7 +340,7 @@ the 3DS family of consoles.
 ---
 
 
-## svcIsSystemDS
+## IsSystemDS
 
 ### C Synopsis
 
@@ -283,13 +356,16 @@ of the BIOS used in the DS family of devices.
 ---
 
 
-[svcSoftReset]: #svcsoftreset
-[svcSoftResetEx]: #svcsoftresetex
-[svcRegisterRamReset]: #svcregisterramreset
-[svcCpuSet]: #svccpuset
-[svcCpuSetFixed]: #svccpusetfixed
-[svcBiosChecksum]: #svcbioschecksum
-[svcIsSystemDS]: #svcissystemds
-[svcHardReset]: #svchardreset
-[svcHalt]: #svchalt
-[svcStop]: #svcstop
+[svcSoftReset]: #softreset
+[svcSoftResetEx]: #softresetex
+[svcRegisterRamReset]: #registerramreset
+[svcHalt]: #halt
+[svcStop]: #stop
+[svcIntrWait]: #intrwait
+[svcIntrWaitEx]: #intrwaitex
+[svcVBlankIntrWait]: #vblankintrwait
+[svcCpuSet]: #cpuset
+[svcCpuSetFixed]: #cpusetfixed
+[svcBiosChecksum]: #bioschecksum
+[svcIsSystemDS]: #issystemds
+[svcHardReset]: #hardreset
