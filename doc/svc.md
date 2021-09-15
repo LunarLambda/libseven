@@ -139,6 +139,11 @@ void svcRegisterRamReset(u8 reset_flags);
 
 Clears the selected RAM and I/O register areas.
 
+When clearing IWRAM, the last 512 bytes are included, as they contain the stack
+area and some bookkeeping for the BIOS (like IRQ handler address).
+
+The LCD is always set to forced blanking mode.
+
 ⚠️ Clearing OAM does not make objects invisible. Beware of graphical artifacts.\
 ⚠️ When clearing RAM, make sure to disable interrupts if your handler resides
 there.
