@@ -86,11 +86,11 @@ func svcIntrWaitEx thumb
     orrs        r1, r1, r2
 1:
     @ Set IE
-    movs        r12, r3
+    mov         r12, r3
     strh        r1, [r3]
     @ IntrWait()
     svc         #4
-    movs        r3, r12
+    mov         r3, r12
     @ Restore IE
     strh        r2, [r3]
     bx          lr
