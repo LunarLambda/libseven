@@ -68,6 +68,34 @@ func svcSoftResetEx thumb
     svc         #0
 endf
 
+@ extern void svcIntrWaitEx(u8 op, u16 intr_flags);
+@
+@ enum IntrWaitExFlags
+@ {
+@     IWE_WAIT_NEXT     = BIT(0),
+@     IWE_CLEAR_IE      = BIT(1),
+@     IEW_ADD_IE        = !IWE_CLEAR_IE,
+@ }
+func svcIntrWaitEx thumb
+    @ Load IE
+    ldr         r3, =0x04000200
+    @ if (!(op & 2 /* IWE_CLEAR */)) { intr_flags |= IE; }
+    lsrs        r2, r0, #2
+    ldrh        r2, [r3]
+    bcs         1f
+    orrs        r1, r1, r2
+1:
+    @ Set IE
+    movs        r12, r3
+    strh        r1, [r3]
+    @ IntrWait()
+    svc         #4
+    movs        r3, r12
+    @ Restore IE
+    strh        r2, [r3]
+    bx          lr
+endf
+
 func svcDiv thumb
     movs        r3, r0
     movs        r0, r1

@@ -99,6 +99,16 @@ extern void svcRegisterRamReset(u8 reset_flags);
 extern void svcHalt(void);
 extern void svcStop(void);
 extern void svcIntrWait(bool wait_next, u16 intr_flags);
+
+enum IntrWaitExFlags
+{
+    IWE_WAIT_NEXT       = BIT(0),
+    IWE_SET_IE          = BIT(1),
+    IWE_OR_IE           = !IWE_SET_IE,
+};
+
+extern void svcIntrWaitEx(u8 op, u16 intr_flags);
+
 extern void svcVBlankIntrWait(void);
 
 struct Div
