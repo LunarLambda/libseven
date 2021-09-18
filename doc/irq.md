@@ -110,7 +110,7 @@ When an interrupt occurs, the following steps are taken by the CPU:
 Once this has happened, the BIOS' IRQ handler code runs. It does the following:
 
 1. Pushes the registers r0, r1, r2, r3, r12, and r14 (lr) to the IRQ stack.
-2. Calls the function stored in the RAM location at address 0x3FFFFFC. This
-function *must* be an ARM function.
+2. Calls the function stored in the RAM location at address 0x03FFFFFC.
+This function *must* be an ARM function.
 3. Restores the previously pushed registers.
 4. Returns from the exception via the appropriate return instruction.
