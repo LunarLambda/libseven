@@ -9,7 +9,7 @@ It also provides \*\_MIN and \*\_MAX constants for all integer types.
 
 ## Signed Types
 
-Type Name       | Alias for 
+Type Name       | Alias for
 ----------------|-----------
 i8, s8          | int8\_t
 i16, s16        | int16\_t
@@ -20,7 +20,7 @@ iptr, sptr      | intptr\_t
 
 ## Unsigned Types
 
-Type Name       | Alias for 
+Type Name       | Alias for
 ----------------|-----------
 u8              | uint8\_t
 u16             | uint16\_t
@@ -39,7 +39,7 @@ reg8            | volatile u8
 reg16           | volatile u16
 reg32           | volatile u32
 
-## Other Types
+## C Standard Types
 
 The following standard C headers are included:
 

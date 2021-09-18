@@ -221,7 +221,13 @@ non-zero, previously unacknowledged interrupts are ignored.
 TODO: Show IRQ flags
 
 ⚠️ This function only waits for interrupts actually enabled in the IE register.
-Use [svcIntrWaitEx] to automatically adjust IE as needed.
+Use [svcIntrWaitEx] to temporarily adjust IE as needed.
+
+⚠️ If interrupt handling is enabled, enabled interrupts will be handled before
+this function returns.
+
+⚠️ This function returns based on the value of the "IFBIOS" RAM location
+(0x03FFFFF8). Make sure your interrupt handler sets it.
 
 ---
 
@@ -253,8 +259,8 @@ Shorthand for `IntrWait(1, 1)`. See [svcIntrWait] for details.
 enum IntrWaitExFlags
 {
     IWE_WAIT_NEXT       = 0x01,
-    IWE_SET_IE          = 0x02,
-    IWE_OR_IE           = 0x00,
+    IWE_EXCLUSIVE       = 0x02,
+    IWE_INCLUSIVE       = 0x00,
 };
 
 void svcIntrWaitEx(u8 op, u16 intr_flags);
@@ -262,11 +268,11 @@ void svcIntrWaitEx(u8 op, u16 intr_flags);
 
 ### Description
 
-Wrapper around [svcIntrWait] that temporarily adds the given `intr_flags` to
-the IE register. If `op` contains the `IWE_SET_IE` flag, the IE register is
-temporarily overwritten with `intr_flags`.
-
-See [svcIntrWait] for details.
+Wrapper around [svcIntrWait] that temporarily adjusts the IE register with the
+given `intr_flags`. If `IWE_INCLUSIVE` (the default) is used, the flags are
+temporarily added to the register. If `IWE_EXCLUSIVE` is used, the flags
+temporarily replace the value in the register.
+See [svcIntrWait] for details and caveats.
 
 ---
 
