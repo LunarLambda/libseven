@@ -11,4 +11,4 @@ This directory contains the API reference for libseven, organized per header.
 
 # Hardware
 
-- Interrupts(./irq.md)
+- [Interrupts](./irq.md)

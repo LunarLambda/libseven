@@ -1,9 +1,5 @@
 # Interrupt Handling
 
-[Link to header](../inc/seven_irq.h)
-
-## Table of Contents
-
 1. [Explanation](#explanation)
 2. [Interrupt Sources](#interrupt-sources)
 3. [Interrupt Registers](#interrupt-registers)
@@ -59,7 +55,7 @@ The IE (*"Interrupt Enable"*) register controls which interrupt sources are
 allowed to trigger an interrupt.
 
 Bit | Event
----:|-----:
+---:|:-----
   0 | Display entering V-Blank period
   1 | Display entering H-Blank period
   2 | Display reaching set scanline
