@@ -8,3 +8,7 @@ This directory contains the API reference for libseven, organized per header.
 - [seven\_attributes.h](./attributes.md)
 - [seven\_types.h](./types.md)
 - [seven\_svc.h](./svc.md)
+
+# Hardware
+
+- Interrupts(./irq.md)
