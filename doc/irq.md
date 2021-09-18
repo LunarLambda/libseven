@@ -3,7 +3,7 @@
 1. [Explanation](#explanation)
 2. [Interrupt Sources](#interrupt-sources)
 3. [Interrupt Registers](#interrupt-registers)
-4. [The BIOS IRQ Vector](#the-bios-irq-vector)
+4. [The Interrupt Vector](#the-interrupt-vector)
 5. [Interrupt Handlers](#interrupt-handlers)
 
 ---
@@ -16,7 +16,7 @@ by external hardware such as the
 
 When an interrupt request occurs, the CPU immediately redirects execution to
 the interrupt vector in the BIOS, which does some
-[minimal bookkeeping](#the-bios-irq-vector) and then transfers control to the
+[minimal bookkeeping](#the-interrupt-vector) and then transfers control to the
 [interrupt service routine (ISR)](#interrupt-handlers) installed by the user.
 
 The GBA also has a few [I/O Registers](#interrupt-registers)
@@ -37,7 +37,7 @@ Interrupts can be triggered by the following events:
 - Button or D-Pad input
 - Request from the cartridge hardware (usually removal of the cartridge)
 
-TODO: Links to other documentation explaining interrupt sources in more detail
+TODO: Links to other documentation explaining interrupt sources in more detail.
 
 ---
 
@@ -94,11 +94,10 @@ register.
 
 ---
 
-## The BIOS IRQ Vector
+## The Interrupt Vector
 
 ⚠️ This section is very technical and requires knowledge of how the CPU works.
 It is not required to read this section to use interrupts on the GBA!
-
 
 When an interrupt occurs, the following steps are taken by the CPU:
 
@@ -107,7 +106,8 @@ When an interrupt occurs, the following steps are taken by the CPU:
 3. Interrupts are disabled in the CPSR and the mode is changed to IRQ mode.
 4. Execution is transferred to the IRQ vector at address 0x00000018.
 
-Once this has happened, the BIOS' IRQ handler code runs. It does the following:
+Once this has been done, the BIOS' interrupt handling code runs.
+It does the following:
 
 1. Pushes the registers r0, r1, r2, r3, r12, and r14 (lr) to the IRQ stack.
 2. Calls the function stored in the RAM location at address 0x03FFFFFC.
