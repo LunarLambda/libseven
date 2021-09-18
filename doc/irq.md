@@ -1,4 +1,4 @@
-# Interrupt Handling
+# Interrupts
 
 1. [Explanation](#explanation)
 2. [Interrupt Sources](#interrupt-sources)
@@ -6,9 +6,9 @@
 4. [The BIOS IRQ Vector](#the-bios-irq-vector)
 5. [Interrupt Handlers](#interrupt-handlers)
 
-### Explanation
+## Explanation
 
-Interrupt Requests (IRQs for short), are asynchronous signals sent to the CPU
+Interrupt Requests (IRQs for short) are asynchronous signals sent to the CPU
 by external hardware such as the
 [display unit, timers, DMA engine, and more](#interrupt-sources).
 
@@ -20,7 +20,7 @@ the interrupt vector in the BIOS, which does some
 The GBA also has a few [I/O Registers](#interrupt-registers)
 that control which interrupts are handled by the CPU.
 
-### Interrupt Sources
+## Interrupt Sources
 
 Interrupts can be triggered by the following events:
 
@@ -35,11 +35,11 @@ Interrupts can be triggered by the following events:
 
 TODO: Links to other documentation explaining interrupt sources in more detail
 
-### Interrupt Registers
+## Interrupt Registers
 
 The GBA has 3 important I/O registers relating to interrupt handling:
 
-#### IME
+### IME
 
 Address: 0x04000208 (Read/Write)
 
@@ -47,7 +47,7 @@ The IME (*"Interrupt Master Enable"*) register acts as a global switch to
 enable or disable interrupts from occuring. It can only be set to 0 (disable),
 or 1 (enable).
 
-#### IE
+### IE
 
 Address: 0x04000200 (Read/Write)
 
@@ -75,7 +75,7 @@ Note that in addition to being enabled in the IE register, nearly all sources
 require the interrupt to also be enabled in the control registers for the
 respective hardware.
 
-#### IF
+### IF
 
 Address: 0x04000202 (Read/Write)
 
