@@ -6,6 +6,8 @@
 4. [The BIOS IRQ Vector](#the-bios-irq-vector)
 5. [Interrupt Handlers](#interrupt-handlers)
 
+---
+
 ## Explanation
 
 Interrupt Requests (IRQs for short) are asynchronous signals sent to the CPU
@@ -19,6 +21,8 @@ the interrupt vector in the BIOS, which does some
 
 The GBA also has a few [I/O Registers](#interrupt-registers)
 that control which interrupts are handled by the CPU.
+
+---
 
 ## Interrupt Sources
 
@@ -34,6 +38,8 @@ Interrupts can be triggered by the following events:
 - Request from the cartridge hardware (usually removal of the cartridge)
 
 TODO: Links to other documentation explaining interrupt sources in more detail
+
+---
 
 ## Interrupt Registers
 
@@ -85,3 +91,26 @@ enabled.
 
 Flagged interrupts are "acknowledged" by writing the corresponding bits to the
 register.
+
+---
+
+## The BIOS IRQ Vector
+
+⚠️ This section is very technical and requires knowledge of how the CPU works.
+It is not required to read this section to use interrupts on the GBA!
+
+
+When an interrupt occurs, the following steps are taken by the CPU:
+
+1. The address of the next instruction is saved in the r14\_irq register.
+2. The CPSR is saved to the SPSR\_irq register.
+3. Interrupts are disabled in the CPSR and the mode is changed to IRQ mode.
+4. Transfers execution to the IRQ vector (address 0x00000018).
+
+Once this has happened, the BIOS' IRQ handler code runs. It does the following:
+
+1. Pushes the registers r0, r1, r2, r3, r12, and r14 (lr) to the IRQ stack.
+2. Calls the function stored in the RAM location at address 0x3FFFFFC. This
+function *must* be an ARM function.
+3. Restores the previously pushed registers.
+4. Returns from the exception via the appropriate return instruction.
