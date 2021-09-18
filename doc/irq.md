@@ -105,7 +105,7 @@ When an interrupt occurs, the following steps are taken by the CPU:
 1. The address of the next instruction is saved in the r14\_irq register.
 2. The CPSR is saved to the SPSR\_irq register.
 3. Interrupts are disabled in the CPSR and the mode is changed to IRQ mode.
-4. Transfers execution to the IRQ vector (address 0x00000018).
+4. Execution is transferred to the IRQ vector at address 0x00000018.
 
 Once this has happened, the BIOS' IRQ handler code runs. It does the following:
 
