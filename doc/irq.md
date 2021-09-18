@@ -114,3 +114,32 @@ It does the following:
 This function *must* be an ARM function.
 3. Restores the previously pushed registers.
 4. Returns from the exception via the appropriate return instruction.
+
+---
+
+## Interrupt Handlers
+
+Interrupt handlers, sometimes referred to as Interrupt Service Routines (ISRs),
+are special functions that perform the task of discerning which interrupts
+have occured, and handle them in the appropriate way, usually by calling
+other functions depending on the interrupt in question.
+
+Generally, this involves the following steps:
+
+1. Saving any registers used besides the ones already saved by the
+BIOS interrupt vector.
+2. Reading IE and IF to figure out which of the enabled interrupts have occured.
+3. Writing IE to IF to clear the appropriate flags.
+4. Bitwise OR-ing the BIOS-specific IF-variable at address 0x03FFFFF8.
+This is required for BIOS functions like [IntrWait] or [VBlankIntrWait] to work
+correctly.
+5. Optionally doing the required bookkeeping to enable nested interrupts.
+6. Calling an appropriate handler function for the requested interrupt. Usually
+this is done using a table of some kind.
+7. Restoring any saved registers and returning to the BIOS interrupt handler.
+
+See [libseven's default interrupt handler][libseven-irq] as an example.
+
+[IntrWait]: ./svc.md#intrwait
+[VBlankIntrWait]: ./svc.md#vblankintrwait
+[libseven-irq]: https://github.com/LunarLambda/libseven/blob/32ac591fe79340cc2d431b76f3d3328ab0d81369/src/irq.s#L32
