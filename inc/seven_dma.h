@@ -46,6 +46,8 @@ extern "C" {
 #define DMA3DST_MAX     DMA_ALL_MEMORY
 #define DMA3LEN_MAX     0xFFFF
 
+#define DMACNT(n)       REG16_ARRAY_STRIDE(0x040000BA, 12, n)
+
 enum DMAFlags
 {
     DMA_DST_INCREMENT   = BITFIELD(5, 0)
@@ -80,6 +82,32 @@ enum DMAFlags
     DMA_IRQ_ENABLE      = BIT(14),
     DMA_ENABLE          = BIT(15),
 };
+
+static inline void dmaEnable(u32 num)
+{
+    if (num > 3)
+    {
+        return;
+    }
+
+    DMACNT(num) |= DMA_ENABLE;
+}
+
+static inline void dmaDisable(u32 num)
+{
+    if (num > 3)
+    {
+        return;
+    }
+
+    DMACNT(num) &= ~DMA_ENABLE;
+}
+
+// General purpose memory copy using DMA3.
+extern void dmaTransfer(const void *src, void *dst, u16 count, u16 flags);
+
+// Sets up an HDMA transfer on DMA0.
+extern void dmaHBlankTransfer(const void *src, void *dst, u16 count, u16 flags);
 
 #ifdef __cplusplus
 }
