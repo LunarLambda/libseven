@@ -3,53 +3,41 @@
 
 .include        "asm_base.s"
 
-@ BIOS IRQ sequence looks as follows:
-@
-@ 0018 b                IRQ
-@
-@ IRQ:
-@ 0128 stmdb            sp!, {r0-r3, r12, lr}
-@ 012c mov              r0, #MEM_IO
-@ 0130 adr              lr, #0x138
-@ 0134 ldr              pc, [r0, #-4] => IRQ_USER_HANDLER
-@ 0138 ldmia            sp!, {r0-r3, r12, lr}
-@ 013c subs             pc, lr, #4
-@
-@ Handler always called in ARM state, best to have ISR in iwram
-@ SPSR_irq and LR_irq set
-@
-@ CPSR I bit is set (irq disabled)
-@ r0-r3, r12, r14_irq saved on IRQ stack
-@ SPSR_irq not saved
-@ IRQ stack has 34 words free
-@ return by bx lr
-
 .align          2
 data IRQ_TABLE rw
     .fill       16, 8, 0
 endd
 
 func irqDefaultHandler arm .iwram
+    @ Save registers
     push        {r4, r5}
+
     mov         r4, #0x04000000
-    @ REG_IME = 0
+
+    @ Disable IME.
+    @ An interrupt handler can later enable it again
+    @ if it wishes to use nested interrupts.
     ldr         r5, [r4, #0x208]
     str         r4, [r4, #0x208]
-    @ r0 = REG_IE & REG_IF
+
+    @ Determine interrupt cause(s).
+    @ This is done by AND-ing IE and IF
+    @ to get the interrupts that are "enabled AND flagged".
     ldr         r0, [r4, #0x200]
     and         r0, r0, r0, lsr #16
-    @ REG_IF = r0
+
+    @ Acknowledge the interrupts by writing this value to IF.
     ldr         r1, =#0x202
     strh        r0, [r4, r1]
-    @ REG_IFBIOS |= r0
+
+    @ OR the value of "IFBIOS" (0x03FFFFF8)
+    @ with this value to make IntrWait work.
     ldrh        r1, [r4, #-8]
     orr         r1, r1, r0
     strh        r1, [r4, #-8]
 
-    @ r0 = IE & IF
-    @ r4 = MEM_IO
-    @ r5 = IME
-
+    @ Search for an appropriate handler function
+    @ using this value.
     ldr         r1, =IRQ_TABLE
     mvn         r2, #2
 .Lsearch:
@@ -63,6 +51,11 @@ func irqDefaultHandler arm .iwram
 
 .Ldispatch:
     @ Save SPSR_irq, Switch to System Mode, save lr
+    @
+    @ Saving the SPSR is required for nested interrupts to work as it would
+    @ otherwise be overwritten by another IRQ entry.
+    @
+    @ Saving the system mode LR register is necessary because we use it here.
     mrs         r12, spsr
     msr         cpsr_c, #0x5F
     push        {r12, lr}
@@ -73,12 +66,13 @@ func irqDefaultHandler arm .iwram
     bx          r1
 
 .Lcleanup:
-    @ Return to IRQ Mode
+    @ Return to IRQ Mode, restoring LR and the SPSR.
     pop         {r12, lr}
     msr         cpsr_c, #0xD2
     msr         spsr, r12
 
 .Lexit:
+    @ Restore IME to its previous value, and restore the registers we saved.
     str         r5, [r4, #0x208]
     pop         {r4, r5}
     bx          lr
