@@ -145,4 +145,4 @@ example of an ISR that follows these steps.
 
 [IntrWait]: ./svc.md#intrwait
 [VBlankIntrWait]: ./svc.md#vblankintrwait
-[libseven-irq]: https://github.com/LunarLambda/libseven/blob/32ac591fe79340cc2d431b76f3d3328ab0d81369/src/irq.s#L32
+[libseven-irq]: https://github.com/LunarLambda/libseven/blob/67a50a2021c8545b2dc5c753d9280a82ea73b123/src/irq.s#L11
