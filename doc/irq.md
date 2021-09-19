@@ -132,10 +132,10 @@ Generally, this involves the following steps:
 4. Writing the BIOS-specific IF-like variable at address 0x03FFFFF8.
 This is required for BIOS functions like [IntrWait] or [VBlankIntrWait] to work
 correctly.
-5. (Optional) Doing the required bookkeeping to enable nested interrupts.
-6. Calling the appropriate handler function for the requested interrupts.
-Usually this is done using a table of some kind.
-7. Restoring any saved registers and returning to the BIOS interrupt handler.
+5. Doing the required bookkeeping to enable nested interrupts (optional).
+6. Calling an appropriate handler function for the requested interrupts.
+Usually this is done using a lookup table.
+7. Restoring any saved registers and returning from the function.
 
 See [Writing an Interrupt Service Routine](./irq_handler.md) (TODO!)
 for detailed explanations of these steps.
