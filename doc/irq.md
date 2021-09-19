@@ -101,7 +101,7 @@ It is not required to read this section to use interrupts on the GBA!
 
 When an interrupt occurs, the following steps are taken by the CPU:
 
-1. The address of the next instruction is saved in the r14\_irq register.
+1. The address of the next instruction +4 is saved in the r14\_irq register.
 2. The CPSR is saved to the SPSR\_irq register.
 3. Interrupts are disabled in the CPSR and the mode is changed to IRQ mode.
 4. Execution is transferred to the IRQ vector at address 0x00000018.
@@ -126,20 +126,23 @@ other functions depending on the interrupt in question.
 
 Generally, this involves the following steps:
 
-1. Saving any registers used besides the ones already saved by the
-BIOS interrupt vector.
-2. Reading IE and IF to figure out which of the enabled interrupts have occured.
-3. Writing IE to IF to clear the appropriate flags.
-4. Bitwise OR-ing the BIOS-specific IF-variable at address 0x03FFFFF8.
+1. Saving any additional registers needed.
+2. Determining the interrupt cause(s).
+3. Acknowledging the appropriate interrupts.
+4. Writing the BIOS-specific IF-like variable at address 0x03FFFFF8.
 This is required for BIOS functions like [IntrWait] or [VBlankIntrWait] to work
 correctly.
-5. Optionally doing the required bookkeeping to enable nested interrupts.
-6. Calling an appropriate handler function for the requested interrupt. Usually
-this is done using a table of some kind.
-7. Restoring any saved registers and returning to the BIOS interrupt handler.
+5. Doing the required bookkeeping to enable nested interrupts (optional).
+6. Calling an appropriate handler function for the requested interrupts.
+Usually this is done using a lookup table.
+7. Restoring any saved registers and returning from the function.
 
-See [libseven's default interrupt handler][libseven-irq] as an example.
+See [Writing an Interrupt Service Routine](./irq_handler.md) (TODO!)
+for detailed explanations of these steps.
+
+See [libseven's default interrupt handler][libseven-irq] as an annotated
+example of an ISR that follows these steps.
 
 [IntrWait]: ./svc.md#intrwait
 [VBlankIntrWait]: ./svc.md#vblankintrwait
-[libseven-irq]: https://github.com/LunarLambda/libseven/blob/32ac591fe79340cc2d431b76f3d3328ab0d81369/src/irq.s#L32
+[libseven-irq]: https://github.com/LunarLambda/libseven/blob/67a50a2021c8545b2dc5c753d9280a82ea73b123/src/irq.s#L11
