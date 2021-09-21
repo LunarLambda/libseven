@@ -97,25 +97,50 @@ static void logOutputNone(u8 level, const char *message)
     (void)message;
 }
 
+#define REG_MGBA_ENABLE         REG16(0x04FFF780)
+#define REG_MGBA_FLAGS          REG16(0x04FFF700)
+#define MGBA_LOG_OUT            ((char*)0x04FFF600)
+
 static bool logInitMgba(void)
 {
-    return false; /* UNIMPLEMENTED */
+    REG_MGBA_ENABLE = 0xC0DE;
+
+    return REG_MGBA_ENABLE == 0x1DEA;
 }
 
 static void logOutputMgba(u8 level, const char *message)
 {
-    (void)level;
-    (void)message;
+    for (int i = 0; message[i] && i < 256; i++)
+    {
+        MGBA_LOG_OUT[i] = message[i];
+    }
+
+    REG_MGBA_FLAGS = level | 0x100;
 }
+
+#define NOCASH_SIG              ((char*)0x04FFFA00)
+#define REG_NOCASH_LOG          REG8(0x04FFFA1C)
 
 static bool logInitNocash(void)
 {
-    return false; /* UNIMPLEMENTED */
+    for (int i = 0; i < 6; i++)
+    {
+        if ("no$gba"[i] != NOCASH_SIG[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 static void logOutputNocash(u8 level, const char *message)
 {
     (void)level;
-    (void)message;
+
+    while (*message)
+    {
+        REG_NOCASH_LOG = *message++;
+    }
 }
 
