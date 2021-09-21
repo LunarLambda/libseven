@@ -39,6 +39,7 @@ TODO: Coding Philosophy Blurb Here
 
 ## Extra Features
 
+- [x] Logging
 - [ ] Fast string routines
 - [ ] Fast copy routines
 - [ ] Fast math routines
