@@ -142,5 +142,7 @@ static void logOutputNocash(u8 level, const char *message)
     {
         REG_NOCASH_LOG = *message++;
     }
+
+    REG_NOCASH_LOG = '\n';
 }
 
