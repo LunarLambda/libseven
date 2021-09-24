@@ -11,7 +11,7 @@ TODO: Coding Philosophy Blurb Here
 
 - [x] Basic Data Types & Limits
 - [x] Memory
-- [ ] Video
+- [x] Video (base definitions)
 - [ ] Sound
 - [x] Timers
 - [x] DMA (base definitions)
