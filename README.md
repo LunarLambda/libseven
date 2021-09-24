@@ -87,9 +87,9 @@ If you open a PR please try to follow the coding style of the project.
 # License
 
 All source code in this project is licensed under the
-Mozilla Public License Version 2.0.
+Mozilla Public License Version 2.0.\
 See [LICENSE\_SRC.txt](./LICENSE\_SRC.txt) for more information.
 
 All documentation in this project is licensed under the
-CC0 1.0 Universal license.
+CC0 1.0 Universal license.\
 See [LICENSE\_DOC.txt](./LICENSE_DOC.txt) for more information.
