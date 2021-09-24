@@ -67,8 +67,11 @@ enum DisplayStatus
 
 
 // Vertical Counter
-// TODO: Read-only register defines
-#define REG_VCOUNT      REG16(0x04000006)
+
+#define REG_VCOUNT      ROREG16(0x04000006)
+
+#define VCOUNT_DISPLAY_START    0
+#define VCOUNT_VBLANK_START     160
 
 
 // Background Control

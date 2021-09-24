@@ -11,6 +11,10 @@ extern "C" {
 #define REG16(addr)             (*(reg16*)(addr))
 #define REG32(addr)             (*(reg32*)(addr))
 
+#define ROREG8(addr)            (*(const reg8*)(addr))
+#define ROREG16(addr)           (*(const reg16*)(addr))
+#define ROREG32(addr)           (*(const reg32*)(addr))
+
 #define REG8_ARRAY(addr)        (&REG8(addr))
 #define REG16_ARRAY(addr)       (&REG16(addr))
 #define REG32_ARRAY(addr)       (&REG32(addr))
