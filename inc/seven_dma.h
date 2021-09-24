@@ -50,7 +50,7 @@ extern "C" {
 
 enum DMAFlags
 {
-    DMA_DST_INCREMENT   = BITFIELD(5, 0)
+    DMA_DST_INCREMENT   = BITFIELD(5, 0),
     DMA_DST_DECREMENT   = BITFIELD(5, 1),
     DMA_DST_FIXED       = BITFIELD(5, 2),
     DNA_DST_REPEAT      = BITFIELD(5, 3),

@@ -104,7 +104,7 @@ enum IntrWaitExFlags
 {
     IWE_WAIT_NEXT       = BIT(0),
     IWE_EXCLUSIVE       = BIT(1),
-    IWE_INCLUSIVE       = !IWE_SET_IE,
+    IWE_INCLUSIVE       = !IWE_EXCLUSIVE,
 };
 
 extern void svcIntrWaitEx(u8 op, u16 intr_flags);
