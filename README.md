@@ -3,7 +3,14 @@
 `libseven` is a fully from-scratch library for GBA development, meant to
 replace existing libraries like `libgba` or `libtonc`.
 
-TODO: Coding Philosophy Blurb Here
+It has the following key goals:
+
+- A straightforward, consistent API covering the most common tasks around GBA
+programming.
+- Optimize for speed where it matters.
+- Optimize for size everywhere else.
+- Avoid common pitfalls and strange bugs.
+- Provide high-quality, accessible documentation for the GBA hardware and APIs.
 
 # Implementation Status
 
@@ -11,13 +18,13 @@ TODO: Coding Philosophy Blurb Here
 
 - [x] Basic Data Types & Limits
 - [x] Memory
-- [x] Video (base definitions)
+- [x] Video (Base Definitions)
 - [ ] Sound
 - [x] Timers
-- [x] DMA (base definitions)
+- [x] DMA (Basic API)
 - [ ] SIO
 - [x] Input
-- [x] IRQ (base definitions, base functions)
+- [x] IRQ (Basic API)
 - [x] BIOS Functions (incomplete)
     - [x] Reset
     - [x] Halt and IRQ Waiting
@@ -39,28 +46,23 @@ TODO: Coding Philosophy Blurb Here
 
 ## Extra Features
 
-- [x] Logging
+- [x] Logging (MGBA, NO$GBA, Custom)
 - [ ] Fast string routines
-- [ ] Fast copy routines
+- [ ] Fast memory routines
 - [ ] Fast math routines
 
-## "Maybe Some Day" Features
+## Other Libraries and Toolchain Features
 
-- [ ] Custom allocators for RAM and video resources (\*)
-- [ ] Custom text engine (\*)
-- [ ] Savefile support library (\*)
-- [ ] ROM-filesystem (GBFS replacement) (\*)
+- [ ] Custom allocator library for RAM and video resources
+- [ ] Custom text engine
+- [ ] Savefile support library
+- [ ] ROM-filesystem (GBFS replacement)
 - [ ] Replacement for devkitARM's awful makefiles
 - [ ] crt0/linker script replacement to fully ditch devkitARM
-
-\* These will be separate projects and libraries. `libseven` will only provide
-"must-have" features.
 
 # Documentation
 
 See the `doc` folder. Files are named after their respective headers in `inc`.
-
-TODO: Some example projects once the library is more fleshed out.
 
 # Build
 
@@ -77,13 +79,10 @@ TODO: devkitARM Makefile example.
 
 # Contributing
 
-Bug reports and pull requests are welcome! Feature requests are too but I make
-zero guarantees of anything being implemented.
+Bug reports and pull requests are welcome! Feature requests are as well but as
+of now there are zero guarantees of anything.
 
-If you send a PR please try to follow the coding style of the project.\
-If you don't I'll either nitpick at you or fix it myself and be grumpy about it.
-
-TODO: Coding style documentation. Possibly do clang-format.
+If you open a PR please try to follow the coding style of the project.
 
 # License
 
