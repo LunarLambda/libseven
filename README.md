@@ -84,6 +84,9 @@ of now there are zero guarantees of anything.
 
 If you open a PR please try to follow the coding style of the project.
 
+You can also reach out to us in the `#libseven` channel in the
+[gbadev discord](https://discord.io/gbadev)
+
 # License
 
 All source code in this project is licensed under the
