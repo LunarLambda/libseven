@@ -15,7 +15,7 @@ extern void timerSet(u32 num, u16 reload, u16 flags)
 
     if (flags & TIMER_IRQ_ENABLE)
     {
-        REG_IE |= (IRQ_TIMER_0 << num);
+        irqEnable(IRQ_TIMER_0 << num);
     }
 
     REG_TM[num] = reload | (flags << 16);

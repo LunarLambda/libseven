@@ -78,4 +78,60 @@ func irqDefaultHandler arm .iwram
     bx          lr
 endf
 
+func irqEnable thumb
+    @ IME OFF
+    ldr         r1, =0x04000200
+    ldr         r2, [r1, #8]
+    str         r1, [r1, #8]
+
+    @ IE
+    ldrh        r3, [r1]
+    orrs        r0, r0, r3
+    strh        r0, [r1]
+
+    movs        r0, r3
+
+    @ IME Restore
+    str         r2, [r1, #8]
+
+    bx          lr
+endf
+
+func irqDisable thumb
+    @ IME OFF
+    ldr         r1, =0x04000200
+    ldr         r2, [r1, #8]
+    str         r1, [r1, #8]
+
+    @ IE
+    ldrh        r3, [r1]
+    bics        r0, r0, r3
+    strh        r0, [r1]
+
+    movs        r0, r3
+
+    @ IME Restore
+    str         r2, [r1, #8]
+
+    bx          lr
+endf
+
+func irqSetEnabled thumb
+    @ IME OFF
+    ldr         r1, =0x04000200
+    ldr         r2, [r1, #8]
+    str         r1, [r1, #8]
+
+    @ IE
+    ldrh        r3, [r1]
+    strh        r0, [r1]
+
+    movs        r0, r3
+
+    @ IME Restore
+    str         r2, [r1, #8]
+
+    bx          lr
+endf
+
 @ vim:ft=armv4 et sta sw=4 sts=8

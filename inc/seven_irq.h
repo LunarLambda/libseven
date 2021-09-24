@@ -44,31 +44,38 @@ extern IRQHandler irqDefaultHandler;
 
 #define IRQ_HANDLER (*(IRQHandler **volatile)0x03FFFFFC)
 
-static inline void irqEnableIME(void)
+static inline u32 irqSetIME(u32 v)
 {
-    REG_IME = 1;
+    u32 old = REG_IME;
+    REG_IME = v;
+
+    return old;
 }
 
-static inline void irqDisableIME(void)
+static inline u32 irqEnableIME(void)
 {
-    REG_IME = 0;
+    return irqSetIME(1);
 }
 
-static inline void irqEnable(u16 flags)
+static inline u32 irqDisableIME(void)
 {
-    REG_IE |= flags;
-}
-
-static inline void irqDisable(u16 flags)
-{
-    REG_IE &= ~flags;
+    return irqSetIME(0);
 }
 
 static inline void irqInit(IRQHandler *isr)
 {
-    irqEnableIME();
+    REG_IME     = 0;
+    REG_IF      = 0xFFFF;
+    REG_IE      = 0;
+
     IRQ_HANDLER = isr ? isr : irqDefaultHandler;
+
+    REG_IME     = 1;
 }
+
+extern u16 irqEnable(u16 intr_flags);
+extern u16 irqDisable(u16 intr_flags);
+extern u16 irqSetEnabled(u16 intr_flags);
 
 #ifdef __cplusplus
 }
