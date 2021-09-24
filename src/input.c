@@ -29,6 +29,5 @@ extern u16 inputKeysHeld(void)
 
 extern void inputSetKeyIRQ(u16 keys, u16 op)
 {
-    irqEnable(IRQ_KEYPAD);
     REG_KEYCNT = keys | op | KEY_IRQ_ENABLE;
 }
