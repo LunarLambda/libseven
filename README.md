@@ -69,6 +69,8 @@ See the `doc` folder. Files are named after their respective headers in `inc`.
 `libseven` can be built with devkitARM or a regular arm-none-eabi GCC toolchain.
 Simply run `make` and `libseven.a` will be built in the project root directory.
 
+Run `make -f Makefile.dkp` to use the devkitARM compiler.
+
 # Linking
 
 Add `<path to libseven>/inc` to your include search path.\
