@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <seven_base.h>
+
 // RAM Only
 #define DMA_INTERNAL_MEMORY     0x07FFFFFF
 // Except SRAM due to 8-bit only bus
