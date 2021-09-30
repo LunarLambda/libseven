@@ -77,6 +77,19 @@ extern u16 irqEnable(u16 intr_flags);
 extern u16 irqDisable(u16 intr_flags);
 extern u16 irqSetEnabled(u16 intr_flags);
 
+extern void svcIntrWait(bool wait_next, u16 intr_flags);
+
+enum IntrWaitExFlags
+{
+    IWE_WAIT_NEXT       = BIT(0),
+    IWE_EXCLUSIVE       = BIT(1),
+    IWE_INCLUSIVE       = !IWE_EXCLUSIVE,
+};
+
+extern void svcIntrWaitEx(u8 op, u16 intr_flags);
+
+extern void svcVBlankIntrWait(void);
+
 #ifdef __cplusplus
 }
 #endif
