@@ -5,76 +5,66 @@
 
 .align          2
 data IRQ_TABLE rw
-    .fill       16, 8, 0
+    .fill       14, 8, 0
+    .word       0
 endd
 
+@ r0    REG_BASE
+@ r1    IE & IF
+@ r2    <tmp>
+@ r3    <tmp>
+@ r12   IME
 func irqDefaultHandler arm .iwram
-    @ Save registers
-    push        {r4, r5}
+    @ Theoretically this is redundant because
+    @ the BIOS IRQ vector already puts 0x04000000 in r0...
+    @ But I doubt (m)any emulators HLE-ing the BIOS would get this right, lol
+    mov         r1, #0x04000000
 
-    mov         r4, #0x04000000
+    @ Disable IME (r12)
+    ldr         r12, [r1, #0x208]
+    str         r1, [r1, #0x208]
 
-    @ Disable IME.
-    @ An interrupt handler can later enable it again
-    @ if it wishes to use nested interrupts.
-    ldr         r5, [r4, #0x208]
-    str         r4, [r4, #0x208]
-
-    @ Determine interrupt cause(s).
-    @ This is done by AND-ing IE and IF
-    @ to get the interrupts that are "enabled AND flagged".
-    ldr         r0, [r4, #0x200]
+    @ Get IE & IF (r0, can be read by subsequent handler)
+    ldr         r0, [r1, #0x200]!
     and         r0, r0, r0, lsr #16
 
-    @ Acknowledge the interrupts by writing this value to IF.
-    ldr         r1, =#0x202
-    strh        r0, [r4, r1]
+    @ Ack IF
+    strh        r0, [r1, #2]
 
-    @ OR the value of "IFBIOS" (0x03FFFFF8)
-    @ with this value to make IntrWait work.
-    ldrh        r1, [r4, #-8]
-    orr         r1, r1, r0
-    strh        r1, [r4, #-8]
+    @ Ack IFBIOS (r2)
+    ldr         r2, [r1, #-0x208]
+    orr         r2, r2, r0
+    str         r2, [r1, #-0x208]
 
-    @ Search for an appropriate handler function
-    @ using this value.
-    ldr         r1, =IRQ_TABLE
-    mvn         r2, #2
+    @ Search IRQ_TABLE for a handler matching our flags.
+    @ We have at most 14 unique entries, meaning we can use the 15th entry
+    @ as a sentinel, saving the need for a loop counter.
+    @ Allowing us, in turn, to sneak REG_BASE past in r1
+    ldr         r2, =IRQ_TABLE
+
 .Lsearch:
-    ldr         r3, [r1], #8
+    ldr         r3, [r2], #8
     tst         r0, r3
     bne         .Ldispatch
-    lsls        r2, r2, #2
     tst         r3, r3
-    bhi         .Lsearch
+    bne         .Lsearch
     b           .Lexit
 
 .Ldispatch:
-    @ Save SPSR_irq, Switch to System Mode, save lr
-    @
-    @ Saving the SPSR is required for nested interrupts to work as it would
-    @ otherwise be overwritten by another IRQ entry.
-    @
-    @ Saving the system mode LR register is necessary because we use it here.
-    mrs         r12, spsr
+    mrs         r3, spsr
     msr         cpsr_c, #0x5F
-    push        {r12, lr}
+    push        {r1, r3, r12, lr}
 
-    @ Call handler
-    ldr         r1, [r1, #-4]
+    ldr         r2, [r2, #-4]
     mov         lr, pc
-    bx          r1
+    bx          r2
 
-.Lcleanup:
-    @ Return to IRQ Mode, restoring LR and the SPSR.
-    pop         {r12, lr}
+    pop         {r1, r3, r12, lr}
     msr         cpsr_c, #0xD2
-    msr         spsr, r12
+    msr         spsr, r3
 
 .Lexit:
-    @ Restore IME to its previous value, and restore the registers we saved.
-    str         r5, [r4, #0x208]
-    pop         {r4, r5}
+    str         r12, [r1, #8]
     bx          lr
 endf
 
