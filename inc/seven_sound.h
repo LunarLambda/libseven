@@ -5,6 +5,15 @@
 extern "C" {
 #endif
 
+// TODO: Separate header? Need extra structures, plus really rarely used.
+extern void svcSoundDriverMain(void);
+extern void svcSoundDriverVSync(void);
+extern void svcSoundChannelClear(void);
+extern void svcSoundDriverVSyncOff(void);
+extern void svcSoundDriverVSyncOn(void);
+
+// TODO: MusicPlayer* functions
+
 #ifdef __cplusplus
 }
 #endif
