@@ -14,12 +14,12 @@ extern "C" {
 
 enum DisplayControl
 {
-    LCD_MODE_0                  = BITFIELD(0, 0),
-    LCD_MODE_1                  = BITFIELD(0, 1),
-    LCD_MODE_2                  = BITFIELD(0, 2),
-    LCD_MODE_3                  = BITFIELD(0, 3),
-    LCD_MODE_4                  = BITFIELD(0, 4),
-    LCD_MODE_5                  = BITFIELD(0, 5),
+    LCD_MODE_0                  = BITFIELD(0, 3, 0),
+    LCD_MODE_1                  = BITFIELD(0, 3, 1),
+    LCD_MODE_2                  = BITFIELD(0, 3, 2),
+    LCD_MODE_3                  = BITFIELD(0, 3, 3),
+    LCD_MODE_4                  = BITFIELD(0, 3, 4),
+    LCD_MODE_5                  = BITFIELD(0, 3, 5),
 
     LCD_MODE_REGULAR            = LCD_MODE_0,
     LCD_MODE_MIXED              = LCD_MODE_1,
@@ -83,18 +83,13 @@ enum DisplayStatus
 
 enum BackgroundControl
 {
-    BG_PRIO_0                   = BITFIELD(0, 0),
-    BG_PRIO_1                   = BITFIELD(0, 1),
-    BG_PRIO_2                   = BITFIELD(0, 2),
-    BG_PRIO_3                   = BITFIELD(0, 3),
+    BG_PRIO_0                   = BITFIELD(0, 2, 0),
+    BG_PRIO_1                   = BITFIELD(0, 2, 1),
+    BG_PRIO_2                   = BITFIELD(0, 2, 2),
+    BG_PRIO_3                   = BITFIELD(0, 2, 3),
 
     BG_PRIO_MIN                 = BG_PRIO_3,
     BG_PRIO_MAX                 = BG_PRIO_0,
-
-    BG_GFX_BASE_0               = BITFIELD(2, 0),
-    BG_GFX_BASE_1               = BITFIELD(2, 1),
-    BG_GFX_BASE_2               = BITFIELD(2, 2),
-    BG_GFX_BASE_3               = BITFIELD(2, 3),
 
     BG_MOSAIC_ENABLE            = BIT(6),
 
@@ -102,48 +97,14 @@ enum BackgroundControl
     BG_256_COLOR                = BIT(7),
     BG_USE_PALETTES             = !BG_256_COLOR,
 
-    // TODO: Is this too silly?
-    BG_MAP_BASE_0               = BITFIELD(8, 0),
-    BG_MAP_BASE_1               = BITFIELD(8, 1),
-    BG_MAP_BASE_2               = BITFIELD(8, 2),
-    BG_MAP_BASE_3               = BITFIELD(8, 3),
-    BG_MAP_BASE_4               = BITFIELD(8, 4),
-    BG_MAP_BASE_5               = BITFIELD(8, 5),
-    BG_MAP_BASE_6               = BITFIELD(8, 6),
-    BG_MAP_BASE_7               = BITFIELD(8, 7),
-    BG_MAP_BASE_8               = BITFIELD(8, 8),
-    BG_MAP_BASE_9               = BITFIELD(8, 9),
-    BG_MAP_BASE_10              = BITFIELD(8, 10),
-    BG_MAP_BASE_11              = BITFIELD(8, 11),
-    BG_MAP_BASE_12              = BITFIELD(8, 12),
-    BG_MAP_BASE_13              = BITFIELD(8, 13),
-    BG_MAP_BASE_14              = BITFIELD(8, 14),
-    BG_MAP_BASE_15              = BITFIELD(8, 15),
-    BG_MAP_BASE_16              = BITFIELD(8, 16),
-    BG_MAP_BASE_17              = BITFIELD(8, 17),
-    BG_MAP_BASE_18              = BITFIELD(8, 18),
-    BG_MAP_BASE_19              = BITFIELD(8, 19),
-    BG_MAP_BASE_20              = BITFIELD(8, 20),
-    BG_MAP_BASE_21              = BITFIELD(8, 21),
-    BG_MAP_BASE_22              = BITFIELD(8, 22),
-    BG_MAP_BASE_23              = BITFIELD(8, 23),
-    BG_MAP_BASE_24              = BITFIELD(8, 24),
-    BG_MAP_BASE_25              = BITFIELD(8, 25),
-    BG_MAP_BASE_26              = BITFIELD(8, 26),
-    BG_MAP_BASE_27              = BITFIELD(8, 27),
-    BG_MAP_BASE_28              = BITFIELD(8, 28),
-    BG_MAP_BASE_29              = BITFIELD(8, 29),
-    BG_MAP_BASE_30              = BITFIELD(8, 30),
-    BG_MAP_BASE_31              = BITFIELD(8, 31),
-
     // TODO: Naming
     BG_AFF_OVERFLOW_WRAP        = BIT(13),
     BG_AFF_OVERFLOW_TRANS       = !BG_AFF_OVERFLOW_WRAP,
 
-    BG_SIZE_256x256             = BITFIELD(14, 0),
-    BG_SIZE_512x256             = BITFIELD(14, 1),
-    BG_SIZE_256x512             = BITFIELD(14, 2),
-    BG_SIZE_512x512             = BITFIELD(14, 3),
+    BG_SIZE_256x256             = BITFIELD(14, 2, 0),
+    BG_SIZE_512x256             = BITFIELD(14, 2, 1),
+    BG_SIZE_256x512             = BITFIELD(14, 2, 2),
+    BG_SIZE_512x512             = BITFIELD(14, 2, 3),
 
     BG_AFF_SIZE_128x128         = BG_SIZE_256x256,
     BG_AFF_SIZE_256x256         = BG_SIZE_512x256,
@@ -151,8 +112,8 @@ enum BackgroundControl
     BG_AFF_SIZE_1024x1024       = BG_SIZE_512x512,
 };
 
-#define BG_GFX_BASE(n)  BITFIELD(2, (n) & 0x3)
-#define BG_MAP_BASE(n)  BITFIELD(8, (n) & 0x1F)
+#define BG_GFX_BASE(n)  BITFIELD(2, 2, n)
+#define BG_MAP_BASE(n)  BITFIELD(8, 5, n)
 
 
 // Background Scroll
@@ -229,10 +190,10 @@ enum BlendControl
     BLD_TARGET_OBJ      = BIT(4),
     BLD_TARGET_BD       = BIT(5),
 
-    BLD_MODE_OFF        = BITFIELD(6, 0),
-    BLD_MODE_ALPHA      = BITFIELD(6, 1),
-    BLD_MODE_WHITE      = BITFIELD(6, 2),
-    BLD_MODE_BLACK      = BITFIELD(6, 3),
+    BLD_MODE_OFF        = BITFIELD(6, 2, 0),
+    BLD_MODE_ALPHA      = BITFIELD(6, 2, 1),
+    BLD_MODE_WHITE      = BITFIELD(6, 2, 2),
+    BLD_MODE_BLACK      = BITFIELD(6, 2, 3),
 
     // Only used with BLD_MODE_ALPHA
     BLD_TARGET2_BG0      = BIT(8),
