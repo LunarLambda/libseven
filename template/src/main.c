@@ -14,7 +14,8 @@ int main(void)
     fb[136+80*240] = 0x03E0;
     fb[120+96*240] = 0x7C00;
 
-    while (1) {
+    while (1)
+    {
         svcVBlankIntrWait();
     }
 }
