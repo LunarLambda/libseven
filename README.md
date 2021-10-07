@@ -57,7 +57,7 @@ programming.
 - [ ] Custom text engine
 - [ ] Savefile support library
 - [ ] ROM-filesystem (GBFS replacement)
-- [ ] Replacement for devkitARM's awful makefiles
+- [x] Replacement for devkitARM's awful makefiles
 - [ ] crt0/linker script replacement to fully ditch devkitARM
 
 # Documentation
@@ -74,10 +74,10 @@ Run `make -f Makefile.dkp` to use the devkitARM compiler.
 # Linking
 
 Add `<path to libseven>/inc` to your include search path.\
-Add `<path to libseven>` to your library search path.\
+Add `<path to libseven>/build` to your library search path.\
 Add `-lseven` to your linker flags.
 
-TODO: devkitARM Makefile example.
+You can also use the [template project](./template).
 
 # Contributing
 
