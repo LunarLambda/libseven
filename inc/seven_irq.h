@@ -10,9 +10,9 @@ extern "C" {
 // IRQ Flags. Used with IE, IF and IFBIOS registers, and IntrWait functions.
 enum IRQFlags
 {
-    IRQ_LCD_VBLANK      = BIT(0),
-    IRQ_LCD_HBLANK      = BIT(1),
-    IRQ_LCD_VCOUNT      = BIT(2),
+    IRQ_VBLANK          = BIT(0),
+    IRQ_HBLANK          = BIT(1),
+    IRQ_VCOUNT          = BIT(2),
     IRQ_TIMER_0         = BIT(3),
     IRQ_TIMER_1         = BIT(4),
     IRQ_TIMER_2         = BIT(5),
