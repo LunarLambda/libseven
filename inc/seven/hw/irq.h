@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 // IRQ Flags. Used with IE, IF and IFBIOS registers, and IntrWait functions.
 enum IRQFlags

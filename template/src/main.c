@@ -1,4 +1,4 @@
-#include <seven_prelude.h>
+#include <seven/prelude.h>
 
 int main(void)
 {

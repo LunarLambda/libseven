@@ -9,7 +9,7 @@ extern "C" {
 }
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 extern void NORETURN svcSoftReset(void);
 extern void NORETURN svcHardReset(void);

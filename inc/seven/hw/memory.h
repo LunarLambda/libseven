@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 // BIOS ROM (16K)
 #define MEM_BIOS                ((const void*)0x00000000)

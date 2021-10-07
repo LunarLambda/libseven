@@ -5,11 +5,11 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
-#include <seven_input.h>
-#include <seven_irq.h>
-#include <seven_memory.h>
-#include <seven_video.h>
+#include <seven/base.h>
+#include <seven/hw/input.h>
+#include <seven/hw/irq.h>
+#include <seven/hw/memory.h>
+#include <seven/video.h>
 
 #ifdef __cplusplus
 }

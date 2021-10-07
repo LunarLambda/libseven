@@ -1,12 +1,6 @@
 #ifndef _LIBSEVEN_MULTIBOOT_H
 #define _LIBSEVEN_MULTIBOOT_H
 
-#include <seven_base.h>
-
-_LIBSEVEN_BEGIN_EXTERN_C
-
-
-
-_LIBSEVEN_END_EXTERN_C
+#include <seven/base.h>
 
 #endif /* !_LIBSEVEN_MULTIBOOT_H */

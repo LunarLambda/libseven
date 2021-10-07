@@ -1,4 +1,4 @@
-#include <seven_log.h>
+#include <seven/util/log.h>
 
 typedef bool LogInitFn(void);
 typedef void LogOutputFn(u8, const char *);

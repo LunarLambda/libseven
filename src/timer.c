@@ -1,6 +1,6 @@
-#include <seven_base.h>
-#include <seven_timer.h>
-#include <seven_irq.h>
+#include <seven/base.h>
+#include <seven/hw/timer.h>
+#include <seven/hw/irq.h>
 
 #define REG_TM          REG32_ARRAY(0x04000100)
 #define REG_TMVAL(num)  REG16_ARRAY_STRIDE(0x04000100, 4, num)

@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-// TODO: Separate header? Need extra structures, plus really rarely used.
 extern void svcSoundDriverMain(void);
 extern void svcSoundDriverVSync(void);
 extern void svcSoundChannelClear(void);

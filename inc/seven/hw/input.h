@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 enum Key
 {

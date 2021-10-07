@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 // Just for reference, or if you want to use an inline SVC macro.
 // I will not provide you with one, inline SVCs are a terrible idea!

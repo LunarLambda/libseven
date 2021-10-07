@@ -1,7 +1,7 @@
 #ifndef _LIBSEVEN_LOG_H
 #define _LIBSEVEN_LOG_H
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 enum LogLevel
 {

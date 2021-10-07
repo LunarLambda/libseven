@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 // RAM Only
 #define DMA_INTERNAL_MEMORY     0x07FFFFFF

@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 #define REG8(addr)              (*(reg8*)(addr))
 #define REG16(addr)             (*(reg16*)(addr))

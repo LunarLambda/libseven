@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <seven_base.h>
+#include <seven/base.h>
 
 #define REG_TM0VAL      REG16(0x04000100)
 #define REG_TM0CNT      REG16(0x04000102)
