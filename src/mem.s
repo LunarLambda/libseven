@@ -48,20 +48,20 @@ endf
 @ Memory Zero
 
 func memZero8 thumb
-    mov         r2, r1
-    mov         r1, #0
+    movs        r2, r1
+    movs        r1, #0
     b           memSet8
 endf
 
 func memZero16 thumb
-    mov         r2, r1
-    mov         r1, #0
+    movs        r2, r1
+    movs        r1, #0
     b           memSet16
 endf
 
 func memZero32 arm .iwram
-    mov         r2, r1
-    mov         r1, #0
+    movs        r2, r1
+    movs        r1, #0
     b           memSet32
 endf
 
