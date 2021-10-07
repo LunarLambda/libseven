@@ -11,8 +11,6 @@ SOURCES = \
 	src/mem.s \
 	src/str.s
 
-
-
 INCLUDES = \
 	inc \
 	src
@@ -38,34 +36,26 @@ TARGET = libseven.a
 # You don't need to touch anything below this point!
 #
 
-OBJECTS = $(patsubst %,$(BUILD)/%.o,$(basename $(SOURCES)))
-OBJDIRS = $(dir $(OBJECTS))
-DEPENDS = $(OBJECTS:.o=.d)
+OBJECTS = $(patsubst %,$(BUILD)/obj/%.o,$(SOURCES))
+DEPENDS = $(patsubst %,$(BUILD)/dep/%.d,$(SOURCES))
+OBJDIRS = $(dir $(OBJECTS) $(DEPENDS))
 
-$(TARGET): $(OBJECTS)
-	@echo creating $@
+$(BUILD)/$(TARGET): $(OBJECTS)
+	@echo "AR      $@"
 	@$(AR) rcs $@ $^
 
 $(OBJECTS): | objdirs
 
-$(BUILD)/%.o: %.c
-	@echo $<
-	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(@:.o=.d) $<
-
-$(BUILD)/%.o: %.s
-	@echo $<
-	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(@:.o=.d) $<
-
-$(BUILD)/%.o: %.S
-	@echo $<
-	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(@:.o=.d) $<
+$(BUILD)/obj/%.o: %
+	@echo "COMPILE $<"
+	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILD)/dep/$<.d $<
 
 objdirs:
 	@mkdir -p $(OBJDIRS)
 
 clean:
-	@echo clean
-	@rm -rf $(BUILD) $(TARGET)
+	@echo "CLEAN   $(BUILD)"
+	@rm -rf $(BUILD)
 
 .PHONY: objdirs clean
 
