@@ -8,11 +8,9 @@ int main(void)
     REG_DISPSTAT = LCD_VBLANK_IRQ_ENABLE;
     REG_DISPCNT  = LCD_MODE_3 | LCD_ENABLE_BG2;
 
-    volatile u16 *fb = MEM_VRAM;
-
-    fb[120+80*240] = 0x001F;
-    fb[136+80*240] = 0x03E0;
-    fb[120+96*240] = 0x7C00;
+    MODE3_FRAME[80][120] = RGB5(31,  0,  0);
+    MODE3_FRAME[80][136] = RGB5( 0, 31,  0);
+    MODE3_FRAME[96][120] = RGB5( 0,  0, 31);
 
     while (1)
     {
