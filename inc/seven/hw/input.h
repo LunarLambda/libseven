@@ -29,7 +29,7 @@ enum KeyGroups
     KEYS_AB             = KEY_A         | KEY_B,
     KEYS_LR             = KEY_L         | KEY_R,
     KEYS_STARTSELECT    = KEY_START     | KEY_SELECT,
-    KEYS_ANYBUTTON      = KEYS_AB       | KEYS_LR       | KEYS_STARTSELECT,
+    KEYS_ALL            = KEYS_AB       | KEYS_LR       | KEYS_STARTSELECT,
 };
 
 #define REG_KEYINPUT REG16(0x04000130)

@@ -60,9 +60,9 @@ enum DisplayStatus
     LCD_IN_HBLANK               = BIT(1),
     LCD_VCOUNT_MATCH            = BIT(2),
 
-    LCD_VBLANK_IRQ_ENABLE       = BIT(3),
-    LCD_HBLANK_IRQ_ENABLE       = BIT(4),
-    LCD_VCOUNT_IRQ_ENABLE       = BIT(5),
+    LCD_ENABLE_VBLANK_IRQ       = BIT(3),
+    LCD_ENABLE_HBLANK_IRQ       = BIT(4),
+    LCD_ENABLE_VCOUNT_IRQ       = BIT(5),
 };
 
 
@@ -91,7 +91,7 @@ enum BackgroundControl
     BG_PRIO_MIN                 = BG_PRIO_3,
     BG_PRIO_MAX                 = BG_PRIO_0,
 
-    BG_MOSAIC_ENABLE            = BIT(6),
+    BG_ENABLE_MOSAIC            = BIT(6),
 
     // TODO: Naming
     BG_256_COLOR                = BIT(7),

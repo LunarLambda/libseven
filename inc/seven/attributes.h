@@ -11,6 +11,9 @@ extern "C" {
 #define ARM_CODE        __attribute__((target("arm")))
 #define THUMB_CODE      __attribute__((target("thumb")))
 
+#define SECTION(name) \
+    __attribute__((section(name)))
+
 #define IWRAM_FUNC(func) \
     __attribute__((section(".iwram." #func), noinline)) func
 #define IWRAM_DATA(data) \

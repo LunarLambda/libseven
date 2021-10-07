@@ -102,7 +102,7 @@ func svcDiv thumb
     movs        r1, r2
     movs        r2, r3
     svc         #6
-    stmia       r2!, {r0, r1}
+    stmia       r2, {r0, r1}
     bx          lr
 endf
 

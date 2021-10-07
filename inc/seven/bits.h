@@ -19,7 +19,7 @@ extern "C" {
     ((lhs) & ~BF_MASK(name) | BF_VALUE(name, (rhs))
 
 #define BF_EXTRACT(name, lhs)           \
-    ((lhs) >> (BF_##name##_OFFSET) & BITS(0, (BF_##name##_LEN)))
+    ((lhs) >> (BF_##name##_OFFSET) & BITS(0, (BF_##name##_LENGTH)))
 
 #define BF_CLEAR(name, lhs)             \
     BF_INSERT(name, (lhs), 0)

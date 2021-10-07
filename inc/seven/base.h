@@ -5,10 +5,10 @@
 extern "C" {
 #endif
 
-#include <seven/types.h>
 #include <seven/attributes.h>
 #include <seven/bits.h>
 #include <seven/registers.h>
+#include <seven/types.h>
 
 #ifdef __cplusplus
 }

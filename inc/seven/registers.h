@@ -19,6 +19,10 @@ extern "C" {
 #define REG16_ARRAY(addr)       (&REG16(addr))
 #define REG32_ARRAY(addr)       (&REG32(addr))
 
+#define ROREG8_ARRAY(addr)        (&ROREG8(addr))
+#define ROREG16_ARRAY(addr)       (&ROREG16(addr))
+#define ROREG32_ARRAY(addr)       (&ROREG32(addr))
+
 #define REG8_ARRAY_STRIDE(addr, stride, num) \
     (*(reg8*)((addr) + (stride) * (num)))
 
@@ -27,6 +31,15 @@ extern "C" {
 
 #define REG32_ARRAY_STRIDE(addr, stride, num) \
     (*(reg32*)((addr) + (stride) * (num)))
+
+#define ROREG8_ARRAY_STRIDE(addr, stride, num) \
+    (*(const reg8*)((addr) + (stride) * (num)))
+
+#define ROREG16_ARRAY_STRIDE(addr, stride, num) \
+    (*(const reg16*)((addr) + (stride) * (num)))
+
+#define ROREG32_ARRAY_STRIDE(addr, stride, num) \
+    (*(const reg32*)((addr) + (stride) * (num)))
 
 #ifdef __cplusplus
 }

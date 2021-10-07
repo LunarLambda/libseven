@@ -26,7 +26,7 @@ enum TimerFlags
     TIMER_FREQ_64KHZ    = BITFIELD(0, 2, 2),
     TIMER_FREQ_16KHZ    = BITFIELD(0, 2, 3),
     TIMER_CASCADE       = BIT(2),
-    TIMER_IRQ_ENABLE    = BIT(6),
+    TIMER_IRQ           = BIT(6),
     TIMER_ENABLE        = BIT(7),
 };
 
