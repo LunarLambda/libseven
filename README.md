@@ -17,14 +17,14 @@ programming.
 ## GBA Features
 
 - [x] Basic Data Types & Limits
-- [x] Memory
+- [x] Memory Map
 - [x] Video (Base Definitions)
 - [ ] Sound
 - [x] Timers
 - [x] DMA (Basic API)
 - [ ] SIO
 - [x] Input
-- [x] IRQ (Basic API)
+- [x] IRQ (Basic Functions)
 - [x] BIOS Functions (incomplete)
     - [x] Reset
     - [x] Halt and IRQ Waiting

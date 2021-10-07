@@ -17,6 +17,16 @@
     \name\():
 .endm
 
+.macro subfunc name:req
+    .global     \name
+    .type       \name STT_FUNC
+    .macro      endsf
+        .size   \name,.-\name
+        .purgem endsf
+    .endm
+    \name\():
+.endm
+
 .macro data name:req rw:req section
     .ifc                \rw,rw
         .ifb            \section

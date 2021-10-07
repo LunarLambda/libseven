@@ -89,6 +89,26 @@ enum CpuFastSetFlags
 extern void svcCpuFastSet(const void *src, void *dst, u32 ctrl);
 extern void svcCpuFastSetFixed(u32 value, void *dst, u32 ctrl);
 
+extern void memCopy8(void *dst, const void *src, size_t len);
+extern void memCopy16(void *dst, const void *src, size_t len);
+extern void memCopy32(void *dst, const void *src, size_t len);
+
+extern void memMove8(void *dst, const void *src, size_t len);
+extern void memMove16(void *dst, const void *src, size_t len);
+extern void memMove32(void *dst, const void *src, size_t len);
+
+extern void memSet8(void *dst, const void *src, size_t len);
+extern void memSet16(void *dst, const void *src, size_t len);
+extern void memSet32(void *dst, const void *src, size_t len);
+
+extern void memZero8(void *dst, const void *src, size_t len);
+extern void memZero16(void *dst, const void *src, size_t len);
+extern void memZero32(void *dst, const void *src, size_t len);
+
+extern void memCompare8(void *dst, const void *src, size_t len);
+extern void memCompare16(void *dst, const void *src, size_t len);
+extern void memCompare32(void *dst, const void *src, size_t len);
+
 #ifdef __cplusplus
 }
 #endif
