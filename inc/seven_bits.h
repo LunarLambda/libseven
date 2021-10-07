@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #define BIT(n)                  (1 << (n))
-#define BITS(o, l)              (BIT((l)) - 1 << (o))
+#define BITS(o, l)              ((BIT((l)) - 1) << (o))
 #define BITFIELD(o, l, v)       (((v) & BITS(0, (l))) << (o))
 
 #define BF_VALUE(name, value)           \
