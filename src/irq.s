@@ -3,11 +3,63 @@
 
 .include        "asm_base.s"
 
-.align          2
 data IRQ_TABLE rw
+    .align      2
     .fill       14, 8, 0
     .word       0
 endd
+
+.data
+CRITICAL_SECTION:
+    .byte 0
+
+CRITICAL_SECTION_IME:
+    .byte 0
+.previous
+
+func irqEnterCriticalSection thumb
+    @ if (CRITICAL_SECTION) CRITICAL_SECTION+=1; return;
+    ldr         r0, =CRITICAL_SECTION
+    ldrb        r1, [r0]
+    cmp         r1, #0
+    bne         .Lecs_inc
+    @ CRITICAL_SECTION_IME = REG_IME;
+    @ REG_IME = 0;
+    ldr         r1, =0x04000208
+    ldr         r2, [r1]
+    str         r1, [r1]
+    strb        r2, [r0, #1]
+.Lecs_inc:
+    adds        r1, r1, #1
+    strb        r1, [r0]
+    bx          lr
+endf
+
+@ r0 = &CRITICAL_SECTION
+@ r1 = CRITICAL_SECTION
+@ r2 = CRITICAL_SECTION_IME
+@ r2 = &REG_IME
+func irqExitCriticalSection thumb
+    @ if (!CRITICAL_SECTION) return;
+    ldr         r0, =CRITICAL_SECTION
+    ldrb        r1, [r0]
+    cmp         r1, #1
+    @ >= 1
+    bgt         .Lecs_dec
+    @ 0
+    blt         .Lecs_exit
+    @ == 1
+    ldr         r3, =0x04000208
+    ldrb        r2, [r0, #1]
+    strb        r2, [r3]
+.Lecs_dec:
+    @ CRITICAL_SECTION -= 1;
+    subs        r1, r1, #1
+    strb        r1, [r0]
+.Lecs_exit:
+    bx          lr
+endf
+
 
 @ r0    REG_BASE
 @ r1    IE & IF
