@@ -79,7 +79,7 @@ enum DMAFlags
     DMA_START_CAPTURE   = DMA_START_SPECIAL,
 
     // On transfer completion
-    DMA_IRQ             = BIT(14),
+    DMA_IRQ_ENABLE      = BIT(14),
     DMA_ENABLE          = BIT(15),
 };
 

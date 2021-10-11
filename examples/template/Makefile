@@ -9,7 +9,7 @@ endif
 #
 
 # Path to libseven's source directory.
-LIBSEVEN := $(CURDIR)/../
+LIBSEVEN := $(CURDIR)/../../
 
 # The name of your project
 TARGET   := template

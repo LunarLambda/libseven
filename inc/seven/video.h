@@ -39,14 +39,14 @@ enum DisplayControl
 
     LCD_FORCE_BLANK             = BIT(7),
 
-    LCD_ENABLE_BG0              = BIT(8),
-    LCD_ENABLE_BG1              = BIT(9),
-    LCD_ENABLE_BG2              = BIT(10),
-    LCD_ENABLE_BG3              = BIT(11),
-    LCD_ENABLE_OBJ              = BIT(12),
-    LCD_ENABLE_WIN0             = BIT(13),
-    LCD_ENABLE_WIN1             = BIT(14),
-    LCD_ENABLE_OBJ_WINDOW       = BIT(15),
+    LCD_BG0_ENABLE              = BIT(8),
+    LCD_BG1_ENABLE              = BIT(9),
+    LCD_BG2_ENABLE              = BIT(10),
+    LCD_BG3_ENABLE              = BIT(11),
+    LCD_OBJ_ENABLE              = BIT(12),
+    LCD_WIN0_ENABLE             = BIT(13),
+    LCD_WIN1_ENABLE             = BIT(14),
+    LCD_OBJ_WINDOW_ENABLE       = BIT(15),
 };
 
 
@@ -60,9 +60,9 @@ enum DisplayStatus
     LCD_IN_HBLANK               = BIT(1),
     LCD_VCOUNT_MATCH            = BIT(2),
 
-    LCD_ENABLE_VBLANK_IRQ       = BIT(3),
-    LCD_ENABLE_HBLANK_IRQ       = BIT(4),
-    LCD_ENABLE_VCOUNT_IRQ       = BIT(5),
+    LCD_VBLANK_IRQ_ENABLE       = BIT(3),
+    LCD_HBLANK_IRQ_ENABLE       = BIT(4),
+    LCD_VCOUNT_IRQ_ENABLE       = BIT(5),
 };
 
 
@@ -91,7 +91,7 @@ enum BackgroundControl
     BG_PRIO_MIN                 = BG_PRIO_3,
     BG_PRIO_MAX                 = BG_PRIO_0,
 
-    BG_ENABLE_MOSAIC            = BIT(6),
+    BG_MOSAIC_ENABLE            = BIT(6),
 
     // TODO: Naming
     BG_256_COLOR                = BIT(7),
@@ -161,12 +161,12 @@ enum BackgroundControl
 
 enum WindowControl
 {
-    WIN_SHOW_BG0       = BIT(0),
-    WIN_SHOW_BG1       = BIT(1),
-    WIN_SHOW_BG2       = BIT(2),
-    WIN_SHOW_BG3       = BIT(3),
-    WIN_SHOW_OBJ       = BIT(4),
-    WIN_ENABLE_BLEND   = BIT(5),
+    WIN_BG0_ENABLE       = BIT(0),
+    WIN_BG1_ENABLE       = BIT(1),
+    WIN_BG2_ENABLE       = BIT(2),
+    WIN_BG3_ENABLE       = BIT(3),
+    WIN_OBJ_ENABLE       = BIT(4),
+    WIN_BLEND_ENABLE     = BIT(5),
 };
 
 #define WINDOW_DIM(l, h)        ((((l) & 255) << 8) | ((h) & 255))
