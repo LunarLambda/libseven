@@ -118,15 +118,15 @@ func irqDefaultHandler arm .iwram
     msr         spsr, r3
 
 .Lexit:
-    str         r12, [r1, #8]
+    strh        r12, [r1, #8]
     bx          lr
 endf
 
 func irqEnable thumb
     @ IME OFF
     ldr         r1, =0x04000200
-    ldr         r2, [r1, #8]
-    str         r1, [r1, #8]
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
 
     @ IE
     ldrh        r3, [r1]
@@ -136,7 +136,7 @@ func irqEnable thumb
     movs        r0, r3
 
     @ IME Restore
-    str         r2, [r1, #8]
+    strh        r2, [r1, #8]
 
     bx          lr
 endf
@@ -144,8 +144,8 @@ endf
 func irqDisable thumb
     @ IME OFF
     ldr         r1, =0x04000200
-    ldr         r2, [r1, #8]
-    str         r1, [r1, #8]
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
 
     @ IE
     ldrh        r3, [r1]
@@ -155,7 +155,7 @@ func irqDisable thumb
     movs        r0, r3
 
     @ IME Restore
-    str         r2, [r1, #8]
+    strh        r2, [r1, #8]
 
     bx          lr
 endf
@@ -163,8 +163,8 @@ endf
 func irqSetEnabled thumb
     @ IME OFF
     ldr         r1, =0x04000200
-    ldr         r2, [r1, #8]
-    str         r1, [r1, #8]
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
 
     @ IE
     ldrh        r3, [r1]
@@ -173,7 +173,7 @@ func irqSetEnabled thumb
     movs        r0, r3
 
     @ IME Restore
-    str         r2, [r1, #8]
+    strh        r2, [r1, #8]
 
     bx          lr
 endf
