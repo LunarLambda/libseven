@@ -18,48 +18,50 @@ CRITICAL_SECTION_IME:
 .previous
 
 func irqEnterCriticalSection thumb
-    @ if (CRITICAL_SECTION) CRITICAL_SECTION+=1; return;
-    ldr         r0, =CRITICAL_SECTION
-    ldrb        r1, [r0]
-    cmp         r1, #0
+    @ r1 = REG_IME
+    @ REG_IME = 0
+    ldr         r0, =0x04000208
+    ldrh        r1, [r0]
+    strh        r0, [r0]
+
+    @ if (CRITICAL_SECTION) b .Lecs_inc
+    ldr         r2, =CRITICAL_SECTION
+    ldrb        r3, [r2]
+    cmp         r3, #0
     bne         .Lecs_inc
-    @ CRITICAL_SECTION_IME = REG_IME;
-    @ REG_IME = 0;
-    ldr         r1, =0x04000208
-    ldr         r2, [r1]
-    str         r1, [r1]
-    strb        r2, [r0, #1]
+
+    @ Save IME
+    strb        r1, [r2, #1]
+
 .Lecs_inc:
-    adds        r1, r1, #1
+    adds        r3, r3, #1
     strb        r1, [r0]
     bx          lr
 endf
 
-@ r0 = &CRITICAL_SECTION
-@ r1 = CRITICAL_SECTION
-@ r2 = CRITICAL_SECTION_IME
-@ r2 = &REG_IME
 func irqExitCriticalSection thumb
-    @ if (!CRITICAL_SECTION) return;
-    ldr         r0, =CRITICAL_SECTION
-    ldrb        r1, [r0]
-    cmp         r1, #1
-    @ >= 1
-    bgt         .Lecs_dec
-    @ 0
-    blt         .Lecs_exit
-    @ == 1
-    ldr         r3, =0x04000208
-    ldrb        r2, [r0, #1]
-    strb        r2, [r3]
-.Lecs_dec:
-    @ CRITICAL_SECTION -= 1;
-    subs        r1, r1, #1
-    strb        r1, [r0]
-.Lecs_exit:
+    @ r1 = REG_IME
+    @ REG_IME = 0
+    ldr         r0, =0x04000208
+    ldrh        r1, [r0]
+    strh        r0, [r0]
+
+    ldr         r2, =CRITICAL_SECTION
+    ldrb        r3, [r2]
+    cmp         r3, #1
+    @ >= 1: just decrement
+    bgt         .Lxcs_dec
+    @ == 0: do nothing
+    blt         .Lxcs_ret
+    @ == 1: restore saved IME
+    ldrb        r1, [r2, #1]
+.Lxcs_dec:
+    subs        r3, r3, #1
+    strb        r3, [r2]
+.Lxcs_ret:
+    strh        r1, [r0]
     bx          lr
 endf
-
 
 @ r0    REG_BASE
 @ r1    IE & IF
