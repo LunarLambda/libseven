@@ -280,4 +280,4 @@ extern void svcObjAffineSet(
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_VIDEO_H */
+#endif /* !_LIBSEVEN_HW_VIDEO_H */
