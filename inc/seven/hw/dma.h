@@ -1,11 +1,9 @@
-#ifndef _LIBSEVEN_DMA_H
-#define _LIBSEVEN_DMA_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_HW_DMA_H
+#define _LIBSEVEN_HW_DMA_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 // RAM Only
 #define DMA_INTERNAL_MEMORY     0x07FFFFFF
@@ -111,8 +109,6 @@ extern void dmaHBlankTransfer(const void *src, void *dst, u16 count, u16 flags);
 
 #undef DMACNT
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
-#endif /* _LIBSEVEN_DMA_H */
+#endif /* _LIBSEVEN_HW_DMA_H */

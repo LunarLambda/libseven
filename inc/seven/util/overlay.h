@@ -1,12 +1,12 @@
-#ifndef _LIBSEVEN_OVERLAY_H
-#define _LIBSEVEN_OVERLAY_H
+#ifndef _LIBSEVEN_UTIL_OVERLAY_H
+#define _LIBSEVEN_UTIL_OVERLAY_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <seven/base.h>
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C
 
-#endif /* !_LIBSEVEN_OVERLAY_H */
+#error "seven/util/overlay.h is a stub header"
+
+_LIBSEVEN_EXTERN_C_END
+
+#endif /* !_LIBSEVEN_UTIL_OVERLAY_H */

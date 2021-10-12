@@ -1,11 +1,9 @@
-#ifndef _LIBSEVEN_SVC_H
-#define _LIBSEVEN_SVC_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_HW_SVC_H
+#define _LIBSEVEN_HW_SVC_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 // Just for reference, or if you want to use an inline SVC macro.
 // I will not provide you with one, inline SVCs are a terrible idea!
@@ -73,8 +71,6 @@ enum SupervisorCallNumber
     SVC_MUSICPLAYERJUMPTABLECOPY        = 42,
 };
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_SVC_H */
+#endif /* !_LIBSEVEN_HW_SVC_H */

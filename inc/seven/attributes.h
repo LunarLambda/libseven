@@ -1,9 +1,9 @@
 #ifndef _LIBSEVEN_ATTRIBUTES_H
 #define _LIBSEVEN_ATTRIBUTES_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 #define ALIGN(n)        __attribute__((aligned(n)))
 #define NORETURN        __attribute__((__noreturn__))
@@ -27,8 +27,6 @@ extern "C" {
 #define EWRAM_BSS(data) \
     __attribute__((section(".sbss." #data))) data
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_ATTRIBUTES_H */

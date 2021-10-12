@@ -1,12 +1,12 @@
-#ifndef _LIBSEVEN_SERIAL_H
-#define _LIBSEVEN_SERIAL_H
+#ifndef _LIBSEVEN_HW_SERIAL_H
+#define _LIBSEVEN_HW_SERIAL_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <seven/base.h>
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C
 
-#endif /* !_LIBSEVEN_SERIAL_H */
+#error "seven/hw/serial.h is a stub header"
+
+_LIBSEVEN_EXTERN_C_END
+
+#endif /* !_LIBSEVEN_HW_SERIAL_H */

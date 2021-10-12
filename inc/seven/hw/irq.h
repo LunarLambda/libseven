@@ -1,11 +1,9 @@
-#ifndef _LIBSEVEN_IRQ_H
-#define _LIBSEVEN_IRQ_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_HW_IRQ_H
+#define _LIBSEVEN_HW_IRQ_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 // IRQ Flags. Used with IE, IF and IFBIOS registers, and IntrWait functions.
 enum IRQFlags
@@ -83,21 +81,6 @@ extern void irqEnterCriticalSection(void);
 // Restores the value in IME saved by a previous call to EnterCriticalSection.
 extern void irqExitCriticalSection(void);
 
-extern void svcIntrWait(bool wait_next, u16 intr_flags);
+_LIBSEVEN_EXTERN_C_END
 
-enum IntrWaitExFlags
-{
-    IWE_WAIT_NEXT       = BIT(0),
-    IWE_EXCLUSIVE       = BIT(1),
-    IWE_INCLUSIVE       = !IWE_EXCLUSIVE,
-};
-
-extern void svcIntrWaitEx(u8 op, u16 intr_flags);
-
-extern void svcVBlankIntrWait(void);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* !_LIBSEVEN_IRQ_H */
+#endif /* !_LIBSEVEN_HW_IRQ_H */

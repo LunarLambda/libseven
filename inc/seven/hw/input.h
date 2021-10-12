@@ -1,11 +1,9 @@
-#ifndef _LIBSEVEN_INPUT_H
-#define _LIBSEVEN_INPUT_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_HW_INPUT_H
+#define _LIBSEVEN_HW_INPUT_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 enum Key
 {
@@ -51,8 +49,6 @@ extern u16 inputKeysHeld(void);
 
 extern void inputSetKeyIRQ(u16 keys, u16 op);
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C
 
-#endif /* !_LIBSEVEN_INPUT_H */
+#endif /* !_LIBSEVEN_HW_INPUT_H */

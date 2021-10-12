@@ -1,9 +1,9 @@
-#ifndef _LIBSEVEN_MATH_H
-#define _LIBSEVEN_MATH_H
+#ifndef _LIBSEVEN_SVC_MATH_H
+#define _LIBSEVEN_SVC_MATH_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 struct Div
 {
@@ -16,8 +16,6 @@ extern u16 svcSqrt(u32 x);
 extern i16 svcArcTan(i16 tan);
 extern u16 svcArcTan2(i16 x, i16 y);
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_MATH_H */
+#endif /* !_LIBSEVEN_SVC_MATH_H */

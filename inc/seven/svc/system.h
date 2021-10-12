@@ -1,15 +1,9 @@
-#ifndef _LIBSEVEN_SYSTEM_H
-#define _LIBSEVEN_SYSTEM_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifdef __cplusplus
-}
-#endif
+#ifndef _LIBSEVEN_SVC_SYSTEM_H
+#define _LIBSEVEN_SVC_SYSTEM_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 extern void NORETURN svcSoftReset(void);
 extern void NORETURN svcHardReset(void);
@@ -46,4 +40,6 @@ extern void svcStop(void);
 extern u32 svcBiosChecksum(void);
 extern bool svcIsSystemDS(void);
 
-#endif /* !_LIBSEVEN_SYSTEM_H */
+_LIBSEVEN_EXTERN_C_END
+
+#endif /* !_LIBSEVEN_SVC_SYSTEM_H */

@@ -1,11 +1,9 @@
-#ifndef _LIBSEVEN_TIMER_H
-#define _LIBSEVEN_TIMER_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_HW_TIMER_H
+#define _LIBSEVEN_HW_TIMER_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 #define REG_TM0VAL      REG16(0x04000100)
 #define REG_TM0CNT      REG16(0x04000102)
@@ -38,8 +36,6 @@ extern void timerStop(u32 num);
 
 extern u16 timerGetValue(u32 num);
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_TIMER_H */
+#endif /* !_LIBSEVEN_HW_TIMER_H */

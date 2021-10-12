@@ -1,12 +1,9 @@
-#ifndef _LIBSEVEN_VIDEO_H
-#define _LIBSEVEN_VIDEO_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_HW_VIDEO_H
+#define _LIBSEVEN_HW_VIDEO_H
 
 #include <seven/base.h>
 
+_LIBSEVEN_EXTERN_C
 
 // Display Control
 
@@ -281,8 +278,6 @@ extern void svcObjAffineSet(
         u32 num,
         u32 offset);
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_H */

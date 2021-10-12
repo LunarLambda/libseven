@@ -1,9 +1,9 @@
 #ifndef _LIBSEVEN_BITS_H
 #define _LIBSEVEN_BITS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 #define BIT(n)                  (1 << (n))
 #define BITS(o, l)              ((BIT((l)) - 1) << (o))
@@ -32,8 +32,6 @@ extern "C" {
 #define BF_OR  BF_ORR
 #define BF_XOR BF_EOR
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_BITS_H */

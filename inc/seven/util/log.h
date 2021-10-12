@@ -1,7 +1,9 @@
-#ifndef _LIBSEVEN_LOG_H
-#define _LIBSEVEN_LOG_H
+#ifndef _LIBSEVEN_UTIL_LOG_H
+#define _LIBSEVEN_UTIL_LOG_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 enum LogLevel
 {
@@ -44,4 +46,6 @@ extern u8 logGetMaxLevel(void);
 // Output a message via the currently initialized log interface
 extern void logOutput(u8 level, const char *message);
 
-#endif /* _LIBSEVEN_LOG_H */
+_LIBSEVEN_EXTERN_C_END
+
+#endif /* _LIBSEVEN_UTIL_LOG_H */

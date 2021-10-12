@@ -1,9 +1,9 @@
-#ifndef _LIBSEVEN_SOUND_H
-#define _LIBSEVEN_SOUND_H
+#ifndef _LIBSEVEN_HW_SOUND_H
+#define _LIBSEVEN_HW_SOUND_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 extern void svcSoundDriverMain(void);
 extern void svcSoundDriverVSync(void);
@@ -13,8 +13,6 @@ extern void svcSoundDriverVSyncOn(void);
 
 // TODO: MusicPlayer* functions
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_SOUND_H */
+#endif /* !_LIBSEVEN_HW_SOUND_H */

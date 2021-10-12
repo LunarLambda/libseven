@@ -1,11 +1,9 @@
-#ifndef _LIBSEVEN_COMPRESSION_H
-#define _LIBSEVEN_COMPRESSION_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _LIBSEVEN_SVC_COMPRESSION_H
+#define _LIBSEVEN_SVC_COMPRESSION_H
 
 #include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
 
 struct BitUnPackParam
 {
@@ -30,8 +28,6 @@ extern void svcDiff8bitUnFilterWram(const void *src, void *dst);
 extern void svcDiff8bitUnFilterVram(const void *src, void *dst);
 extern void svcDiff16bitUnFilter(const void *src, void *dst);
 
-#ifdef __cplusplus
-}
-#endif
+_LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_COMPRESSION_H */
+#endif /* !_LIBSEVEN_SVC_COMPRESSION_H */
