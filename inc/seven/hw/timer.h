@@ -30,9 +30,9 @@ enum TimerFlags
 
 extern void timerSet(u32 num, u16 reload, u16 flags);
 
-extern void timerStart(u32 num);
+extern void timerEnable(u32 num);
 
-extern void timerStop(u32 num);
+extern void timerDisable(u32 num);
 
 extern u16 timerGetValue(u32 num);
 

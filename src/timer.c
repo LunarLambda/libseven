@@ -16,7 +16,7 @@ extern void timerSet(u32 num, u16 reload, u16 flags)
     REG_TM[num] = reload | (flags << 16);
 }
 
-extern void timerStart(u32 num)
+extern void timerEnable(u32 num)
 {
     if (num > 3)
     {
@@ -26,7 +26,7 @@ extern void timerStart(u32 num)
     REG_TMCNT(num) |= TIMER_ENABLE;
 }
 
-extern void timerStop(u32 num)
+extern void timerDisable(u32 num)
 {
     if (num > 3)
     {
