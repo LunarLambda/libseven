@@ -5,13 +5,7 @@
 
 _LIBSEVEN_EXTERN_C
 
-extern void svcSoundDriverMain(void);
-extern void svcSoundDriverVSync(void);
-extern void svcSoundChannelClear(void);
-extern void svcSoundDriverVSyncOff(void);
-extern void svcSoundDriverVSyncOn(void);
-
-// TODO: MusicPlayer* functions
+#error "seven/hw/sound.h is a stub header"
 
 _LIBSEVEN_EXTERN_C_END
 
