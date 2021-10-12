@@ -12,4 +12,3 @@ It simply includes the following headers:
 - [seven\_attributes.h](./attributes.md)
 - [seven\_bits.h](./bits.md)
 - [seven\_registers.h](./registers.md)
-
