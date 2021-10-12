@@ -46,9 +46,7 @@ _LIBSEVEN_EXTERN_C
 #define DMA3DST_MAX     DMA_ALL_MEMORY
 #define DMA3LEN_MAX     0x10000
 
-#define DMACNT(n)       REG16_ARRAY_STRIDE(0x040000BA, 12, n)
-
-enum DMAFlags
+enum DMAControl
 {
     DMA_DST_INCREMENT   = BITFIELD(5, 2, 0),
     DMA_DST_DECREMENT   = BITFIELD(5, 2, 1),
@@ -81,33 +79,24 @@ enum DMAFlags
     DMA_ENABLE          = BIT(15),
 };
 
-static inline void dmaEnable(u32 num)
-{
-    if (num > 3)
-    {
-        return;
-    }
+extern void dmaEnable(u32 num);
+extern void dmaDisable(u32 num);
 
-    DMACNT(num) |= DMA_ENABLE;
-}
+// General purpose memory copy using DMA3
+extern void dmaCopy16(const void *src, void *dst, u32 len);
+extern void dmaCopy32(const void *src, void *dst, u32 len);
 
-static inline void dmaDisable(u32 num)
-{
-    if (num > 3)
-    {
-        return;
-    }
+// Repeating Sound FIFO A transfer using DMA1
+extern void dmaSoundFifoATransfer(const void *src, u16 flags);
 
-    DMACNT(num) &= ~DMA_ENABLE;
-}
+// Repeating Sound FIFO B transfer using DMA2
+extern void dmaSoundFifoBTransfer(const void *src, u16 flags);
 
-// General purpose memory copy using DMA3.
-extern void dmaTransfer(const void *src, void *dst, u16 count, u16 flags);
+// Repeating H-Blank transfer using DMA0.
+extern void dmaHBlankTransfer(const void *src, void *dst, u32 len, u16 flags);
 
-// Sets up an HDMA transfer on DMA0.
-extern void dmaHBlankTransfer(const void *src, void *dst, u16 count, u16 flags);
-
-#undef DMACNT
+// Atomically sets up a DMA channel, using a byte count
+extern void dmaSet(u32 num, const void *src, void *dst, u32 len, u16 flags);
 
 _LIBSEVEN_EXTERN_C_END
 

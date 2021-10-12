@@ -21,7 +21,7 @@ programming.
 - [x] Video (Base Definitions)
 - [ ] Sound
 - [x] Timers
-- [x] DMA (Basic API)
+- [x] DMA
 - [ ] SIO
 - [x] Input
 - [x] IRQ (Basic Functions)
