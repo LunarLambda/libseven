@@ -35,7 +35,7 @@ func irqEnterCriticalSection thumb
 
 .Lecs_inc:
     adds        r3, r3, #1
-    strb        r1, [r0]
+    strb        r3, [r2]
     bx          lr
 endf
 
