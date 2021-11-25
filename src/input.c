@@ -1,6 +1,5 @@
 #include <seven/base.h>
 #include <seven/hw/input.h>
-#include <seven/hw/irq.h>
 
 // Little hack to group these two variables together even when -fdata-sections
 // is used. Saves an extra pool load because they get allocated together.
