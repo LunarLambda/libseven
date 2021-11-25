@@ -53,14 +53,14 @@ simple_svc svcSoundDriverVSyncOff        40
 simple_svc svcSoundDriverVSyncOn         41
 
 func svcSoftResetEx thumb
-    ldr         r2, =#0x04000208
+    ldr         r2, =0x04000208
     strh        r2, [r2]
     movs        r1, r1
     beq         1f
     movs        r2, #1
     bics        r0, r2
 1:
-    ldr         r2, =#0x03007FFA
+    ldr         r2, =0x03007FFA
     strb        r1, [r2]
     subs        r2, #0xFA
     mov         sp, r2
@@ -132,7 +132,7 @@ endf
 
 func svcIsSystemDS thumb
     svc         #13
-    ldr         r1, =#0x4551E780
+    ldr         r1, =0x4551E780
     adds        r0, r0, r1
     rsbs        r1, r0, #0
     adcs        r0, r0, r1

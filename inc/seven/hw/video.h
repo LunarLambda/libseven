@@ -203,8 +203,12 @@ enum BlendControl
 
 // TODO: BLDALPHA defines
 #define REG_BLDALPHA    REG16(0x04000052)
-// TODO: different name?
+// TODO: different name? BLDCOEFF?
 #define REG_BLDY        REG16(0x04000054)
+
+#define REG_GREENSWP    REG16(0x04000002)
+
+// TODO: These should be in video/color.h and video/mode3.h
 
 typedef u16 Color;
 
@@ -223,6 +227,8 @@ typedef u16 Color;
 typedef Color Mode3Line[MODE3_WIDTH];
 
 // TODO: Naming
+// Change to Mode3Frame[MODE3_HEIGHT][MODE3_WIDTH]
+// or just (*(Color(*)[M3_HEIGHT][M3_WIDTH]))
 #define MODE3_FRAME     (*(Mode3Line(*)[MODE3_HEIGHT])(MEM_VRAM))
 
 _LIBSEVEN_EXTERN_C_END
