@@ -1,4 +1,5 @@
 #include <seven/prelude.h>
+#include <seven/video/mode3.h>
 
 int main(void)
 {

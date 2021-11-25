@@ -208,28 +208,14 @@ enum BlendControl
 
 #define REG_GREENSWP    REG16(0x04000002)
 
-// TODO: These should be in video/color.h and video/mode3.h
-
-typedef u16 Color;
-
 #define RGB5(r, g, b) \
-    (Color)(BITFIELD(0, 5, (r)) | BITFIELD(5, 5, (g)) | BITFIELD(10, 5, (b)))
+    ((u16)(BITFIELD(0, 5, (r)) | BITFIELD(5, 5, (g)) | BITFIELD(10, 5, (b))))
 
 #define RGB8(r, g, b) \
     RGB5((r) >> 3, (g) >> 3, (b) >> 3)
 
 #define BG_PALETTE      (*(Color(*)[256])(MEM_PALETTE))
 #define OBJ_PALETTE     (*(Color(*)[256])(MEM_PALETTE + 256))
-
-#define MODE3_WIDTH     240
-#define MODE3_HEIGHT    160
-
-typedef Color Mode3Line[MODE3_WIDTH];
-
-// TODO: Naming
-// Change to Mode3Frame[MODE3_HEIGHT][MODE3_WIDTH]
-// or just (*(Color(*)[M3_HEIGHT][M3_WIDTH]))
-#define MODE3_FRAME     (*(Mode3Line(*)[MODE3_HEIGHT])(MEM_VRAM))
 
 _LIBSEVEN_EXTERN_C_END
 
