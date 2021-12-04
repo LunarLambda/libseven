@@ -11,10 +11,10 @@
 
 _LIBSEVEN_EXTERN_C
 
-#include <seven/attributes.h>
-#include <seven/bits.h>
-#include <seven/registers.h>
-#include <seven/types.h>
+#include <seven/base/attributes.h>
+#include <seven/base/bits.h>
+#include <seven/base/registers.h>
+#include <seven/base/types.h>
 
 _LIBSEVEN_EXTERN_C_END
 
