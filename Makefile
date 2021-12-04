@@ -9,7 +9,8 @@ SOURCES = \
 	src/dma.s \
 	src/log.c \
 	src/mem.s \
-	src/str.s
+	src/str.s \
+	src/lcd.s
 
 INCLUDES = \
 	inc \

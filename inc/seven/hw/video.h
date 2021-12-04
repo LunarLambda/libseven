@@ -203,8 +203,7 @@ enum BlendControl
 
 // TODO: BLDALPHA defines
 #define REG_BLDALPHA    REG16(0x04000052)
-// TODO: different name? BLDCOEFF?
-#define REG_BLDY        REG16(0x04000054)
+#define REG_BLDCOEFF    REG16(0x04000054)
 
 #define REG_GREENSWP    REG16(0x04000002)
 
@@ -216,6 +215,8 @@ enum BlendControl
 
 #define BG_PALETTE      (*(Color(*)[256])(MEM_PALETTE))
 #define OBJ_PALETTE     (*(Color(*)[256])(MEM_PALETTE + 256))
+
+extern void* lcdSwapBuffers(void);
 
 _LIBSEVEN_EXTERN_C_END
 

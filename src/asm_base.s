@@ -11,6 +11,8 @@
     .endif
     .macro      endf
         .size   \name,.-\name
+        \name\()_pool:
+        .pool
         .previous
         .purgem endf
     .endm

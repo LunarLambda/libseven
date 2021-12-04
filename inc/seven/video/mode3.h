@@ -11,7 +11,9 @@ _LIBSEVEN_EXTERN_C
 typedef       u16 Mode3Line[MODE3_WIDTH];
 typedef Mode3Line Mode3Frame[MODE3_HEIGHT];
 
-#define MODE3_FRAME     (*(Mode3Frame*)(MEM_VRAM))
+#define MODE3_FRAME     MEMDEFW(Mode3Frame, MEM_VRAM)
+
+extern void* lcdInitMode3(void);
 
 _LIBSEVEN_EXTERN_C_END
 

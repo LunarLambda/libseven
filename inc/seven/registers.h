@@ -5,6 +5,9 @@
 
 _LIBSEVEN_EXTERN_C
 
+#define MEMDEFR(type, addr) (*(const type *)(addr))
+#define MEMDEFW(type, addr) (*(type *)(addr))
+
 #define REG8(addr)              (*(reg8*)(addr))
 #define REG16(addr)             (*(reg16*)(addr))
 #define REG32(addr)             (*(reg32*)(addr))
