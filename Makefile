@@ -10,7 +10,9 @@ SOURCES = \
 	src/log.c \
 	src/mem.s \
 	src/str.s \
-	src/lcd.s
+	src/lcd.s \
+	src/rand.s \
+	src/profile.s
 
 INCLUDES = \
 	inc \
