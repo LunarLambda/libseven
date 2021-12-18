@@ -3,6 +3,7 @@
 
 // Little hack to group these two variables together even when -fdata-sections
 // is used. Saves an extra pool load because they get allocated together.
+// TODO: consider dropping -fdata-sections?
 static __attribute__((section(".data.keyinput"))) u16 keyinput, keyinput_last;
 
 extern void inputPoll(void)
@@ -11,22 +12,17 @@ extern void inputPoll(void)
     keyinput      = ~REG_KEYINPUT & 0x3FF;
 }
 
-extern u16 inputKeysDown(void)
+extern u16 inputKeysPressed(void)
 {
     return ~keyinput_last & keyinput;
 }
 
-extern u16 inputKeysUp(void)
+extern u16 inputKeysReleased(void)
 {
     return keyinput_last & ~keyinput;
 }
 
-extern u16 inputKeysHeld(void)
+extern u16 inputKeysDown(void)
 {
     return keyinput;
-}
-
-extern void inputSetKeyIRQ(u16 keys, u16 op)
-{
-    REG_KEYCNT = keys | op | KEY_IRQ_ENABLE;
 }

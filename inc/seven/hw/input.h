@@ -43,11 +43,9 @@ enum KeyIRQFlags
 
 extern void inputPoll(void);
 
+extern u16 inputKeysPressed(void);
+extern u16 inputKeysReleased(void);
 extern u16 inputKeysDown(void);
-extern u16 inputKeysUp(void);
-extern u16 inputKeysHeld(void);
-
-extern void inputSetKeyIRQ(u16 keys, u16 op);
 
 _LIBSEVEN_EXTERN_C
 
