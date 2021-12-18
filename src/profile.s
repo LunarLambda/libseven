@@ -43,8 +43,8 @@ func profileFunction arm .iwram
 .Lskip:
 
     @ Read timers
-    ldr         r0, [r4]
-    ldr         r1, [r4, #4]
+    ldrh        r0, [r4]
+    ldrh        r1, [r4, #4]
     orr         r0, r0, r1, lsl #16
 
     pop         {r4, r5, r6, lr}
