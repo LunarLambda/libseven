@@ -5,20 +5,27 @@
 
 _LIBSEVEN_EXTERN_C
 
+// Keypad input register. Reports held keys as active-low bits.
+#define REG_KEYINPUT    REG16(0x04000130)
+// Keypad control register. Allows configuring the keypad IRQ.
+#define REG_KEYCNT      REG16(0x04000132)
+
+// Key bits as used by KEYINPUT and KEYCNT.
 enum Key
 {
-    KEY_A       = BIT(0),
-    KEY_B       = BIT(1),
-    KEY_SELECT  = BIT(2),
-    KEY_START   = BIT(3),
-    KEY_RIGHT   = BIT(4),
-    KEY_LEFT    = BIT(5),
-    KEY_UP      = BIT(6),
-    KEY_DOWN    = BIT(7),
-    KEY_R       = BIT(8),
-    KEY_L       = BIT(9),
+    KEY_A               = BIT(0),
+    KEY_B               = BIT(1),
+    KEY_SELECT          = BIT(2),
+    KEY_START           = BIT(3),
+    KEY_RIGHT           = BIT(4),
+    KEY_LEFT            = BIT(5),
+    KEY_UP              = BIT(6),
+    KEY_DOWN            = BIT(7),
+    KEY_R               = BIT(8),
+    KEY_L               = BIT(9),
 };
 
+// Groupings of key bits.
 enum KeyGroups
 {
     KEYS_DPAD_X         = KEY_LEFT      | KEY_RIGHT,
@@ -27,10 +34,24 @@ enum KeyGroups
     KEYS_AB             = KEY_A         | KEY_B,
     KEYS_LR             = KEY_L         | KEY_R,
     KEYS_STARTSELECT    = KEY_START     | KEY_SELECT,
-    KEYS_ALL            = KEYS_AB       | KEYS_LR       | KEYS_STARTSELECT,
+    KEYS_BUTTONS        = KEYS_AB       | KEYS_LR       | KEYS_STARTSELECT,
+    KEYS_ALL            = KEYS_DPAD     | KEYS_BUTTONS,
 };
 
-#define REG_KEYINPUT REG16(0x04000130)
+// Bit indices of keys bits.
+enum KeyIndex
+{
+    KEYINDEX_A,
+    KEYINDEX_B,
+    KEYINDEX_SELECT,
+    KEYINDEX_START,
+    KEYINDEX_RIGHT,
+    KEYINDEX_LEFT,
+    KEYINDEX_UP,
+    KEYINDEX_DOWN,
+    KEYINDEX_R,
+    KEYINDEX_L,
+};
 
 enum KeyIRQFlags
 {
@@ -39,13 +60,41 @@ enum KeyIRQFlags
     KEY_IRQ_PRESS_ANY    = !KEY_IRQ_PRESS_ALL,
 };
 
-#define REG_KEYCNT REG16(0x04000132)
-
+// Updates the internal keypad state. Should be called once per frame.
 extern void inputPoll(void);
 
+// Returns the keys that were pressed this frame. ("Rising egde")
 extern u16 inputKeysPressed(void);
+
+// Returns the keys that were released this frame. ("Falling edge")
 extern u16 inputKeysReleased(void);
+
+// Returns the keys that are being held this frame.
 extern u16 inputKeysDown(void);
+
+// Gets the state of the Dpad X-axis.
+// -1: Left
+//  0: None
+//  1: Right
+extern i32 inputAxisX(void);
+
+// Gets the state of the Dpad Y-axis.
+// -1: Up
+//  0: None
+//  1: Down
+extern i32 inputAxisY(void);
+
+// Gets the state of the shoulder button axis.
+// -1: L
+//  0: None/Both
+//  1: R
+extern i32 inputAxisLR(void);
+
+// Gets the state of the face button axis.
+// -1: B
+//  0: None/Both
+//  1: A
+extern i32 inputAxisAB(void);
 
 _LIBSEVEN_EXTERN_C
 

@@ -9,6 +9,8 @@ _LIBSEVEN_EXTERN_C
 #define BITS(o, l)              ((BIT((l)) - 1) << (o))
 #define BITFIELD(o, l, v)       (((v) & BITS(0, (l))) << (o))
 
+#define BIT_TRISTATE(val, m, p) (((val)>>(p)&1)-((val)>>(m)&1))
+
 #define BF_VALUE(name, value)           \
     BITFIELD((BF_##name##_OFFSET), (BF_##name##_LENGTH), (value))
 

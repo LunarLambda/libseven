@@ -26,3 +26,23 @@ extern u16 inputKeysDown(void)
 {
     return keyinput;
 }
+
+extern i32 inputAxisX(void)
+{
+    return BIT_TRISTATE(keyinput, KEYINDEX_LEFT, KEYINDEX_RIGHT);
+}
+
+extern i32 inputAxisY(void)
+{
+    return BIT_TRISTATE(keyinput, KEYINDEX_UP, KEYINDEX_DOWN);
+}
+
+extern i32 inputAxisLR(void)
+{
+    return BIT_TRISTATE(keyinput, KEYINDEX_L, KEYINDEX_R);
+}
+
+extern i32 inputAxisAB(void)
+{
+    return BIT_TRISTATE(keyinput, KEYINDEX_B, KEYINDEX_A);
+}
