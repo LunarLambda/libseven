@@ -47,11 +47,13 @@ programming.
 ## Extra Features
 
 - [x] Logging (MGBA, NO$GBA, Custom)
+- [x] Fast PRNG (Xoshiro128++)
+- [x] Basic profiler routine
 - [ ] Fast string routines
 - [ ] Fast memory routines
 - [ ] Fast math routines
 
-## Other Libraries and Toolchain Features
+## Other Planned Libraries and Toolchain Features
 
 - [ ] Custom allocator library for RAM and video resources
 - [ ] Custom text engine
