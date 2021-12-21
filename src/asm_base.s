@@ -87,11 +87,11 @@
 .endm
 
 @ Declares zero-initialized data.
-.macro zdata name:req
-    .macro              endz
+.macro bss name:req
+    .macro              endb
         .size           \name,.-\name
         .previous
-        .purgem         endz
+        .purgem         endb
     .endm
 
     .section            .bss.\name,"aw",%nobits
