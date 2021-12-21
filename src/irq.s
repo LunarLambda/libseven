@@ -3,11 +3,11 @@
 
 .include        "asm_base.s"
 
-data IRQ_TABLE
+bss IRQ_TABLE
     .align      2
     .fill       14, 8, 0
     .word       0
-endd
+endb
 
 .data
 CRITICAL_SECTION:

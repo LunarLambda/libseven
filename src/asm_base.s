@@ -96,6 +96,7 @@
 
     .section            .bss.\name,"aw",%nobits
     .type               \name STT_OBJECT
+    \name\():
 .endm
 
 @ vim:ft=armv4 et sta sw=4 sts=8
