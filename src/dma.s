@@ -11,7 +11,7 @@
 .set REG_DMACNT, 0x040000BA
 
 @ r0: num
-func dmaEnable thumb
+fn dmaEnable thumb
     cmp         r0, #3
     bgt         .Leout
 
@@ -34,9 +34,9 @@ func dmaEnable thumb
     strh        r2, [r1, r0]
 .Leout:
     bx          lr
-endf
+endfn
 
-func dmaDisable thumb
+fn dmaDisable thumb
     cmp         r0, #3
 
     bgt         .Ldout
@@ -59,11 +59,11 @@ func dmaDisable thumb
     strh        r2, [r1, r0]
 .Ldout:
     bx          lr
-endf
+endfn
 
 @ r0: src
 @ r1: dst
-func dmaCopy16 thumb
+fn dmaCopy16 thumb
     @ DMA_ENABLE
     movs        r3, #0x80
     lsls        r3, r3, #24
@@ -74,11 +74,11 @@ func dmaCopy16 thumb
     ldr         r3, =REG_DMA3
     stm         r3!, {r0, r1, r2}
     bx          lr
-endf
+endfn
 
 @ r0: src
 @ r1: dst
-func dmaCopy32 thumb
+fn dmaCopy32 thumb
     @ DMA_ENABLE | DMA_32BIT
     movs        r3, #0x84
     lsls        r3, r3, #24
@@ -89,11 +89,11 @@ func dmaCopy32 thumb
     ldr         r3, =REG_DMA3
     stm         r3!, {r0, r1, r2}
     bx          lr
-endf
+endfn
 
 @ r0: src
 @ r1: flags
-func dmaSoundFifoATransfer thumb
+fn dmaSoundFifoATransfer thumb
     lsls        r3, r1, #16
     ldr         r1, =0x040000A0
     @ DMA_REPEAT | DMA_START_SOUND
@@ -103,11 +103,11 @@ func dmaSoundFifoATransfer thumb
     ldr         r3, =REG_DMA1
     stm         r3!, {r0, r1, r2}
     bx          lr
-endf
+endfn
 
 @ r0: src
 @ r1: flags
-func dmaSoundFifoBTransfer thumb
+fn dmaSoundFifoBTransfer thumb
     lsls        r3, r1, #16
     ldr         r1, =0x040000A4
     movs        r2, #0x32
@@ -116,13 +116,13 @@ func dmaSoundFifoBTransfer thumb
     ldr         r3, =REG_DMA2
     stm         r3!, {r0, r1, r2}
     bx          lr
-endf
+endfn
 
 @ r0: src
 @ r1: dst
 @ r2: count
 @ r3: flags
-func dmaHBlankTransfer thumb
+fn dmaHBlankTransfer thumb
     @ Clear DMA_START flags
     mov         r12, r4
     movs        r4, #0x30
@@ -146,14 +146,14 @@ func dmaHBlankTransfer thumb
     ldr         r3, =REG_DMA0
     stm         r3!, {r0, r1, r2}
     bx          lr
-endf
+endfn
 
 @ r0: num
 @ r1: src
 @ r2: dst
 @ r3: len
 @ [sp]: flags
-func dmaSet thumb
+fn dmaSet thumb
     cmp         r0, #3
     bgt         .Lsout
     push        {r4, r5}
@@ -187,4 +187,4 @@ func dmaSet thumb
     pop         {r4, r5}
 .Lsout:
     bx          lr
-endf
+endfn

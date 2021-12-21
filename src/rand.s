@@ -5,15 +5,15 @@
 
 @ state cannot be all zeroes, generator locks up
 @ set last state word as 1 to make sure SetSeed(0) is fine.
-data XOSHIRO_STATE rw
+data XOSHIRO_STATE
     .word 0, 0, 0, 1
 endd
 
-func randSetSeed thumb
+fn randSetSeed thumb
     ldr         r1, =XOSHIRO_STATE
     str         r0, [r1]
     bx          lr
-endf
+endfn
 
 @ Implementation of the Xoshiro128++ PRNG.
 @
@@ -29,7 +29,7 @@ endf
 @ r5 = t
 @ r6 = &XOSHIRO_STATE
 @ r7 = ROR immediate
-func randNext thumb
+fn randNext thumb
     push        {r4, r5, r6, r7}
 
     ldr         r6, =XOSHIRO_STATE
@@ -66,6 +66,6 @@ func randNext thumb
 
     pop         {r4, r5, r6, r7}
     bx          lr
-endf
+endfn
 
 @ vim: ft=armv4

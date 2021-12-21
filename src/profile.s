@@ -11,7 +11,7 @@
 .set TIMER_CASCADE, 0x4
 .set TIMER_ENABLE, 0x80
 
-func profileFunction arm .iwram
+fn profileFunction arm
     push        {r4, r5, r6, lr}
 
     ldr         r4, =REG_TM2VAL
@@ -29,7 +29,7 @@ func profileFunction arm .iwram
     mov         r2, TIMER_ENABLE
     strh        r2, [r4, #2]
 
-    @ Call function
+    @ Call fntion
     mov         lr, pc
     bx          r0
 
@@ -49,6 +49,6 @@ func profileFunction arm .iwram
 
     pop         {r4, r5, r6, lr}
     bx          lr
-endf
+endfn
 
 @ vim: ft=armv4

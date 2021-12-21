@@ -13,7 +13,7 @@
 .set LCD_MODE_4,        0x4
 .set LCD_MODE_5,        0x5
 
-func lcdSwapBuffers thumb
+fn lcdSwapBuffers thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_FRAME_SELECT
     movs        r1, LCD_FRAME_SELECT
@@ -39,9 +39,9 @@ func lcdSwapBuffers thumb
 
 .Llsb_noadd:
     bx          lr
-endf
+endfn
 
-func lcdInitMode3 thumb
+fn lcdInitMode3 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
     movs        r0, #4
@@ -60,9 +60,9 @@ func lcdInitMode3 thumb
     movs        r0, #6
     lsls        r0, r0, #24
     bx          lr
-endf
+endfn
 
-func lcdInitMode4 thumb
+fn lcdInitMode4 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
     movs        r0, #4
@@ -81,9 +81,9 @@ func lcdInitMode4 thumb
     movs        r0, #6
     lsls        r0, r0, #24
     bx          lr
-endf
+endfn
 
-func lcdInitMode5 thumb
+fn lcdInitMode5 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
     movs        r0, #4
@@ -102,6 +102,6 @@ func lcdInitMode5 thumb
     movs        r0, #6
     lsls        r0, r0, #24
     bx          lr
-endf
+endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8

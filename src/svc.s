@@ -4,12 +4,12 @@
 .include        "asm_base.s"
 
 .macro simple_svc name:req num:req noreturn
-    func \name thumb
+    fn \name thumb
         svc     #\num
-        .ifb \noreturn
+        .ifnc \noreturn,noreturn
             bx  lr
         .endif
-    endf
+    endfn
 .endm
 
 simple_svc svcSoftReset                   0 noreturn
@@ -52,7 +52,7 @@ simple_svc svcHardReset                  38 noreturn
 simple_svc svcSoundDriverVSyncOff        40
 simple_svc svcSoundDriverVSyncOn         41
 
-func svcSoftResetEx thumb
+fn svcSoftResetEx thumb
     ldr         r2, =0x04000208
     strh        r2, [r2]
     movs        r1, r1
@@ -66,7 +66,7 @@ func svcSoftResetEx thumb
     mov         sp, r2
     svc         #1
     svc         #0
-endf
+endfn
 
 @ extern void svcIntrWaitEx(u8 op, u16 intr_flags);
 @
@@ -76,7 +76,7 @@ endf
 @     IWE_CLEAR_IE      = BIT(1),
 @     IEW_ADD_IE        = !IWE_CLEAR_IE,
 @ }
-func svcIntrWaitEx thumb
+fn svcIntrWaitEx thumb
     @ Load IE
     ldr         r3, =0x04000200
     @ if (!(op & 2 /* IWE_CLEAR */)) { intr_flags |= IE; }
@@ -94,9 +94,9 @@ func svcIntrWaitEx thumb
     @ Restore IE
     strh        r2, [r3]
     bx          lr
-endf
+endfn
 
-func svcDiv thumb
+fn svcDiv thumb
     movs        r3, r0
     movs        r0, r1
     movs        r1, r2
@@ -104,9 +104,9 @@ func svcDiv thumb
     svc         #6
     stmia       r2!, {r0, r1}
     bx          lr
-endf
+endfn
 
-func svcCpuSetFixed thumb
+fn svcCpuSetFixed thumb
     sub         sp, #8
     str         r0, [sp]
     mov         r0, sp
@@ -116,9 +116,9 @@ func svcCpuSetFixed thumb
     svc         #11
     add         sp, #8
     bx          lr
-endf
+endfn
 
-func svcCpuFastSetFixed thumb
+fn svcCpuFastSetFixed thumb
     sub         sp, #8
     str         r0, [sp]
     mov         r0, sp
@@ -128,15 +128,15 @@ func svcCpuFastSetFixed thumb
     svc         #12
     add         sp, #8
     bx          lr
-endf
+endfn
 
-func svcIsSystemDS thumb
+fn svcIsSystemDS thumb
     svc         #13
     ldr         r1, =0x4551E780
     adds        r0, r0, r1
     rsbs        r1, r0, #0
     adcs        r0, r0, r1
     bx          lr
-endf
+endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8

@@ -5,76 +5,76 @@
 
 @ Memory Copy
 
-func memCopy8 thumb
+fn memCopy8 thumb
     bx          lr
-endf
+endfn
 
-func memCopy16 thumb
+fn memCopy16 thumb
     bx          lr
-endf
+endfn
 
-func memCopy32 arm .iwram
+fn memCopy32 arm
     bx          lr
-endf
+endfn
 
 @ Memory Move
 
-func memMove8 thumb
+fn memMove8 thumb
     bx          lr
-endf
+endfn
 
-func memMove16 thumb
+fn memMove16 thumb
     bx          lr
-endf
+endfn
 
-func memMove32 arm .iwram
+fn memMove32 arm
     bx          lr
-endf
+endfn
 
 @ Memory Set
 
-func memSet8 thumb
+fn memSet8 thumb
     bx          lr
-endf
+endfn
 
-func memSet16 thumb
+fn memSet16 thumb
     bx          lr
-endf
+endfn
 
-func memSet32 arm .iwram
+fn memSet32 arm
     bx          lr
-endf
+endfn
 
 @ Memory Zero
 
-func memZero8 thumb
+fn memZero8 thumb
     movs        r2, r1
     movs        r1, #0
     b           memSet8
-endf
+endfn
 
-func memZero16 thumb
+fn memZero16 thumb
     movs        r2, r1
     movs        r1, #0
     b           memSet16
-endf
+endfn
 
-func memZero32 arm .iwram
+fn memZero32 arm
     movs        r2, r1
     movs        r1, #0
     b           memSet32
-endf
+endfn
 
 @ Memory Compare
 
-func memCompare8 thumb
+fn memCompare8 thumb
     bx          lr
-endf
+endfn
 
-func memCompare16 thumb
+fn memCompare16 thumb
     bx          lr
-endf
+endfn
 
-func memCompare32 arm .iwram
+fn memCompare32 arm
     bx          lr
-endf
+endfn

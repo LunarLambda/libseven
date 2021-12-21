@@ -3,7 +3,7 @@
 
 .include        "asm_base.s"
 
-data IRQ_TABLE rw
+data IRQ_TABLE
     .align      2
     .fill       14, 8, 0
     .word       0
@@ -17,7 +17,7 @@ CRITICAL_SECTION_IME:
     .byte 0
 .previous
 
-func irqEnterCriticalSection thumb
+fn irqEnterCriticalSection thumb
     @ r1 = REG_IME
     @ REG_IME = 0
     ldr         r0, =0x04000208
@@ -37,9 +37,9 @@ func irqEnterCriticalSection thumb
     adds        r3, r3, #1
     strb        r3, [r2]
     bx          lr
-endf
+endfn
 
-func irqExitCriticalSection thumb
+fn irqExitCriticalSection thumb
     @ r1 = REG_IME
     @ REG_IME = 0
     ldr         r0, =0x04000208
@@ -61,14 +61,14 @@ func irqExitCriticalSection thumb
 .Lxcs_ret:
     strh        r1, [r0]
     bx          lr
-endf
+endfn
 
 @ r0    REG_BASE
 @ r1    IE & IF
 @ r2    <tmp>
 @ r3    <tmp>
 @ r12   IME
-func irqDefaultHandler arm .iwram
+fn irqDefaultHandler arm
     @ Theoretically this is redundant because
     @ the BIOS IRQ vector already puts 0x04000000 in r0...
     @ But I doubt (m)any emulators HLE-ing the BIOS would get this right, lol
@@ -120,9 +120,9 @@ func irqDefaultHandler arm .iwram
 .Lexit:
     strh        r12, [r1, #8]
     bx          lr
-endf
+endfn
 
-func irqEnable thumb
+fn irqEnable thumb
     @ IME OFF
     ldr         r1, =0x04000200
     ldrh        r2, [r1, #8]
@@ -139,9 +139,9 @@ func irqEnable thumb
     strh        r2, [r1, #8]
 
     bx          lr
-endf
+endfn
 
-func irqDisable thumb
+fn irqDisable thumb
     @ IME OFF
     ldr         r1, =0x04000200
     ldrh        r2, [r1, #8]
@@ -158,9 +158,9 @@ func irqDisable thumb
     strh        r2, [r1, #8]
 
     bx          lr
-endf
+endfn
 
-func irqSetEnabled thumb
+fn irqSetEnabled thumb
     @ IME OFF
     ldr         r1, =0x04000200
     ldrh        r2, [r1, #8]
@@ -176,6 +176,6 @@ func irqSetEnabled thumb
     strh        r2, [r1, #8]
 
     bx          lr
-endf
+endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8
