@@ -12,19 +12,19 @@ extern void inputPoll(void)
     keyinput      = ~REG_KEYINPUT & 0x3FF;
 }
 
-extern u16 inputKeysPressed(void)
+extern u16 inputKeysPressed(u16 keys)
 {
-    return ~keyinput_last & keyinput;
+    return (~keyinput_last & keyinput) & keys;
 }
 
-extern u16 inputKeysReleased(void)
+extern u16 inputKeysReleased(u16 keys)
 {
-    return keyinput_last & ~keyinput;
+    return (keyinput_last & ~keyinput) & keys;
 }
 
-extern u16 inputKeysDown(void)
+extern u16 inputKeysDown(u16 keys)
 {
-    return keyinput;
+    return keyinput & keys;
 }
 
 extern i32 inputAxisX(void)

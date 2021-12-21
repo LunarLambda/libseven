@@ -64,13 +64,13 @@ enum KeyIRQFlags
 extern void inputPoll(void);
 
 // Returns the keys that were pressed this frame. ("Rising egde")
-extern u16 inputKeysPressed(void);
+extern u16 inputKeysPressed(u16 keys);
 
 // Returns the keys that were released this frame. ("Falling edge")
-extern u16 inputKeysReleased(void);
+extern u16 inputKeysReleased(u16 keys);
 
 // Returns the keys that are being held this frame.
-extern u16 inputKeysDown(void);
+extern u16 inputKeysDown(u16 keys);
 
 // Gets the state of the Dpad X-axis.
 // -1: Left
