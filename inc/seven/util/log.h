@@ -23,7 +23,8 @@ enum LogInterface
     LOGIF_NONE = 0,
     LOGIF_MGBA,
     LOGIF_NOCASH,
-    LOGIF_CUSTOM,
+    LOGIF_VBA,
+    LOGIF_CUSTOM = U8_MAX,
 };
 
 typedef void LogCustomOutputFunction(u8, const char *);
@@ -31,11 +32,17 @@ typedef void LogCustomOutputFunction(u8, const char *);
 // Initializes the first available log interface, or returns LOGIF_NONE
 extern u8 logInit(void);
 
+// Tries to initialize the given log interface.
+extern bool logInitInterface(u8 interface);
+
 // Register a custom logging function.
 extern void logInitCustom(LogCustomOutputFunction *f);
 
 // Gets the current log interface.
 extern u8 logGetInterface(void);
+
+// Gets the name of the current log interface.
+extern const char* logGetInterfaceName(void);
 
 // Sets the current max log level.
 extern void logSetMaxLevel(u8 level);

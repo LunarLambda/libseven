@@ -6,62 +6,110 @@ typedef void LogOutputFn(u8, const char *);
 static LogInitFn logInitNone;
 static LogInitFn logInitMgba;
 static LogInitFn logInitNocash;
+static LogInitFn logInitVba;
 
 static LogOutputFn logOutputNone;
 static LogOutputFn logOutputMgba;
 static LogOutputFn logOutputNocash;
+static LogOutputFn logOutputVba;
 
 static u8 LOG_MAX_LEVEL = LOG_MAX;
-static u8 LOG_INTERFACE = LOGIF_NONE;
-
-static LogOutputFn *LOG_FUNCTION = logOutputNone;
 
 struct LogInterfaceDescriptor
 {
     u32 id;
     LogInitFn *init;
     LogOutputFn *output;
+    const char *name;
 };
 
-const static struct LogInterfaceDescriptor INTERFACES[] =
+// List of log interfaces to try initializing
+// VBA is not included due to the fact it has no dedicated presence check,
+// And using it without checking can crash hardware and emulators using
+// an official GBA BIOS ROM.
+//
+// FIXME: Would it be better to add flags to LogInterfaceDescriptor for "skip"?
+static const enum LogInterface INTERFACE_SEARCH_ORDER[] =
 {
-    {
-        LOGIF_MGBA, logInitMgba, logOutputMgba
-    },
+    LOGIF_MGBA,
+    LOGIF_NOCASH,
 
-    {
-        LOGIF_NOCASH, logInitNocash, logOutputNocash
-    },
-
-    {
-        LOGIF_NONE, logInitNone, logOutputNone
-    },
+    // Sentinel
+    LOGIF_NONE,
 };
+
+static const struct LogInterfaceDescriptor INTERFACES[] =
+{
+    { LOGIF_NONE,   logInitNone,   logOutputNone,   "None"               },
+    { LOGIF_MGBA,   logInitMgba,   logOutputMgba,   "mGBA"               },
+    { LOGIF_NOCASH, logInitNocash, logOutputNocash, "no$gba"             },
+    { LOGIF_VBA,    logInitVba,    logOutputVba,    "Visual Boy Advance" },
+};
+
+static struct LogInterfaceDescriptor CUSTOM_INTERFACE =
+{
+    LOGIF_CUSTOM,
+    NULL,
+    NULL,
+    "Custom",
+};
+
+static const struct LogInterfaceDescriptor *LOG_INTERFACE =
+    &INTERFACES[LOGIF_NONE];
 
 extern u8 logInit(void)
 {
-    const struct LogInterfaceDescriptor *lid = INTERFACES;
+    const enum LogInterface *lid = INTERFACE_SEARCH_ORDER;
+    const struct LogInterfaceDescriptor *lf;
 
-    while (!lid->init())
+    while ((lf = &INTERFACES[*lid]), !lf->init())
     {
         lid++;
     }
 
-    LOG_INTERFACE = lid->id;
-    LOG_FUNCTION  = lid->output;
+    LOG_INTERFACE = lf;
 
-    return lid->id;
+    return lf->id;
+}
+
+extern bool logInitInterface(u8 interface)
+{
+    if (interface >= (sizeof(INTERFACES) / sizeof(INTERFACES[0])))
+    {
+        return false;
+    }
+
+    const struct LogInterfaceDescriptor *l = &INTERFACES[interface];
+
+    if (!l->init)
+    {
+        return false;
+    }
+
+    if (!l->init())
+    {
+        return false;
+    }
+
+    LOG_INTERFACE = l;
+
+    return true;
 }
 
 extern void logInitCustom(LogCustomOutputFunction *f)
 {
-    LOG_INTERFACE = LOGIF_CUSTOM;
-    LOG_FUNCTION  = f;
+    CUSTOM_INTERFACE.output = f;
+    LOG_INTERFACE = &CUSTOM_INTERFACE;
 }
 
 extern u8 logGetInterface(void)
 {
-    return LOG_INTERFACE;
+    return LOG_INTERFACE->id;
+}
+
+extern const char* logGetInterfaceName(void)
+{
+    return LOG_INTERFACE->name;
 }
 
 extern u8 logGetMaxLevel(void)
@@ -81,7 +129,7 @@ extern void logOutput(u8 level, const char *message)
         return;
     }
 
-    LOG_FUNCTION(level, message);
+    LOG_INTERFACE->output(level, message);
 }
 
 // Log interface implementations
@@ -144,4 +192,24 @@ static void logOutputNocash(u8 level, const char *message)
     }
 
     REG_NOCASH_LOG = '\n';
+}
+
+static bool logInitVba(void)
+{
+    return true;
+}
+
+static void logOutputVba(u8 level, const char *message)
+{
+    (void)level;
+
+    __asm__(
+            "movs r0, %0\n"
+            "svc  #255" :: "r" (message) : "r0"
+           );
+
+    __asm__(
+            "movs r0, %0\n"
+            "svc  #255" :: "r" ("\n") : "r0"
+           );
 }
