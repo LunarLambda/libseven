@@ -63,6 +63,7 @@ clean:
 
 install: $(BUILD)/$(TARGET)
 	@echo "INSTALL $(DESTDIR)$(DEVKITPRO)"
+	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/lib
 	@cp -rv inc $(DESTDIR)$(DEVKITPRO)/libseven/include
 	@cp -v $(BUILD)/$(TARGET) $(DESTDIR)$(DEVKITPRO)/libseven/lib
 
