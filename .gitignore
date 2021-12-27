@@ -1,1 +1,3 @@
 /build
+/pkgbuild/*
+!/pkgbuild/PKGBUILD
