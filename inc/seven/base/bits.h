@@ -15,7 +15,7 @@ _LIBSEVEN_EXTERN_C
     BITFIELD((BF_##name##_OFFSET), (BF_##name##_LENGTH), (value))
 
 #define BF_MASK(name)                   \
-    BITS((BF_##name##_OFFSET), (BF_##name##_LENGTH), (value))
+    BITS((BF_##name##_OFFSET), (BF_##name##_LENGTH))
 
 #define BF_INSERT(name, lhs, rhs)       \
     ((lhs) & ~BF_MASK(name) | BF_VALUE(name, (rhs))
