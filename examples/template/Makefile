@@ -1,7 +1,7 @@
 .SUFFIXES:
 
-ifeq ($(strip $(DEVKITARM)),)
-	$(error "Please set DEVKITARM in your environment.")
+ifeq ($(strip $(DEVKITPRO)),)
+	$(error "Please set DEVKITPRO in your environment.")
 endif
 
 #
@@ -52,7 +52,7 @@ LDFLAGS += \
 	   $(LIBS:%=-l%)
 
 ifneq ($(strip $(LIBSEVEN)),)
-	CFLAGS  += -I$(LIBSEVEN)/inc
+	CFLAGS  += -I$(LIBSEVEN)/include
 	LDFLAGS += -L$(LIBSEVEN)/build -lseven
 	MAKE_LIBSEVEN := libseven
 endif

@@ -15,8 +15,8 @@ SOURCES = \
 	src/profile.s
 
 INCLUDES = \
-	inc \
-	src
+	src \
+	include
 
 CFLAGS = \
 	-Os \
@@ -54,7 +54,7 @@ $(BUILD)/obj/%.o: %
 	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILD)/dep/$<.d $<
 
 objdirs:
-	@echo "BUILD   $(BUILD)"
+	@echo "OUTDIR  $(BUILD)"
 	@mkdir -p $(OBJDIRS)
 
 clean:
@@ -64,7 +64,7 @@ clean:
 install: $(BUILD)/$(TARGET)
 	@echo "INSTALL $(DESTDIR)$(DEVKITPRO)"
 	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/lib
-	@cp -rv inc $(DESTDIR)$(DEVKITPRO)/libseven/include
+	@cp -rv include $(DESTDIR)$(DEVKITPRO)/libseven/include
 	@cp -v $(BUILD)/$(TARGET) $(DESTDIR)$(DEVKITPRO)/libseven/lib
 
 .PHONY: objdirs clean install

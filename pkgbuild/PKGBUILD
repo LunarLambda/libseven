@@ -1,5 +1,5 @@
 pkgname='libseven-git'
-pkgver=r138.e2479f0
+pkgver=r139.0f3de1b
 pkgrel=1
 pkgdesc='from-scratch library for GBA development'
 arch=('any')

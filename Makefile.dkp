@@ -1,5 +1,5 @@
 ifeq ($(strip $(DEVKITPRO)),)
-	$(error "Please set DEVKITPRO and DEVKITARM in your environment.")
+	$(error "Please set DEVKITPRO in your environment.")
 endif
 
 include $(DEVKITARM)/base_tools
