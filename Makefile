@@ -54,12 +54,19 @@ $(BUILD)/obj/%.o: %
 	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILD)/dep/$<.d $<
 
 objdirs:
+	@echo "BUILD   $(BUILD)"
 	@mkdir -p $(OBJDIRS)
 
 clean:
 	@echo "CLEAN   $(BUILD)"
 	@rm -rf $(BUILD)
 
-.PHONY: objdirs clean
+install: $(BUILD)/$(TARGET)
+	@echo "INSTALL $(DESTDIR)/$(DEVKITPRO)"
+	@mkdir -p $(DESTDIR)/$(DEVKITPRO)/libseven/lib
+	@cp -rv inc $(DESTDIR)/$(DEVKITPRO)/libseven/include
+	@cp -v $(BUILD)/$(TARGET) $(DESTDIT)/$(DEVKITPRO)/libseven/lib
+
+.PHONY: objdirs clean install
 
 -include $(DEPENDS)
