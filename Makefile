@@ -62,10 +62,9 @@ clean:
 	@rm -rf $(BUILD)
 
 install: $(BUILD)/$(TARGET)
-	@echo "INSTALL $(DESTDIR)/$(DEVKITPRO)"
-	@mkdir -p $(DESTDIR)/$(DEVKITPRO)/libseven/lib
-	@cp -rv inc $(DESTDIR)/$(DEVKITPRO)/libseven/include
-	@cp -v $(BUILD)/$(TARGET) $(DESTDIT)/$(DEVKITPRO)/libseven/lib
+	@echo "INSTALL $(DESTDIR)$(DEVKITPRO)"
+	@cp -rv inc $(DESTDIR)$(DEVKITPRO)/libseven/include
+	@cp -v $(BUILD)/$(TARGET) $(DESTDIR)$(DEVKITPRO)/libseven/lib
 
 .PHONY: objdirs clean install
 
