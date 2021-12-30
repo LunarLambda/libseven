@@ -17,6 +17,10 @@ extern u32 sramCompare(const void *src, u32 len);
 
 extern u32 sramCompareAt(const void *src, u32 len, u32 off);
 
+extern void sramClear(u32 len);
+
+extern void sramClearAt(u32 len, u32 off);
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_HW_SRAM_H */

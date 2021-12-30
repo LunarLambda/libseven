@@ -3,10 +3,13 @@
 
 .include        "asm_base.s"
 
-.set MEM_SRAM, 0x0E000000
+.set MEM_SRAM,          0x0E000000
+.set MEM_SRAM_SIZE,     0x8000
 
 @ TODO: Reduce IWRAM use by only running core sram-read loops in RAM
 @ Use subfn to improve size & performance.
+@
+@ Save a register by using start + end pointers instead of pointers + count
 
 @ r0 = dst, r1 = len
 fn sramRead arm
@@ -125,6 +128,46 @@ fn sramCompareAt arm
 
 .Lsca_out:
     pop         {r4, r5}
+    bx          lr
+endfn
+
+fn sramClear thumb
+    movs        r1, #0
+    b           sramClearAt
+endfn
+
+fn sramClearAt thumb
+    @ if len = 0
+    cmp         r0, #0
+    beq         .Lsza_oob
+
+    @ Bounds check (len + off <= MEM_SRAM_SIZE)
+    movs        r3, #0x80
+    lsls        r3, r3, #8
+    adds        r2, r0, r1
+    cmp         r2, r3
+    bgt         .Lsza_oob
+
+    @ r1 += MEM_SRAM
+    movs        r3, #0xE
+    lsls        r3, r3, #24
+    adds        r1, r1, r3
+
+    @ r0 = len
+    @ r1 = *dst
+    @ r2 = 0
+    @ r3 = count
+
+    @ loop
+    movs        r2, #0
+    movs        r3, #0
+.Lsza_loop:
+    strb        r2, [r1, r3]
+    adds        r3, r3, #1
+    cmp         r3, r0
+    bne         .Lsza_loop
+
+.Lsza_oob:
     bx          lr
 endfn
 
