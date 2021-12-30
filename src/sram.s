@@ -6,93 +6,93 @@
 .set MEM_SRAM,          0x0E000000
 .set MEM_SRAM_SIZE,     0x8000
 
-@ TODO: Reduce IWRAM use by only running core sram-read loops in RAM
-@ Use subfn to improve size & performance.
-@
-@ Save a register by using start + end pointers instead of pointers + count
+@ TODO: Make all functions return a byte count
 
-@ r0 = dst, r1 = len
-fn sramRead arm
-    mov         r2, #0
-    b           sramReadAt
-endfn
-
-@ r0 = u8* dst
-@ r1 = u32 len
-@ r2 = u32 off
-fn sramReadAt arm
-    @ Bounds check
-    add         r3, r1, r2
-    cmp         r3, #0x8000
-    bgt         .Lsra_oob
-
-    add         r2, r2, MEM_SRAM
-    @ r0 = dst
-    @ r1 = len
-    @ r2 = src
-
-    mov         r3, #0
-    cmp         r1, #0
-    beq         .Lsra_oob
-
-    @ r3 = count
-    @ r12 = temp
-.Lsra_loop:
-    ldrb        r12, [r2, r3]
-    strb        r12, [r0, r3]
-    add         r3, r3, #1
-    cmp         r1, r3
-    bne         .Lsra_loop
-
-.Lsra_oob:
+fn sramReadCore arm local
+    ldrb        r3, [r2], #1
+    strb        r3, [r0], #1
+    cmp         r2, r1
+    bne         sramReadCore
     bx          lr
 endfn
 
+@ void sramReadAt(void *src, u32 len, u32 off);
+fn sramRead thumb
+    movs        r2, #0
+sfn sramReadAt
+    @ Return if len == 0
+    cmp         r1, #0
+    beq         .Lsra_ret
+
+    @ len += off
+    adds         r1, r1, r2
+    @ r3 = 0x8000
+    movs        r3, #0x80
+    lsls        r3, r3, #8
+    @ Bounds check
+    cmp         r1, r3
+    bgt         .Lsra_ret
+
+    @ r1 = sram_end
+    @ r2 = sram_start
+    movs        r3, #0xE
+    lsls        r3, r3, #24
+
+    adds        r1, r1, r3
+    adds        r2, r2, r3
+
+    ldr         r3, =sramReadCore
+    @ Tailcall
+    bx          r3
+.Lsra_ret:
+    bx          lr
+endsfn
+endfn
+
+@ void sramWriteAt(const void *src, u32 len, u32 off);
 fn sramWrite thumb
     movs        r2, #0
-    b           sramWriteAt
-endfn
-
-@ r0 = const u8 *src
-@ r1 = u32 len
-@ r2 = u32 off
-fn sramWriteAt thumb
-    push        {r4, r5}
-
-    @ Bounds check (len + off <= MEM_SRAM_SIZE)
-    movs        r4, #0x80
-    lsls        r4, r4, #8
-    adds        r3, r1, r2
-    cmp         r3, r4
-    bgt         .Lswa_oob
-
-    @ r2 += MEM_SRAM
-    movs        r4, #0xE
-    lsls        r4, r4, #24
-    adds        r2, r2, r4
-
-    @ loop
-    movs        r3, #0
+sfn sramWriteAt
     cmp         r1, #0
-    beq         .Lswa_oob
+    beq         .Lswa_ret
+
+    @ len += off
+    adds        r1, r1, r2
+    @ Bounds check
+    movs        r3, #0x80
+    lsls        r3, r3, #8
+    cmp         r1, r3
+    bgt         .Lswa_ret
+
+    @ r1 = sram_end
+    @ r2 = sram_start
+    movs        r3, #0xE
+    lsls        r3, r3, #24
+    adds        r1, r1, r3
+    adds        r2, r2, r3
+
 .Lswa_loop:
-    ldrb        r4, [r0, r3]
-    strb        r4, [r2, r3]
-    adds        r3, r3, #1
-    cmp         r3, r1
+    ldrb        r3, [r0]
+    strb        r3, [r2]
+    adds        r0, r0, #1
+    adds        r2, r2, #1
+    cmp         r2, r1
     bne         .Lswa_loop
 
-.Lswa_oob:
-    pop         {r4, r5}
+.Lswa_ret:
     bx          lr
+endsfn
 endfn
+
+
+@ TODO: Reduce IWRAM use by only running core sram-read loops in RAM
+@
+@ Save a register by using start + end pointers instead of pointers + count
+@ u32 sramCompareAt(const void *src, u32 len, u32 off);
 
 fn sramCompare arm
     mov         r2, #0
-    b           sramCompareAt
-endfn
-
-fn sramCompareAt arm
+sfn sramCompareAt
     push        {r4, r5}
 
     mov         r3, r0
@@ -129,14 +129,12 @@ fn sramCompareAt arm
 .Lsca_out:
     pop         {r4, r5}
     bx          lr
+endsfn
 endfn
 
 fn sramClear thumb
     movs        r1, #0
-    b           sramClearAt
-endfn
-
-fn sramClearAt thumb
+sfn sramClearAt
     @ if len = 0
     cmp         r0, #0
     beq         .Lsza_oob
@@ -169,6 +167,7 @@ fn sramClearAt thumb
 
 .Lsza_oob:
     bx          lr
+endsfn
 endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8

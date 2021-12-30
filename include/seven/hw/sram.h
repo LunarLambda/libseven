@@ -5,21 +5,21 @@
 
 _LIBSEVEN_EXTERN_C
 
-extern void sramRead(void *dst, u32 len);
+extern void sramRead(void *dst, size_t len);
 
-extern void sramReadAt(void *dst, u32 len, u32 off);
+extern void sramReadAt(void *dst, size_t len, size_t off);
 
-extern void sramWrite(const void *src, u32 len);
+extern void sramWrite(const void *src, size_t len);
 
-extern void sramWriteAt(const void *src, u32 len, u32 off);
+extern void sramWriteAt(const void *src, size_t len, size_t off);
 
-extern u32 sramCompare(const void *src, u32 len);
+extern size_t sramCompare(const void *src, size_t len);
 
-extern u32 sramCompareAt(const void *src, u32 len, u32 off);
+extern size_t sramCompareAt(const void *src, size_t len, size_t off);
 
-extern void sramClear(u32 len);
+extern void sramClear(size_t len);
 
-extern void sramClearAt(u32 len, u32 off);
+extern void sramClearAt(size_t len, size_t off);
 
 _LIBSEVEN_EXTERN_C_END
 
