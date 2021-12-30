@@ -11,6 +11,7 @@
 - [ ] SIO
 - [x] Input
 - [ ] IRQ
+- [x] SRAM (32K)
 - [x] BIOS Functions
     - [x] Reset
     - [x] Halt and IRQ Waiting
