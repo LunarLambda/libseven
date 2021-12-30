@@ -5,6 +5,9 @@
 
 .set MEM_SRAM, 0x0E000000
 
+@ TODO: Reduce IWRAM use by only running core sram-read loops in RAM
+@ Use subfn to improve size & performance.
+
 @ r0 = dst, r1 = len
 fn sramRead arm
     mov         r2, #0
@@ -77,6 +80,50 @@ fn sramWriteAt thumb
     bne         .Lswa_loop
 
 .Lswa_oob:
+    pop         {r4, r5}
+    bx          lr
+endfn
+
+fn sramCompare arm
+    mov         r2, #0
+    b           sramCompareAt
+endfn
+
+fn sramCompareAt arm
+    push        {r4, r5}
+
+    mov         r3, r0
+    mov         r0, #0
+
+    @ if len = 0
+    cmp         r1, #0
+    beq         .Lsca_out
+
+    @ Bounds check
+    add         r4, r1, r2
+    cmp         r4, #0x8000
+    bgt         .Lsca_out
+
+    add         r2, r2, MEM_SRAM
+
+    @ r0 = count
+    @ r1 = len
+    @ r2 = rhs
+    @ r3 = lhs
+    @ r5 = temp_rhs
+    @ r4 = temp_lhs
+.Lsca_loop:
+    ldrb        r4, [r2, r0]
+    ldrb        r5, [r3, r0]
+
+    cmp         r4, r5
+    bne         .Lsca_out
+
+    add         r0, r0, #1
+    cmp         r1, r0
+    bne         .Lsca_loop
+
+.Lsca_out:
     pop         {r4, r5}
     bx          lr
 endfn
