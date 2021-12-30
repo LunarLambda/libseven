@@ -12,7 +12,8 @@ SOURCES = \
 	src/str.s \
 	src/lcd.s \
 	src/rand.s \
-	src/profile.s
+	src/profile.s \
+	src/sram.s
 
 INCLUDES = \
 	src \

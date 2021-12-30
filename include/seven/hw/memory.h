@@ -38,9 +38,9 @@ _LIBSEVEN_EXTERN_C
 #define MEM_ROM                 ((const void*)0x08000000)
 #define MEM_ROM_SIZE            ((size_t)0x02000000)
 
-// Cartridge Static RAM (64K)
+// Cartridge Static RAM (32K)
 #define MEM_SRAM                ((void*)0x0E000000)
-#define MEM_SRAM_SIZE           ((size_t)0x10000)
+#define MEM_SRAM_SIZE           ((size_t)0x8000)
 
 _LIBSEVEN_EXTERN_C_END
 
