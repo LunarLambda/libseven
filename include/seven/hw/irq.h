@@ -71,6 +71,8 @@ static inline void irqInit(IRQHandler *isr)
     REG_IME     = 1;
 }
 
+extern void irqInitDefault(void);
+
 extern u16 irqEnable(u16 intr_flags);
 extern u16 irqDisable(u16 intr_flags);
 extern u16 irqSetEnabled(u16 intr_flags);

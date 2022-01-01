@@ -65,6 +65,39 @@ fn irqExitCriticalSection thumb
     bx          lr
 endfn
 
+.set REG_IE,    0x04000200
+.set REG_IF,    0x04000202
+.set REG_IME,   0x04000208
+
+@ REG_IME = 0
+@ REG_IF = 0xFFFF
+@ REG_IE = 0
+@ IRQ_HANDLER = irqDefaultHandler
+@ REG_IME = 1
+fn irqInitDefault thumb
+    movs        r0, #0
+    mvns        r1, r0
+    ldr         r2, =REG_IE
+
+    @ REG_IME = 0
+    strh        r0, [r2, #8]
+
+    @ REG_IF = 0xFFFF
+    strh        r1, [r2, #2]
+
+    @ REG_IE = 0
+    strh        r0, [r2]
+
+    @ IRQ_HANDLER = irqDefaultHandler
+    ldr         r3, =irqDefaultHandler
+    ldr         r0, =0x03007FFC
+    str         r3, [r0]
+
+    @ REG_IME = 1
+    strh        r1, [r2, #8]
+    bx          lr
+endfn
+
 @ r0    REG_BASE
 @ r1    IE & IF
 @ r2    <tmp>
