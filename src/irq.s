@@ -3,6 +3,8 @@
 
 .include        "asm_base.s"
 
+.global         IRQ_TABLE
+
 bss IRQ_TABLE
     .align      2
     .fill       14, 8, 0
