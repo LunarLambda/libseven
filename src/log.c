@@ -13,7 +13,7 @@ static LogOutputFn logOutputMgba;
 static LogOutputFn logOutputNocash;
 static LogOutputFn logOutputVba;
 
-static u8 LOG_MAX_LEVEL = LOG_MAX;
+static u8 LOG_MAX_LEVEL = LOG_OFF;
 
 struct LogInterfaceDescriptor
 {
@@ -124,7 +124,8 @@ extern void logSetMaxLevel(u8 level)
 
 extern void logOutput(u8 level, const char *message)
 {
-    if (level > LOG_MAX_LEVEL)
+    // Prevent silliness with logOutput(LOG_OFF, "Message");
+    if (!level || level > LOG_MAX_LEVEL)
     {
         return;
     }
@@ -163,7 +164,8 @@ static void logOutputMgba(u8 level, const char *message)
         MGBA_LOG_OUT[i] = message[i];
     }
 
-    REG_MGBA_FLAGS = level | 0x100;
+    // FIXME: What if invalid level? Reject? Default to TRACE?
+    REG_MGBA_FLAGS = (level - 1) | 0x100;
 }
 
 #define NOCASH_SIG              ((char*)0x04FFFA00)

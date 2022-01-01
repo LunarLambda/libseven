@@ -7,13 +7,14 @@ _LIBSEVEN_EXTERN_C
 
 enum LogLevel
 {
+    // logSetMaxLevel(LOG_OFF);
+    LOG_OFF = 0,
     LOG_FATAL,
     LOG_ERROR,
     LOG_WARN,
     LOG_INFO,
     LOG_DEBUG,
     LOG_TRACE,
-    LOG_MAX,
 };
 
 // Supported log interfaces
