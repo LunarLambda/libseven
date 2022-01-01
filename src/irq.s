@@ -65,6 +65,15 @@ fn irqExitCriticalSection thumb
     bx          lr
 endfn
 
+fn irqCriticalSectionActive thumb
+    ldr         r0, =CRITICAL_SECTION
+    ldr         r0, [r0]
+    subs        r1, r0, #1
+    sbcs        r0, r0, r1
+.Lcsa_out:
+    bx          lr
+endfn
+
 .set REG_IE,    0x04000200
 .set REG_IF,    0x04000202
 .set REG_IME,   0x04000208

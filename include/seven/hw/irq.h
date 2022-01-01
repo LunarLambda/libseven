@@ -83,6 +83,9 @@ extern void irqEnterCriticalSection(void);
 // Restores the value in IME saved by a previous call to EnterCriticalSection.
 extern void irqExitCriticalSection(void);
 
+// Returns true if inside a critical section
+extern bool irqCriticalSectionActive(void);
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_HW_IRQ_H */
