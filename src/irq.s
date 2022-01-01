@@ -19,7 +19,7 @@ CRITICAL_SECTION_IME:
     .byte 0
 .previous
 
-fn irqEnterCriticalSection thumb
+fn irqCriticalSectionEnter thumb
     @ r1 = REG_IME
     @ REG_IME = 0
     ldr         r0, =0x04000208
@@ -41,7 +41,7 @@ fn irqEnterCriticalSection thumb
     bx          lr
 endfn
 
-fn irqExitCriticalSection thumb
+fn irqCriticalSectionExit thumb
     @ r1 = REG_IME
     @ REG_IME = 0
     ldr         r0, =0x04000208

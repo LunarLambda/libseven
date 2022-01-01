@@ -79,9 +79,9 @@ extern u16 irqSetEnabled(u16 intr_flags);
 
 // Saves the current value of IME and disables IME.
 // Nested calls are possible, only the outermost call has any effect.
-extern void irqEnterCriticalSection(void);
+extern void irqCriticalSectionEnter(void);
 // Restores the value in IME saved by a previous call to EnterCriticalSection.
-extern void irqExitCriticalSection(void);
+extern void irqCriticalSectionExit(void);
 
 // Returns true if inside a critical section
 extern bool irqCriticalSectionActive(void);
