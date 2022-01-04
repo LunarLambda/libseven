@@ -18,14 +18,12 @@ enum DisplayControl
     LCD_MODE_4                  = BITFIELD(0, 3, 4),
     LCD_MODE_5                  = BITFIELD(0, 3, 5),
 
-    LCD_MODE_REGULAR            = LCD_MODE_0,
+    LCD_MODE_TILED              = LCD_MODE_0,
     LCD_MODE_MIXED              = LCD_MODE_1,
     LCD_MODE_AFFINE             = LCD_MODE_2,
     LCD_MODE_BITMAP             = LCD_MODE_3,
-    LCD_MODE_BITMAP256          = LCD_MODE_4,
+    LCD_MODE_BITMAP_INDEXED     = LCD_MODE_4,
     LCD_MODE_BITMAP_SMALL       = LCD_MODE_5,
-
-    LCD_CGB_MODE                = BIT(3),
 
     LCD_FRAME_SELECT            = BIT(4),
 
