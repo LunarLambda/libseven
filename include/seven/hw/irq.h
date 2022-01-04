@@ -24,6 +24,22 @@ enum IRQFlags
     IRQ_CARTRIDGE       = BIT(13),
 };
 
+enum IRQGroups
+{
+    // Video blanking IRQs.
+    IRQS_BLANK          = IRQ_VBLANK  | IRQ_HBLANK,
+
+    // Timers.
+    IRQS_TIMERS         = IRQ_TIMER_0 | IRQ_TIMER_1 | IRQ_TIMER_2 | IRQ_TIMER_3,
+
+    // DMA.
+    IRQS_DMA            = IRQ_DMA_0   | IRQ_DMA_1   | IRQ_DMA_2   | IRQ_DMA_3,
+    //
+    // IRQs triggered by external hardware events.
+    // IRQs in this group can wake up the GBA from a svcStop() call.
+    IRQS_EXTERNAL       = IRQ_SIO     | IRQ_KEYPAD  | IRQ_CARTRIDGE
+};
+
 // Interrupt Enable
 #define REG_IE          REG16(0x04000200)
 
