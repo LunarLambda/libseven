@@ -2,18 +2,18 @@ CC = arm-none-eabi-gcc
 AR = arm-none-eabi-ar
 
 SOURCES = \
-	src/svc.s \
-	src/irq.s \
-	src/input.c \
-	src/timer.c \
-	src/dma.s \
-	src/log.c \
-	src/mem.s \
-	src/str.s \
-	src/lcd.s \
-	src/rand.s \
-	src/profile.s \
-	src/sram.s
+	src/hw/dma.s \
+	src/hw/input.c \
+	src/hw/irq.s \
+	src/hw/lcd.s \
+	src/hw/sram.s \
+	src/hw/svc.s \
+	src/hw/timer.c \
+	src/util/log.c \
+	src/util/mem.s \
+	src/util/profile.s \
+	src/util/rand.s \
+	src/util/str.s \
 
 INCLUDES = \
 	src \
