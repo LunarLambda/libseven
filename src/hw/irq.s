@@ -27,19 +27,28 @@ endb
 .set REG_IME,     0x04000208
 .set IRQ_HANDLER, 0x03007FFC
 
+// TODO: Merge
 fn irqMasterEnable thumb
-    movs        r0, #1
-    b           irqMasterSetEnabled
-nfn irqMasterDisable
-    movs        r0, #0
-nfn irqMasterSetEnabled
-    movs        r1, r0
-    ldr         r2, =REG_IME
-    ldrh        r0, [r2]
-    strh        r1, [r2]
+    movs        r2, #1
+    ldr         r1, =REG_IME
+    ldrh        r0, [r1]
+    strh        r2, [r1]
     bx          lr
-endnfn irqMasterSetEnabled
-endnfn irqMasterDisable
+endfn
+
+fn irqMasterDisable thumb
+    ldr         r1, =REG_IME
+    ldrh        r0, [r1]
+    strh        r1, [r1]
+    bx          lr
+endfn
+
+fn irqMasterSetEnabled thumb
+    movs        r2, r0
+    ldr         r1, =REG_IME
+    ldrh        r0, [r1]
+    strh        r2, [r1]
+    bx          lr
 endfn
 
 fn irqCriticalSectionEnter thumb
