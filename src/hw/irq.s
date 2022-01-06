@@ -97,9 +97,9 @@ fn irqDisable thumb
     ldrh        r2, [r1, #8]
     strh        r1, [r1, #8]
     @ REG_IE &= ~irqs;
-    movs        r3, r0
+    mvns        r3, r0
     ldrh        r0, [r1]
-    bics        r3, r3, r0
+    ands        r3, r3, r0
     strh        r3, [r1]
     @ REG_IME = old_ime
     strh        r2, [r1, #8]
