@@ -84,17 +84,19 @@ typedef void IRQHandler(void);
 
 #define IRQ_HANDLER (*(IRQHandler **volatile)0x03FFFFFC)
 
+extern void irqInit(IRQHandler *isr);
+extern void irqInitDefault(void);
+
 extern bool irqMasterEnable(void);
 extern bool irqMasterDisable(void);
 extern bool irqMasterSetEnabled(bool enable);
 
-extern void irqInit(IRQHandler *isr);
+extern u16 irqEnable(u16 irqs);
+extern u16 irqDisable(u16 irqs);
+extern u16 irqSetEnabled(u16 irqs);
 
-extern void irqInitDefault(void);
-
-extern u16 irqEnable(u16 intr_flags);
-extern u16 irqDisable(u16 intr_flags);
-extern u16 irqSetEnabled(u16 intr_flags);
+extern u16 irqEnableFull(u16 irqs);
+extern u16 irqDisableFull(u16 irqs);
 
 // Saves the current value of IME and disables IME.
 // Nested calls are possible, only the outermost call has any effect.

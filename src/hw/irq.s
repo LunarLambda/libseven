@@ -126,6 +126,142 @@ fn irqSetEnabled thumb
     bx          lr
 endfn
 
+.macro reg_ie_offset val
+    .hword (0x04000000 + \val) - REG_IE
+.endm
+
+rdata IRQ_SOURCES
+    .hword 0x0008; reg_ie_offset 0x0004 @ LCD V-Blank, DISPSTAT
+    .hword 0x0010; reg_ie_offset 0x0004 @ LCD H-Blank, DISPSTAT
+    .hword 0x0020; reg_ie_offset 0x0004 @ LCD V-Count, DISPSTAT
+    .hword 0x0040; reg_ie_offset 0x0102 @ Timer 0,     TM0CNT
+    .hword 0x0040; reg_ie_offset 0x0106 @ Timer 1,     TM1CNT
+    .hword 0x0040; reg_ie_offset 0x010A @ Timer 2,     TM2CNT
+    .hword 0x0040; reg_ie_offset 0x010E @ Timer 3,     TM3CNT
+    .hword 0x4000; reg_ie_offset 0x0128 @ Serial IO,   SIOCNT
+    .hword 0x4000; reg_ie_offset 0x00BA @ DMA 0,       DMA0CNT
+    .hword 0x4000; reg_ie_offset 0x00C6 @ DMA 1,       DMA1CNT
+    .hword 0x4000; reg_ie_offset 0x00D2 @ DMA 2,       DMA2CNT
+    .hword 0x4000; reg_ie_offset 0x00DE @ DMA 3,       DMA3CNT
+    .hword 0x4000; reg_ie_offset 0x0132 @ Keypad,      KEYCNT
+    .hword 0x0000; reg_ie_offset 0x0000 @ Cartridge,   -
+endr
+
+@ u16 irqEnableFull(u16 irqs);
+@
+@ r0 = REG_IE (previous)
+@ r1 = &REG_IE
+@ r2 = REG_IME
+@ r3 = REG_IE (new)
+@
+@ In loop:
+@
+@ r0 = irqs
+@ r1 = REG_IE
+@ r2 = Register flag
+@ r3 = IRQ_SOURCES
+@ r4 = Register offset from IE
+@ r5 = Register value
+fn irqEnableFull thumb
+    @ irqs &= IRQ_MASK;
+    lsls        r0, r0, #19
+    lsrs        r0, r0, #19
+
+    @ REG_IME = 0;
+    ldr         r1, =REG_IE
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
+
+    push        {r0, r2, r4, r5}
+
+    ldr         r3, =IRQ_SOURCES
+
+.Lief_loop:
+    lsrs        r0, r0, #1
+    bcc         .Lief_continue
+
+    @ load from table
+    ldr         r2, [r3]
+    @ sign extend offset into r4
+    asrs        r4, r2, #16
+
+    ldrh        r5, [r1, r4]
+    orrs        r5, r5, r2
+    strh        r5, [r1, r4]
+
+.Lief_continue:
+    adds        r3, r3, #4
+    cmp         r0, #0
+    bne         .Lief_loop
+
+.Lief_break:
+    pop         {r0, r2, r4, r5}
+
+    movs        r3, r0
+    ldrh        r0, [r1]
+    orrs        r3, r3, r0
+    strh        r3, [r1]
+
+    strh        r2, [r1, #8]
+    bx          lr
+endfn
+
+@ u16 irqDisableFull(u16 irqs);
+@
+@ r0 = REG_IE (previous)
+@ r1 = &REG_IE
+@ r2 = REG_IME
+@ r3 = REG_IE (new)
+@
+@ In loop:
+@
+@ r0 = irqs
+@ r1 = &REG_IE
+@ r2 = Register flag
+@ r3 = IRQ_SOURCES
+@ r4 = Register offset
+@ r5 = Register value
+fn irqDisableFull thumb
+    @ irqs &= IRQ_MASK;
+    lsls        r0, r0, #19
+    lsrs        r0, r0, #19
+
+    @ REG_IME = 0;
+    ldr         r1, =REG_IE
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
+
+    push        {r0, r2, r4, r5}
+
+    ldr         r3, =IRQ_SOURCES
+.Lidf_loop:
+    lsrs        r0, r0, #1
+    bcc         .Lidf_continue
+
+    ldr         r2, [r3]
+    asrs        r4, r2, #16
+
+    ldrh        r5, [r1, r4]
+    bics        r5, r5, r2
+    strh        r5, [r1, r4]
+
+.Lidf_continue:
+    adds        r3, r3, #4
+    cmp         r0, #0
+    bne         .Lidf_loop
+
+.Lidf_break:
+    pop         {r0, r2, r4, r5}
+
+    mvns        r3, r0
+    ldrh        r0, [r1]
+    ands        r3, r3, r0
+    strh        r3, [r1]
+
+    strh        r2, [r1, #8]
+    bx          lr
+endfn
+
 fn irqCriticalSectionEnter thumb
     @ r1 = REG_IME
     @ REG_IME = 0

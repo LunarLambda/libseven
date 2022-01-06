@@ -4,10 +4,7 @@
 int main(void)
 {
     irqInitDefault();
-
-    // TODO: irqEnableFull(IRQ_VBLANK);
-    irqEnable(IRQ_VBLANK);
-    REG_DISPSTAT = LCD_VBLANK_IRQ_ENABLE;
+    irqEnableFull(IRQ_VBLANK);
 
     lcdInitMode3();
 
