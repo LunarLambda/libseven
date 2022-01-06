@@ -3,7 +3,6 @@
 @ License, v. 2.0. If a copy of the MPL was not distributed with this
 @ file, You can obtain one at https://mozilla.org/MPL/2.0/.
 @
-
 .syntax         unified
 .cpu            arm7tdmi
 
@@ -17,9 +16,8 @@ bss IRQ_TABLE
 endb
 
 bss CRITICAL_SECTION
-    .byte 0
-    CRITICAL_SECTION_IME:
-    .byte 0
+    .byte 0     @ Nest Counter
+    .byte 0     @ Saved IME value
 endb
 
 .set REG_IE,      0x04000200
@@ -27,7 +25,11 @@ endb
 .set REG_IME,     0x04000208
 .set IRQ_HANDLER, 0x03007FFC
 
-// TODO: Merge
+@ bool irqMasterEnable(void);
+@
+@ r0 = REG_IME
+@ r1 = &REG_IME
+@ r2 = #1
 fn irqMasterEnable thumb
     movs        r2, #1
     ldr         r1, =REG_IME
@@ -36,6 +38,12 @@ fn irqMasterEnable thumb
     bx          lr
 endfn
 
+@ bool irqMasterDisable(void);
+@
+@ r0 = REG_IME
+@ r1 = &REG_IME
+@
+@ We can disable IME by writing its own address to it, since bit 0 is 0.
 fn irqMasterDisable thumb
     ldr         r1, =REG_IME
     ldrh        r0, [r1]
@@ -43,11 +51,78 @@ fn irqMasterDisable thumb
     bx          lr
 endfn
 
+@ bool irqMasterSetEnabled(bool enable);
+@
+@ r0 = REG_IME
+@ r1 = &REG_IME
+@ r2 = enable
 fn irqMasterSetEnabled thumb
     movs        r2, r0
     ldr         r1, =REG_IME
     ldrh        r0, [r1]
     strh        r2, [r1]
+    bx          lr
+endfn
+
+@ u16 irqEnable(u16 irqs);
+@
+@ r0 = REG_IE (previous)
+@ r1 = &REG_IE
+@ r2 = REG_IME
+@ r3 = REG_IE (new)
+fn irqEnable thumb
+    @ REG_IME = 0;
+    ldr         r1, =REG_IE
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
+    @ REG_IE |= irqs;
+    movs        r3, r0
+    ldrh        r0, [r1]
+    orrs        r3, r3, r0
+    strh        r3, [r1]
+    @ REG_IME = old_ime;
+    strh        r2, [r1, #8]
+    bx          lr
+endfn
+
+@ u16 irqDisable(u16 irqs);
+@
+@ r0 = REG_IE (previous)
+@ r1 = &REG_IE
+@ r2 = REG_IME
+@ r3 = REG_IE (new)
+fn irqDisable thumb
+    @ REG_IME = 0;
+    ldr         r1, =REG_IE
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
+    @ REG_IE &= ~irqs;
+    movs        r3, r0
+    ldrh        r0, [r1]
+    bics        r3, r3, r0
+    strh        r3, [r1]
+    @ REG_IME = old_ime
+    strh        r2, [r1, #8]
+    bx          lr
+endfn
+
+@ u16 irqSetEnabled(u16 irqs);
+@
+@ r0 = REG_IE (new)
+@ r1 = &REG_IE
+@ r2 = REG_IME
+@ r3 = REG_IE (old)
+fn irqSetEnabled thumb
+    @ REG_IME = 0;
+    ldr         r1, =REG_IE
+    ldrh        r2, [r1, #8]
+    strh        r1, [r1, #8]
+    @ REG_IE = irqs;
+    movs        r3, r0
+    ldrh        r0, [r1]
+    strh        r3, [r1]
+    @ REG_IME = old_ime;
+    strh        r2, [r1, #8]
     bx          lr
 endfn
 
@@ -187,62 +262,6 @@ fn irqDefaultHandler arm
 
 .Lexit:
     strh        r12, [r1, #8]
-    bx          lr
-endfn
-
-fn irqEnable thumb
-    @ IME OFF
-    ldr         r1, =REG_IE
-    ldrh        r2, [r1, #8]
-    strh        r1, [r1, #8]
-
-    @ IE
-    ldrh        r3, [r1]
-    orrs        r0, r0, r3
-    strh        r0, [r1]
-
-    movs        r0, r3
-
-    @ IME Restore
-    strh        r2, [r1, #8]
-
-    bx          lr
-endfn
-
-fn irqDisable thumb
-    @ IME OFF
-    ldr         r1, =REG_IE
-    ldrh        r2, [r1, #8]
-    strh        r1, [r1, #8]
-
-    @ IE
-    ldrh        r3, [r1]
-    bics        r0, r0, r3
-    strh        r0, [r1]
-
-    movs        r0, r3
-
-    @ IME Restore
-    strh        r2, [r1, #8]
-
-    bx          lr
-endfn
-
-fn irqSetEnabled thumb
-    @ IME OFF
-    ldr         r1, =REG_IE
-    ldrh        r2, [r1, #8]
-    strh        r1, [r1, #8]
-
-    @ IE
-    ldrh        r3, [r1]
-    strh        r0, [r1]
-
-    movs        r0, r3
-
-    @ IME Restore
-    strh        r2, [r1, #8]
-
     bx          lr
 endfn
 
