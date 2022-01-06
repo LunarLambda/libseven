@@ -10,22 +10,22 @@
 .include        "asm_base.s"
 
 .global         IRQ_TABLE
-
 bss IRQ_TABLE
     .align      2
     .fill       14, 8, 0
     .word       0
 endb
 
-.data
-CRITICAL_SECTION:
+bss CRITICAL_SECTION
     .byte 0
-
-CRITICAL_SECTION_IME:
+    CRITICAL_SECTION_IME:
     .byte 0
-.previous
+endb
 
-.set REG_IME, 0x04000208
+.set REG_IE,      0x04000200
+.set REG_IF,      0x04000202
+.set REG_IME,     0x04000208
+.set IRQ_HANDLER, 0x03007FFC
 
 // TODO: Merge
 fn irqMasterEnable thumb
@@ -54,7 +54,7 @@ endfn
 fn irqCriticalSectionEnter thumb
     @ r1 = REG_IME
     @ REG_IME = 0
-    ldr         r0, =0x04000208
+    ldr         r0, =REG_IME
     ldrh        r1, [r0]
     strh        r0, [r0]
 
@@ -76,7 +76,7 @@ endfn
 fn irqCriticalSectionExit thumb
     @ r1 = REG_IME
     @ REG_IME = 0
-    ldr         r0, =0x04000208
+    ldr         r0, =REG_IME
     ldrh        r1, [r0]
     strh        r0, [r0]
 
@@ -106,15 +106,7 @@ fn irqCriticalSectionActive thumb
     bx          lr
 endfn
 
-.set REG_IE,    0x04000200
-.set REG_IF,    0x04000202
-.set REG_IME,   0x04000208
-
-@ REG_IME = 0
-@ REG_IF = 0xFFFF
-@ REG_IE = 0
-@ IRQ_HANDLER = irqDefaultHandler
-@ REG_IME = 1
+@ extern void irqInit(IRQHandler *isr);
 fn irqInitDefault thumb
     ldr         r0, =irqDefaultHandler
 sfn irqInit
@@ -129,6 +121,7 @@ sfn irqInit
     @ REG_IF = 0xFFFF
     strh        r2, [r3, #2]
 
+    @ IRQ_HANDLER = r0
     ldr         r1, =0x03007FFC
     str         r0, [r1]
 
@@ -199,7 +192,7 @@ endfn
 
 fn irqEnable thumb
     @ IME OFF
-    ldr         r1, =0x04000200
+    ldr         r1, =REG_IE
     ldrh        r2, [r1, #8]
     strh        r1, [r1, #8]
 
@@ -218,7 +211,7 @@ endfn
 
 fn irqDisable thumb
     @ IME OFF
-    ldr         r1, =0x04000200
+    ldr         r1, =REG_IE
     ldrh        r2, [r1, #8]
     strh        r1, [r1, #8]
 
@@ -237,7 +230,7 @@ endfn
 
 fn irqSetEnabled thumb
     @ IME OFF
-    ldr         r1, =0x04000200
+    ldr         r1, =REG_IE
     ldrh        r2, [r1, #8]
     strh        r1, [r1, #8]
 
