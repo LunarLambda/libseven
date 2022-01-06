@@ -11,8 +11,8 @@
 
 _LIBSEVEN_EXTERN_C
 
-// IRQ Flags. Used with IE, IF and IFBIOS registers, and IntrWait functions.
-enum IRQFlags
+// Used with IE, IF and IFBIOS registers, and IntrWait functions.
+enum IRQ
 {
     IRQ_VBLANK          = BIT(0),
     IRQ_HBLANK          = BIT(1),
@@ -21,7 +21,7 @@ enum IRQFlags
     IRQ_TIMER_1         = BIT(4),
     IRQ_TIMER_2         = BIT(5),
     IRQ_TIMER_3         = BIT(6),
-    IRQ_SIO             = BIT(7),
+    IRQ_SERIAL          = BIT(7),
     IRQ_DMA_0           = BIT(8),
     IRQ_DMA_1           = BIT(9),
     IRQ_DMA_2           = BIT(10),
@@ -30,20 +30,42 @@ enum IRQFlags
     IRQ_CARTRIDGE       = BIT(13),
 };
 
-enum IRQGroups
+// TODO: Naming
+enum IRQGroup
 {
     // Video blanking IRQs.
     IRQS_BLANK          = IRQ_VBLANK  | IRQ_HBLANK,
 
     // Timers.
-    IRQS_TIMERS         = IRQ_TIMER_0 | IRQ_TIMER_1 | IRQ_TIMER_2 | IRQ_TIMER_3,
+    IRQS_TIMER          = IRQ_TIMER_0 | IRQ_TIMER_1 | IRQ_TIMER_2 | IRQ_TIMER_3,
 
     // DMA.
     IRQS_DMA            = IRQ_DMA_0   | IRQ_DMA_1   | IRQ_DMA_2   | IRQ_DMA_3,
-    //
+
     // IRQs triggered by external hardware events.
     // IRQs in this group can wake up the GBA from a svcStop() call.
-    IRQS_EXTERNAL       = IRQ_SIO     | IRQ_KEYPAD  | IRQ_CARTRIDGE
+    IRQS_EXTERNAL       = IRQ_SERIAL  | IRQ_KEYPAD  | IRQ_CARTRIDGE,
+
+    IRQS_ALL            = BITS(0, 13),
+};
+
+enum IRQIndex
+{
+    IRQINDEX_VBLANK,
+    IRQINDEX_HBLANK,
+    IRQINDEX_VCOUNT,
+    IRQINDEX_TIMER_0,
+    IRQINDEX_TIMER_1,
+    IRQINDEX_TIMER_2,
+    IRQINDEX_TIMER_3,
+    IRQINDEX_SERIAL,
+    IRQINDEX_DMA_0,
+    IRQINDEX_DMA_1,
+    IRQINDEX_DMA_2,
+    IRQINDEX_DMA_3,
+    IRQINDEX_KEYPAD,
+    IRQINDEX_CARTRIDGE,
+    IRQINDEX_MAX,
 };
 
 // Interrupt Enable
@@ -60,38 +82,13 @@ enum IRQGroups
 
 typedef void IRQHandler(void);
 
-extern IRQHandler irqDefaultHandler;
-
 #define IRQ_HANDLER (*(IRQHandler **volatile)0x03FFFFFC)
 
-static inline u32 irqSetIME(u32 v)
-{
-    u32 old = REG_IME;
-    REG_IME = v;
+extern bool irqMasterEnable(void);
+extern bool irqMasterDisable(void);
+extern bool irqMasterSetEnabled(bool enable);
 
-    return old;
-}
-
-static inline u32 irqEnableIME(void)
-{
-    return irqSetIME(1);
-}
-
-static inline u32 irqDisableIME(void)
-{
-    return irqSetIME(0);
-}
-
-static inline void irqInit(IRQHandler *isr)
-{
-    REG_IME     = 0;
-    REG_IF      = 0xFFFF;
-    REG_IE      = 0;
-
-    IRQ_HANDLER = isr ? isr : irqDefaultHandler;
-
-    REG_IME     = 1;
-}
+extern void irqInit(IRQHandler *isr);
 
 extern void irqInitDefault(void);
 

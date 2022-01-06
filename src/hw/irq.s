@@ -25,6 +25,32 @@ CRITICAL_SECTION_IME:
     .byte 0
 .previous
 
+.set REG_IME, 0x04000208
+
+// TODO: Merge
+fn irqMasterEnable thumb
+    movs        r2, #1
+    ldr         r1, =REG_IME
+    ldrh        r0, [r1]
+    strh        r2, [r1]
+    bx          lr
+endfn
+
+fn irqMasterDisable thumb
+    ldr         r1, =REG_IME
+    ldrh        r0, [r1]
+    strh        r1, [r1]
+    bx          lr
+endfn
+
+fn irqMasterSetEnabled thumb
+    movs        r2, r0
+    ldr         r1, =REG_IME
+    ldrh        r0, [r1]
+    strh        r2, [r1]
+    bx          lr
+endfn
+
 fn irqCriticalSectionEnter thumb
     @ r1 = REG_IME
     @ REG_IME = 0
@@ -90,27 +116,26 @@ endfn
 @ IRQ_HANDLER = irqDefaultHandler
 @ REG_IME = 1
 fn irqInitDefault thumb
-    movs        r0, #0
-    mvns        r1, r0
-    ldr         r2, =REG_IE
+    ldr         r0, =irqDefaultHandler
+sfn irqInit
+    movs        r1, #0
+    mvns        r2, r1
+    ldr         r3, =REG_IE
 
     @ REG_IME = 0
-    strh        r0, [r2, #8]
-
-    @ REG_IF = 0xFFFF
-    strh        r1, [r2, #2]
-
+    strh        r1, [r3, #8]
     @ REG_IE = 0
-    strh        r0, [r2]
+    strh        r1, [r3]
+    @ REG_IF = 0xFFFF
+    strh        r2, [r3, #2]
 
-    @ IRQ_HANDLER = irqDefaultHandler
-    ldr         r3, =irqDefaultHandler
-    ldr         r0, =0x03007FFC
-    str         r3, [r0]
+    ldr         r1, =0x03007FFC
+    str         r0, [r1]
 
     @ REG_IME = 1
-    strh        r1, [r2, #8]
+    strh        r2, [r3, #8]
     bx          lr
+endsfn
 endfn
 
 @ r0    REG_BASE

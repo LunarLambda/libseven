@@ -3,8 +3,7 @@
 
 int main(void)
 {
-    // TODO: irqInitDefault, irqInitSwitchboard
-    irqInit(NULL);
+    irqInitDefault();
 
     // TODO: irqEnableFull(IRQ_VBLANK);
     irqEnable(IRQ_VBLANK);
