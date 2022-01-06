@@ -159,7 +159,7 @@ endfn
 @ r2: dst
 @ r3: len
 @ [sp]: flags
-fn dmaSet thumb
+fn dmaAtomicSet thumb
     cmp         r0, #3
     bgt         .Lsout
     push        {r4, r5}
@@ -194,3 +194,5 @@ fn dmaSet thumb
 .Lsout:
     bx          lr
 endfn
+
+@ vim: ft=armv4 et sta sw=4 sts=8

@@ -102,7 +102,7 @@ extern void dmaSoundFifoBTransfer(const void *src, u16 flags);
 extern void dmaHBlankTransfer(const void *src, void *dst, u32 len, u16 flags);
 
 // Atomically sets up a DMA channel, using a byte count
-extern void dmaSet(u32 num, const void *src, void *dst, u32 len, u16 flags);
+extern void dmaAtomicSet(u32 num, const void *src, void *dst, u32 len, u16 flags);
 
 _LIBSEVEN_EXTERN_C_END
 
