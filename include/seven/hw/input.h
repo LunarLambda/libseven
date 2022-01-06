@@ -32,7 +32,7 @@ enum Key
 };
 
 // Groupings of key bits.
-enum KeyGroups
+enum KeyGroup
 {
     KEYS_DPAD_X         = KEY_LEFT      | KEY_RIGHT,
     KEYS_DPAD_Y         = KEY_UP        | KEY_DOWN,
