@@ -66,6 +66,20 @@
     \name\():
 .endm
 
+.macro nfn name:req local
+    .macro      endnfn nname:req
+        .size   \nname,.-\nname
+    .endm
+
+    .ifnc       \local,local
+        .global \name
+    .endif
+
+    .type       \name STT_FUNC
+
+    \name\():
+.endm
+
 @ Declares read-writable data.
 .macro data name:req
     .macro              endd
