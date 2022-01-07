@@ -11,6 +11,10 @@
 
 _LIBSEVEN_EXTERN_C
 
+#define _LIBSEVEN_STR(s) #s
+#define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
+
+#define PACKED          __attribute__((packed))
 #define ALIGN(n)        __attribute__((aligned(n)))
 #define NORETURN        __attribute__((__noreturn__))
 #define NOINLINE        __attribute__((noinline))
@@ -20,27 +24,30 @@ _LIBSEVEN_EXTERN_C
 #define SECTION(name) \
     __attribute__((section(name)))
 
-#define IWRAM_FUNC(func) \
-    __attribute__((section(".iwram." #func), noinline)) func
-#define IWRAM_DATA(data) \
-    __attribute__((section(".iwram." #data))) data
-#define IWRAM_BSS(data) \
-    __attribute__((section(".bss." #data))) data
-#define EWRAM_FUNC(func) \
-    __attribute__((section(".ewram." #func, noinline))) func
-#define EWRAM_DATA(data) \
-    __attribute__((section(".ewram." #data))) data
-#define EWRAM_BSS(data) \
-    __attribute__((section(".sbss." #data))) data
-
-#define _LIBSEVEN_STR(s) #s
-#define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
+#define IWRAM_SECTION(suffix) SECTION(".iwram." suffix)
+#define IWRAM_OVERLAY(number) SECTION(".iwram" #number)
 
 #define IWRAM_CODE \
     __attribute__((section(".iwram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
 
+#define IWRAM_DATA \
+    __attribute__((section(".iwram.data." _LIBSEVEN_STR2(__COUNTER__))))
+
+#define IWRAM_BSS \
+    __attribute__((section(".bss." _LIBSEVEN_STR2(__COUNTER__))))
+
+
+#define EWRAM_SECTION(suffix) SECTION(".ewram." suffix)
+#define EWRAM_OVERLAY(number) SECTION(".ewram" #number)
+
 #define EWRAM_CODE \
     __attribute__((section(".ewram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
+
+#define EWRAM_DATA \
+    __attribute__((section(".ewram.data." _LIBSEVEN_STR2(__COUNTER__))))
+
+#define EWRAM_BSS \
+    __attribute__((section(".sbss." _LIBSEVEN_STR2(__COUNTER__))))
 
 _LIBSEVEN_EXTERN_C_END
 
