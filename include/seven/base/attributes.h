@@ -38,7 +38,7 @@ _LIBSEVEN_EXTERN_C
 #define EWRAM_DATA              EWRAM_SECTION(".data." _LIBSEVEN_SECCOUNT)
 #define EWRAM_BSS               SECTION(".sbss." _LIBSEVEN_SECCOUNT)
 
-#define IRQ_CODE                IWRAM_CODE ARM_CODE __attribute__((isr("IRQ")))
+#define IRQ_HANDLER             IWRAM_CODE ARM_CODE __attribute__((isr("IRQ")))
 
 _LIBSEVEN_EXTERN_C_END
 

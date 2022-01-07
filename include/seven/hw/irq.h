@@ -82,8 +82,6 @@ enum IRQIndex
 
 typedef void IRQHandler(void);
 
-#define IRQ_HANDLER (*(IRQHandler **volatile)0x03FFFFFC)
-
 extern void irqInit(IRQHandler *isr);
 extern void irqInitDefault(void);
 
