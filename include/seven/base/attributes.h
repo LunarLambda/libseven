@@ -40,7 +40,7 @@ _LIBSEVEN_EXTERN_C
     __attribute__((section(".iwram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
 
 #define EWRAM_CODE \
-    __attribute__((section(".ewram.text." _LibSEVEN_STR2(__COUNTER__)), noinline))
+    __attribute__((section(".ewram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
 
 _LIBSEVEN_EXTERN_C_END
 
