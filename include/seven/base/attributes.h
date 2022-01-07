@@ -33,6 +33,15 @@ _LIBSEVEN_EXTERN_C
 #define EWRAM_BSS(data) \
     __attribute__((section(".sbss." #data))) data
 
+#define _LIBSEVEN_STR(s) #s
+#define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
+
+#define IWRAM_CODE \
+    __attribute__((section(".iwram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
+
+#define EWRAM_CODE \
+    __attribute__((section(".ewram.text." _LibSEVEN_STR2(__COUNTER__)), noinline))
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_ATTRIBUTES_H */
