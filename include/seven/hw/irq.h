@@ -46,7 +46,7 @@ enum IRQGroup
     // IRQs in this group can wake up the GBA from a svcStop() call.
     IRQS_EXTERNAL       = IRQ_SERIAL  | IRQ_KEYPAD  | IRQ_CARTRIDGE,
 
-    IRQS_ALL            = BITS(0, 13),
+    IRQS_ALL            = BITS(14),
 };
 
 enum IRQIndex

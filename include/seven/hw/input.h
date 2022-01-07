@@ -59,7 +59,7 @@ enum KeyIndex
     KEYINDEX_L,
 };
 
-enum KeyIRQFlags
+enum KeyIRQ
 {
     KEY_IRQ_ENABLE       = BIT(14),
     KEY_IRQ_PRESS_ALL    = BIT(15),

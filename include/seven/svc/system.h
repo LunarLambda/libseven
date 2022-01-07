@@ -35,7 +35,7 @@ enum RegisterRamResetFlags
     RRR_SIO             = BIT(5),
     RRR_SOUND           = BIT(6),
     RRR_REGISTERS       = BIT(7),
-    RRR_EVERYTHING      = BITS(0, 8),
+    RRR_EVERYTHING      = BITS(8),
 };
 
 extern void svcRegisterRamReset(u8 reset_flags);

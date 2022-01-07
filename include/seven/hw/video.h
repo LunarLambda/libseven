@@ -15,14 +15,17 @@ _LIBSEVEN_EXTERN_C
 
 #define REG_DISPCNT             REG16(0x04000000)
 
+#define BF_LCD_MODE_OFFSET 0
+#define BF_LCD_MODE_LENGTH 3
+
 enum DisplayControl
 {
-    LCD_MODE_0                  = BITFIELD(0, 3, 0),
-    LCD_MODE_1                  = BITFIELD(0, 3, 1),
-    LCD_MODE_2                  = BITFIELD(0, 3, 2),
-    LCD_MODE_3                  = BITFIELD(0, 3, 3),
-    LCD_MODE_4                  = BITFIELD(0, 3, 4),
-    LCD_MODE_5                  = BITFIELD(0, 3, 5),
+    LCD_MODE_0                  = BITFIELD(LCD_MODE, 0),
+    LCD_MODE_1                  = BITFIELD(LCD_MODE, 1),
+    LCD_MODE_2                  = BITFIELD(LCD_MODE, 2),
+    LCD_MODE_3                  = BITFIELD(LCD_MODE, 3),
+    LCD_MODE_4                  = BITFIELD(LCD_MODE, 4),
+    LCD_MODE_5                  = BITFIELD(LCD_MODE, 5),
 
     LCD_MODE_TILED              = LCD_MODE_0,
     LCD_MODE_MIXED              = LCD_MODE_1,
@@ -82,12 +85,18 @@ enum DisplayStatus
 #define REG_BG2CNT      REG16(0x0400000C)
 #define REG_BG3CNT      REG16(0x0400000E)
 
+#define BF_BG_PRIO_OFFSET 0
+#define BF_BG_PRIO_LENGTH 2
+
+#define BF_BG_SIZE_OFFSET 14
+#define BF_BG_SIZE_LENGTH 2
+
 enum BackgroundControl
 {
-    BG_PRIO_0                   = BITFIELD(0, 2, 0),
-    BG_PRIO_1                   = BITFIELD(0, 2, 1),
-    BG_PRIO_2                   = BITFIELD(0, 2, 2),
-    BG_PRIO_3                   = BITFIELD(0, 2, 3),
+    BG_PRIO_0                   = BITFIELD(BG_PRIO, 0),
+    BG_PRIO_1                   = BITFIELD(BG_PRIO, 1),
+    BG_PRIO_2                   = BITFIELD(BG_PRIO, 2),
+    BG_PRIO_3                   = BITFIELD(BG_PRIO, 3),
 
     BG_PRIO_MIN                 = BG_PRIO_3,
     BG_PRIO_MAX                 = BG_PRIO_0,
@@ -102,10 +111,10 @@ enum BackgroundControl
     BG_AFF_OVERFLOW_WRAP        = BIT(13),
     BG_AFF_OVERFLOW_TRANS       = !BG_AFF_OVERFLOW_WRAP,
 
-    BG_SIZE_256x256             = BITFIELD(14, 2, 0),
-    BG_SIZE_512x256             = BITFIELD(14, 2, 1),
-    BG_SIZE_256x512             = BITFIELD(14, 2, 2),
-    BG_SIZE_512x512             = BITFIELD(14, 2, 3),
+    BG_SIZE_256x256             = BITFIELD(BG_SIZE, 0),
+    BG_SIZE_512x256             = BITFIELD(BG_SIZE, 1),
+    BG_SIZE_256x512             = BITFIELD(BG_SIZE, 2),
+    BG_SIZE_512x512             = BITFIELD(BG_SIZE, 3),
 
     BG_AFF_SIZE_128x128         = BG_SIZE_256x256,
     BG_AFF_SIZE_256x256         = BG_SIZE_512x256,
@@ -182,6 +191,9 @@ enum WindowControl
 
 #define REG_BLDCNT      REG16(0x04000050)
 
+#define BF_BLD_MODE_OFFSET 6
+#define BF_BLD_MODE_LENGTH 2
+
 enum BlendControl
 {
     BLD_TARGET_BG0      = BIT(0),
@@ -191,10 +203,10 @@ enum BlendControl
     BLD_TARGET_OBJ      = BIT(4),
     BLD_TARGET_BD       = BIT(5),
 
-    BLD_MODE_OFF        = BITFIELD(6, 2, 0),
-    BLD_MODE_ALPHA      = BITFIELD(6, 2, 1),
-    BLD_MODE_WHITE      = BITFIELD(6, 2, 2),
-    BLD_MODE_BLACK      = BITFIELD(6, 2, 3),
+    BLD_MODE_OFF        = BITFIELD(BLD_MODE, 0),
+    BLD_MODE_ALPHA      = BITFIELD(BLD_MODE, 1),
+    BLD_MODE_WHITE      = BITFIELD(BLD_MODE, 2),
+    BLD_MODE_BLACK      = BITFIELD(BLD_MODE, 3),
 
     // Only used with BLD_MODE_ALPHA
     BLD_TARGET2_BG0      = BIT(8),
