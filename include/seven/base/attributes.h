@@ -11,43 +11,32 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define _LIBSEVEN_STR(s) #s
-#define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
+#define _LIBSEVEN_STR(s)        #s
+#define _LIBSEVEN_STR2(s)       _LIBSEVEN_STR(s)
+#define _LIBSEVEN_SECCOUNT      _LIBSEVEN_STR2(__COUNTER__)
 
-#define PACKED          __attribute__((packed))
-#define ALIGN(n)        __attribute__((aligned(n)))
-#define NORETURN        __attribute__((__noreturn__))
-#define NOINLINE        __attribute__((noinline))
-#define ARM_CODE        __attribute__((target("arm")))
-#define THUMB_CODE      __attribute__((target("thumb")))
+#define PACKED                  __attribute__((packed))
+#define ALIGN(n)                __attribute__((aligned(n)))
+#define NORETURN                __attribute__((__noreturn__))
+#define NOINLINE                __attribute__((noinline))
+#define ARM_CODE                __attribute__((target("arm")))
+#define THUMB_CODE              __attribute__((target("thumb")))
 
-#define SECTION(name) \
-    __attribute__((section(name)))
+#define SECTION(name)           __attribute__((section(name)))
 
-#define IWRAM_SECTION(suffix) SECTION(".iwram." suffix)
-#define IWRAM_OVERLAY(number) SECTION(".iwram" #number)
+#define IWRAM_SECTION(suffix)   SECTION(".iwram" suffix)
+#define IWRAM_OVERLAY(number)   SECTION(".iwram" #number)
 
-#define IWRAM_CODE \
-    __attribute__((section(".iwram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
+#define IWRAM_CODE              IWRAM_SECTION(".text." _LIBSEVEN_SECCOUNT) NOINLINE
+#define IWRAM_DATA              IWRAM_SECTION(".data." _LIBSEVEN_SECCOUNT)
+#define IWRAM_BSS               SECTION(".bss." _LIBSEVEN_SECCOUNT)
 
-#define IWRAM_DATA \
-    __attribute__((section(".iwram.data." _LIBSEVEN_STR2(__COUNTER__))))
+#define EWRAM_SECTION(suffix)   SECTION(".ewram" suffix)
+#define EWRAM_OVERLAY(number)   SECTION(".ewram" #number)
 
-#define IWRAM_BSS \
-    __attribute__((section(".bss." _LIBSEVEN_STR2(__COUNTER__))))
-
-
-#define EWRAM_SECTION(suffix) SECTION(".ewram." suffix)
-#define EWRAM_OVERLAY(number) SECTION(".ewram" #number)
-
-#define EWRAM_CODE \
-    __attribute__((section(".ewram.text." _LIBSEVEN_STR2(__COUNTER__)), noinline))
-
-#define EWRAM_DATA \
-    __attribute__((section(".ewram.data." _LIBSEVEN_STR2(__COUNTER__))))
-
-#define EWRAM_BSS \
-    __attribute__((section(".sbss." _LIBSEVEN_STR2(__COUNTER__))))
+#define EWRAM_CODE              EWRAM_SECTION(".text." _LIBSEVEN_SECCOUNT) NOINLINE
+#define EWRAM_DATA              EWRAM_SECTION(".data." _LIBSEVEN_SECCOUNT)
+#define EWRAM_BSS               SECTION(".sbss." _LIBSEVEN_SECCOUNT)
 
 _LIBSEVEN_EXTERN_C_END
 
