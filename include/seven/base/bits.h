@@ -11,28 +11,31 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define BIT(n)                  (1 << (n))
-#define BITS(n)                 (BIT(n) - 1)
+#define BIT(n)                          (1 << (n))
+#define BITS(n)                         (BIT(n) - 1)
 
-#define BIT_TRISTATE(val, m, p) \
+#define BIT_TRISTATE(val, m, p)         \
     (((val)>>(p)&1)-((val)>>(m)&1))
 
-#define BITFIELD(name, value)   \
+#define BITFIELD(name, value)           \
     (((value) & BITS((BF_##name##_LENGTH))) << (BF_##name##_OFFSET))
 
-#define BF_AND(name, lhs, rhs)  ((lhs) &  BITFIELD(name, (rhs)))
-#define BF_ORR(name, lhs, rhs)  ((lhs) |  BITFIELD(name, (rhs)))
-#define BF_EOR(name, lhs, rhs)  ((lhs) ^  BITFIELD(name, (rhs)))
-#define BF_BIC(name, lhs, rhs)  ((lhs) & ~BITFIELD(name, (rhs)))
+#define BF_AND(lhs, name, rhs)          ((lhs) &  BITFIELD(name, (rhs)))
+#define BF_ORR(lhs, name, rhs)          ((lhs) |  BITFIELD(name, (rhs)))
+#define BF_EOR(lhs, name, rhs)          ((lhs) ^  BITFIELD(name, (rhs)))
+#define BF_BIC(lhs, name, rhs)          ((lhs) & ~BITFIELD(name, (rhs)))
 
-#define BF_MASK(name)           \
+#define BF_MASK(name)                   \
     (BITS((BF_##name##_LENGTH)) << (BF_##name##OFFSET))
 
-#define BF_GET(name, lhs)       \
-    ((lhs) >> ((BF_##name##_OFFSET)) & BITS(BF_##name##_LENGTH))
+#define BF_GET(lhs, name)               \
+    ((lhs) >> ((BF_##name##_OFFSET)) & BITS((BF_##name##_LENGTH)))
 
-#define BF_SET(name, lhs, rhs)  \
-    (BF_ORR(name, BF_BIC(name, (lhs), BF_MASK(name)), (rhs)))
+#define BF_SET(lhs, name, rhs)          \
+    (BF_ORR(BF_BIC((lhs), name, BF_MASK(name)), name, (rhs)))
+
+#define BF_ESET(lhs, name, enum)        \
+    (BF_ORR(BF_BIC((lhs), name, BF_MASK(name)), name, (name##enum))
 
 _LIBSEVEN_EXTERN_C_END
 
