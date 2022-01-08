@@ -223,8 +223,15 @@ enum BlendControl
 
 #define REG_GREENSWP    REG16(0x04000002)
 
+#define BF_COLOR_R_OFFSET 0
+#define BF_COLOR_R_LENGTH 5
+#define BF_COLOR_G_OFFSET 5
+#define BF_COLOR_G_LENGTH 5
+#define BF_COLOR_B_OFFSET 10
+#define BF_COLOR_B_LENGTH 5
+
 #define RGB5(r, g, b) \
-    ((u16)(BITFIELD(0, 5, (r)) | BITFIELD(5, 5, (g)) | BITFIELD(10, 5, (b))))
+    ((u16)(BITFIELD(COLOR_R, (r)) | BITFIELD(COLOR_G, (g)) | BITFIELD(COLOR_B, (b))))
 
 #define RGB8(r, g, b) \
     RGB5((r) >> 3, (g) >> 3, (b) >> 3)

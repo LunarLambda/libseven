@@ -26,7 +26,7 @@ _LIBSEVEN_EXTERN_C
 #define BF_BIC(lhs, name, rhs)          ((lhs) & ~BITFIELD(name, (rhs)))
 
 #define BF_MASK(name)                   \
-    (BITS((BF_##name##_LENGTH)) << (BF_##name##OFFSET))
+    (BITS((BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
 
 #define BF_GET(lhs, name)               \
     ((lhs) >> ((BF_##name##_OFFSET)) & BITS((BF_##name##_LENGTH)))
@@ -35,7 +35,7 @@ _LIBSEVEN_EXTERN_C
     (BF_ORR((lhs) & ~BF_MASK(name)), name, (rhs))
 
 #define BF_ESET(lhs, name, enum)        \
-    (((lhs) & ~BF_MASK(name)) | (name##enum))
+    (((lhs) & ~BF_MASK(name)) | (name##_##enum))
 
 _LIBSEVEN_EXTERN_C_END
 
