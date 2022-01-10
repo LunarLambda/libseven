@@ -27,6 +27,18 @@ extern void sramClear(usize len);
 
 extern void sramClearAt(usize len, usize off);
 
+extern void sramRead64(void *dst, size_t len);
+
+extern void sramReadAt64(void *dst, size_t len, size_t off);
+
+extern void sramWrite64(const void *src, size_t len);
+
+extern void sramWriteAt64(const void *src, size_t len, size_t off);
+
+extern void sramClear64(size_t len);
+
+extern void sramClearAt64(size_t len, size_t off);
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_HW_SRAM_H */

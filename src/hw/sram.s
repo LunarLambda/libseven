@@ -12,6 +12,11 @@
 .set MEM_SRAM,          0x0E000000
 .set MEM_SRAM_SIZE,     0x8000
 
+.macro fnsize name:req
+    .size       \name,.-\name
+.endm
+
+
 @ TODO: Make all functions return a byte count
 
 fn sramReadCore arm local
@@ -22,19 +27,26 @@ fn sramReadCore arm local
     bx          lr
 endfn
 
-@ void sramReadAt(void *src, u32 len, u32 off);
-fn sramRead thumb
+.global sramReadAt64, sramRead, sramReadAt
+
+fn sramRead64 thumb
     movs        r2, #0
-sfn sramReadAt
-    @ Return if len == 0
+sramReadAt64:
+    movs        r3, #64
+    lsls        r3, r3, #10
+    b           .Lsra_main
+sramRead:
+    movs        r2, #0
+sramReadAt:
+    movs        r3, #32
+    lsls        r3, r3, #10
+.Lsra_main:
+    @ Length check
     cmp         r1, #0
     beq         .Lsra_ret
-
-    @ len += off
-    adds         r1, r1, r2
-    @ r3 = 0x8000
-    movs        r3, #0x80
-    lsls        r3, r3, #8
+    @ Overflow check
+    adds        r1, r1, r2
+    bcs         .Lsra_ret
     @ Bounds check
     cmp         r1, r3
     bgt         .Lsra_ret
@@ -52,21 +64,33 @@ sfn sramReadAt
     bx          r3
 .Lsra_ret:
     bx          lr
-endsfn
+fnsize sramReadAt64
+fnsize sramRead
+fnsize sramReadAt
 endfn
 
+.global sramWriteAt64, sramWrite, sramWriteAt
+
 @ void sramWriteAt(const void *src, u32 len, u32 off);
-fn sramWrite thumb
+fn sramWrite64 thumb
     movs        r2, #0
-sfn sramWriteAt
+sramWriteAt64:
+    movs        r3, #64
+    lsls        r3, r3, #10
+    b           .Lswa_main
+sramWrite:
+    movs        r2, #0
+sramWriteAt:
+    movs        r3, #64
+    lsls        r3, r3, #10
+.Lswa_main:
+    @ Length check
     cmp         r1, #0
     beq         .Lswa_ret
-
-    @ len += off
+    @ Overflow check
     adds        r1, r1, r2
+    bcs         .Lswa_ret
     @ Bounds check
-    movs        r3, #0x80
-    lsls        r3, r3, #8
     cmp         r1, r3
     bgt         .Lswa_ret
 
@@ -87,7 +111,9 @@ sfn sramWriteAt
 
 .Lswa_ret:
     bx          lr
-endsfn
+fnsize sramWriteAt64
+fnsize sramWrite
+fnsize sramWriteAt
 endfn
 
 
@@ -138,17 +164,26 @@ sfn sramCompareAt
 endsfn
 endfn
 
-fn sramClear thumb
+.global sramClearAt64, sramClear, sramClearAt
+
+fn sramClear64 thumb
     movs        r1, #0
-sfn sramClearAt
-    @ if len = 0
+sramClearAt64:
+    movs        r3, #64
+    lsls        r3, r3, #10
+    b           .Lsza_main
+sramClear:
+    movs        r1, #0
+sramClearAt:
+    movs        r3, #32
+    lsls        r3, r3, #10
+    @ Length check
     cmp         r0, #0
     beq         .Lsza_oob
-
-    @ Bounds check (len + off <= MEM_SRAM_SIZE)
-    movs        r3, #0x80
-    lsls        r3, r3, #8
+    @ Overflow check
     adds        r2, r0, r1
+    bcs         .Lsza_oob
+    @ Bounds check
     cmp         r2, r3
     bgt         .Lsza_oob
 
@@ -173,7 +208,9 @@ sfn sramClearAt
 
 .Lsza_oob:
     bx          lr
-endsfn
+fnsize sramClearAt64
+fnsize sramClear
+fnsize sramClearAt
 endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8
