@@ -87,7 +87,7 @@
         .purgem         endr
     .endm
 
-    .section            .rdata.\name,"a",%progbits
+    .section            .rodata.\name,"a",%progbits
     .type               \name STT_OBJECT
     \name\():
 .endm
