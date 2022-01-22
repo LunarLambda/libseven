@@ -37,6 +37,12 @@ _LIBSEVEN_EXTERN_C
 #define BF_ESET(lhs, name, enum)        \
     (((lhs) & ~BF_MASK(name)) | (name##_##enum))
 
+#define BF_CMP(lhs, name, rhs)          \
+    (BF_GET((lhs), name) == (rhs))
+
+#define BF_ECMP(lhs, name, enum)        \
+    (((lhs) & BF_MASK(name)) == name##_##enum)
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_BITS_H */
