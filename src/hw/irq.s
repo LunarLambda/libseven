@@ -9,9 +9,7 @@
 .include        "macros.s"
 
 @ FIXME(LunarLambda): Finally implement the rest of the IRQ API...
-.global         IRQ_TABLE
-
-bss IRQ_TABLE
+bss IRQ_TABLE global
     .align      2
     .fill       14, 8, 0
     .word       0

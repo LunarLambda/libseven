@@ -93,42 +93,87 @@
 .endm
 
 @ Declares read-writable data.
-.macro data name:req
+.macro data .name:req .linkage=local .section
     .macro              endd
-        .size           \name,.-\name
+        .size           \.name,.-\.name
         .previous
         .purgem         endd
     .endm
 
-    .section            .data.\name,"aw",%progbits
-    .type               \name STT_OBJECT
-    \name :
+    .ifc \.linkage,global
+        .global \.name
+    .else
+        .ifc \.linkage,local
+            .local \.name
+        .else
+            .error "please specify linkage of \.name `local` or `global`"
+        .endif
+    .endif
+
+    .ifnb \.section
+        .section        \.section,"aw",%progbits
+    .else
+        .section        .data.\.name,"aw",%progbits
+    .endif
+
+    .type               \.name STT_OBJECT
+    \.name :
 .endm
 
 @ Declares read-only data.
-.macro rodata name:req
+.macro rodata .name:req .linkage=local .section
     .macro              endr
-        .size           \name,.-\name
+        .size           \.name,.-\.name
         .previous
         .purgem         endr
     .endm
 
-    .section            .rodata.\name,"a",%progbits
-    .type               \name STT_OBJECT
-    \name :
+    .ifc \.linkage,global
+        .global \.name
+    .else
+        .ifc \.linkage,local
+            .local \.name
+        .else
+            .error "please specify linkage of \.name `local` or `global`"
+        .endif
+    .endif
+
+    .ifnb \.section
+        .section        \.section,"a",%progbits
+    .else
+        .section        .rodata.\.name,"a",%progbits
+    .endif
+
+    .type               \.name STT_OBJECT
+    \.name :
 .endm
 
 @ Declares zero-initialized data.
-.macro bss name:req
+.macro bss .name:req .linkage=local .section
     .macro              endb
-        .size           \name,.-\name
+        .size           \.name,.-\.name
         .previous
         .purgem         endb
     .endm
 
-    .section            .bss.\name,"aw",%nobits
-    .type               \name STT_OBJECT
-    \name\():
+    .ifc \.linkage,global
+        .global \.name
+    .else
+        .ifc \.linkage,local
+            .local \.name
+        .else
+            .error "please specify linkage of \.name `local` or `global`"
+        .endif
+    .endif
+
+    .ifnb \.section
+        .section        \.section,"aw",%nobits
+    .else
+        .section        .bss.\.name,"aw",%nobits
+    .endif
+
+    .type               \.name STT_OBJECT
+    \.name :
 .endm
 
 @ vim:ft=armv4 et sta sw=4 sts=8
