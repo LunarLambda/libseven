@@ -7,7 +7,7 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 .macro simple_svc name:req num:req noreturn
     fn \name thumb

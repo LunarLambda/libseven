@@ -7,7 +7,7 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 .set REG_TM2VAL, 0x04000108
 .set REG_TM2CNT, 0x0400010A

@@ -7,7 +7,7 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 @ Memory Copy
 

@@ -7,7 +7,7 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 .set REG_DMA0, 0x040000B0
 .set REG_DMA1, 0x040000BC

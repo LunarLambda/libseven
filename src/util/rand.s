@@ -7,7 +7,7 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 @ state cannot be all zeroes, generator locks up
 @ set last state word as 1 to make sure SetSeed(0) is fine.

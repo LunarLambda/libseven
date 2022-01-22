@@ -7,13 +7,14 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 .set MEM_SRAM,          0x0E000000
 .set MEM_SRAM_SIZE,     0x8000
 
 .macro fnsize name:req
     .size       \name,.-\name
+    .type       \name STT_FUNC
 .endm
 
 
@@ -116,52 +117,82 @@ fnsize sramWrite
 fnsize sramWriteAt
 endfn
 
+@ src, offset, sram/temp2, counter, temp
 
-@ TODO: Reduce IWRAM use by only running core sram-read loops in RAM
-@
-@ Save a register by using start + end pointers instead of pointers + count
-@ u32 sramCompareAt(const void *src, u32 len, u32 off);
+@ rX = src
+@ rY = sram
 
-fn sramCompare arm
-    mov         r2, #0
-sfn sramCompareAt
-    push        {r4, r5}
+@ rT = temp, end addr
+@ rU = temp2
 
-    mov         r3, r0
-    mov         r0, #0
+@ r0 = src
+@ r2 = sram_start
+@ r1 = length
 
-    @ if len = 0
-    cmp         r1, #0
-    beq         .Lsca_out
+@ r3, r12 = temp
+@1:
+@ldrb    temp1, [lhs, counter]
+@ldrb    temp2, [rhs, counter]
+@cmp     temp1, temp2
+@bxeq    lr
+@add     counter, #1
+@cmp     counter, max
+@bne     1b
 
-    @ Bounds check
-    add         r4, r1, r2
-    cmp         r4, #0x8000
-    bgt         .Lsca_out
 
-    add         r2, r2, MEM_SRAM
-
-    @ r0 = count
-    @ r1 = len
-    @ r2 = rhs
-    @ r3 = lhs
-    @ r5 = temp_rhs
-    @ r4 = temp_lhs
-.Lsca_loop:
-    ldrb        r4, [r2, r0]
-    ldrb        r5, [r3, r0]
-
-    cmp         r4, r5
-    bne         .Lsca_out
-
+fn sramCompareCore arm local
+.Lscc_loop:
+    ldrb        r3, [r0]
+    ldrb        r12, [r2]
+    cmp         r3, r12
+    @ branch
     add         r0, r0, #1
-    cmp         r1, r0
-    bne         .Lsca_loop
+    add         r2, r2, #1
 
-.Lsca_out:
-    pop         {r4, r5}
     bx          lr
-endsfn
+endfn
+
+.global sramCompareAt64, sramCompare, sramCompareAt
+
+@ void sramCompareAt(const void *src, u32 len, u32 off);
+fn sramCompare64 thumb
+    movs        r2, #0
+sramCompareAt64:
+    movs        r3, #64
+    lsls        r3, r3, #10
+    b           .Lswc_main
+sramCompare:
+    movs        r2, #0
+sramCompareAt:
+    movs        r3, #64
+    lsls        r3, r3, #10
+.Lswc_main:
+    @ Length check
+    cmp         r1, #0
+    beq         .Lswc_ret
+    @ Overflow check
+    adds        r1, r1, r2
+    bcs         .Lswc_ret
+    @ Bounds check
+    cmp         r1, r3
+    bgt         .Lswc_ret
+    subs        r1, r1, r2
+
+    @ r0 = src
+    @ r1 = sram_end
+    @ r2 = sram_addr
+    movs        r3, #0xE
+    lsls        r3, r3, #24
+    adds        r1, r1, r3
+    adds        r2, r2, r3
+    ldr         r3, =sramCompareCore
+    @ Tail call
+    bx          r3
+.Lswc_ret:
+    bx          lr
+fnsize sramCompareAt64
+fnsize sramCompare
+fnsize sramCompareAt
 endfn
 
 .global sramClearAt64, sramClear, sramClearAt

@@ -7,7 +7,7 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.include        "asm_base.s"
+.include        "macros.s"
 
 .set REG_IME,           0x04000208
 .set REG_DISPCNT,       0x04000000
