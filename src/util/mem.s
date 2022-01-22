@@ -84,3 +84,5 @@ endfn
 fn memCompare32 arm
     bx          lr
 endfn
+
+@ vim: ft=armv4 et sta sw=4 sts=8

@@ -19,6 +19,8 @@
 .set LCD_MODE_4,        0x4
 .set LCD_MODE_5,        0x5
 
+@ void* lcdSwapBuffers(void)
+@
 fn lcdSwapBuffers thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_FRAME_SELECT
@@ -47,6 +49,8 @@ fn lcdSwapBuffers thumb
     bx          lr
 endfn
 
+@ void* lcdInitMode3(void)
+@
 fn lcdInitMode3 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
@@ -68,6 +72,8 @@ fn lcdInitMode3 thumb
     bx          lr
 endfn
 
+@ void* lcdInitMode4(void)
+@
 fn lcdInitMode4 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
@@ -89,6 +95,8 @@ fn lcdInitMode4 thumb
     bx          lr
 endfn
 
+@ void* lcdInitMode5(void)
+@
 fn lcdInitMode5 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE

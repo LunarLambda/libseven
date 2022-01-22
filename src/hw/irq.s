@@ -8,7 +8,9 @@
 
 .include        "macros.s"
 
+@ FIXME(LunarLambda): Finally implement the rest of the IRQ API...
 .global         IRQ_TABLE
+
 bss IRQ_TABLE
     .align      2
     .fill       14, 8, 0
@@ -25,11 +27,11 @@ endb
 .set REG_IME,     0x04000208
 .set IRQ_HANDLER, 0x03007FFC
 
-@ bool irqMasterEnable(void);
+@ bool irqMasterEnable(void)
 @
-@ r0 = REG_IME
-@ r1 = &REG_IME
-@ r2 = #1
+@ r0    REG_IME
+@ r1    &REG_IME
+@ r2    #1
 fn irqMasterEnable thumb
     movs        r2, #1
     ldr         r1, =REG_IME
@@ -38,12 +40,10 @@ fn irqMasterEnable thumb
     bx          lr
 endfn
 
-@ bool irqMasterDisable(void);
+@ bool irqMasterDisable(void)
 @
-@ r0 = REG_IME
-@ r1 = &REG_IME
-@
-@ We can disable IME by writing its own address to it, since bit 0 is 0.
+@ r0    REG_IME
+@ r1    &REG_IME
 fn irqMasterDisable thumb
     ldr         r1, =REG_IME
     ldrh        r0, [r1]
@@ -51,11 +51,11 @@ fn irqMasterDisable thumb
     bx          lr
 endfn
 
-@ bool irqMasterSetEnabled(bool enable);
+@ bool irqMasterSetEnabled(bool enable)
 @
-@ r0 = REG_IME
-@ r1 = &REG_IME
-@ r2 = enable
+@ r0    REG_IME
+@ r1    &REG_IME
+@ r2    enable
 fn irqMasterSetEnabled thumb
     movs        r2, r0
     ldr         r1, =REG_IME
@@ -64,12 +64,12 @@ fn irqMasterSetEnabled thumb
     bx          lr
 endfn
 
-@ u16 irqEnable(u16 irqs);
+@ u16 irqEnable(u16 irqs)
 @
-@ r0 = REG_IE (previous)
-@ r1 = &REG_IE
-@ r2 = REG_IME
-@ r3 = REG_IE (new)
+@ r0    REG_IE (previous)
+@ r1    &REG_IE
+@ r2    REG_IME
+@ r3    irqs, REG_IE (new)
 fn irqEnable thumb
     @ REG_IME = 0;
     ldr         r1, =REG_IE
@@ -85,12 +85,12 @@ fn irqEnable thumb
     bx          lr
 endfn
 
-@ u16 irqDisable(u16 irqs);
+@ u16 irqDisable(u16 irqs)
 @
-@ r0 = REG_IE (previous)
-@ r1 = &REG_IE
-@ r2 = REG_IME
-@ r3 = REG_IE (new)
+@ r0    REG_IE (previous)
+@ r1    &REG_IE
+@ r2    REG_IME
+@ r3    irqs, REG_IE (new)
 fn irqDisable thumb
     @ REG_IME = 0;
     ldr         r1, =REG_IE
@@ -106,12 +106,12 @@ fn irqDisable thumb
     bx          lr
 endfn
 
-@ u16 irqSetEnabled(u16 irqs);
+@ u16 irqSetEnabled(u16 irqs)
 @
-@ r0 = REG_IE (new)
-@ r1 = &REG_IE
-@ r2 = REG_IME
-@ r3 = REG_IE (old)
+@ r0    REG_IE (new)
+@ r1    &REG_IE
+@ r2    REG_IME
+@ r3    irqs, REG_IE (old)
 fn irqSetEnabled thumb
     @ REG_IME = 0;
     ldr         r1, =REG_IE
@@ -147,21 +147,21 @@ rodata IRQ_SOURCES
     .hword 0x0000; reg_ie_offset 0x0000 @ Cartridge,   -
 endr
 
-@ u16 irqEnableFull(u16 irqs);
+@ u16 irqEnableFull(u16 irqs)
 @
-@ r0 = REG_IE (previous)
-@ r1 = &REG_IE
-@ r2 = REG_IME
-@ r3 = REG_IE (new)
+@ r0    REG_IE (previous)
+@ r1    &REG_IE
+@ r2    REG_IME
+@ r3    REG_IE (new)
 @
 @ In loop:
 @
-@ r0 = irqs
-@ r1 = REG_IE
-@ r2 = Register flag
-@ r3 = IRQ_SOURCES
-@ r4 = Register offset from IE
-@ r5 = Register value
+@ r0    irqs
+@ r1    REG_IE
+@ r2    Register flag
+@ r3    IRQ_SOURCES
+@ r4    Register offset from IE
+@ r5    Register value
 fn irqEnableFull thumb
     @ irqs &= IRQ_MASK;
     lsls        r0, r0, #19
@@ -206,21 +206,21 @@ fn irqEnableFull thumb
     bx          lr
 endfn
 
-@ u16 irqDisableFull(u16 irqs);
+@ u16 irqDisableFull(u16 irqs)
 @
-@ r0 = REG_IE (previous)
-@ r1 = &REG_IE
-@ r2 = REG_IME
-@ r3 = REG_IE (new)
+@ r0    REG_IE (previous)
+@ r1    &REG_IE
+@ r2    REG_IME
+@ r3    REG_IE (new)
 @
 @ In loop:
 @
-@ r0 = irqs
-@ r1 = &REG_IE
-@ r2 = Register flag
-@ r3 = IRQ_SOURCES
-@ r4 = Register offset
-@ r5 = Register value
+@ r0    irqs
+@ r1    &REG_IE
+@ r2    Register flag
+@ r3    IRQ_SOURCES
+@ r4    Register offset
+@ r5    Register value
 fn irqDisableFull thumb
     @ irqs &= IRQ_MASK;
     lsls        r0, r0, #19
@@ -262,6 +262,8 @@ fn irqDisableFull thumb
     bx          lr
 endfn
 
+@ void irqCriticalSectionEnter(void)
+@
 fn irqCriticalSectionEnter thumb
     @ r1 = REG_IME
     @ REG_IME = 0
@@ -284,6 +286,8 @@ fn irqCriticalSectionEnter thumb
     bx          lr
 endfn
 
+@ void irqCriticalSectionExit(void)
+@
 fn irqCriticalSectionExit thumb
     @ r1 = REG_IME
     @ REG_IME = 0
@@ -308,6 +312,8 @@ fn irqCriticalSectionExit thumb
     bx          lr
 endfn
 
+@ bool irqCriticalSectionActive(void)
+@
 fn irqCriticalSectionActive thumb
     ldr         r0, =CRITICAL_SECTION
     ldr         r0, [r0]
@@ -317,9 +323,12 @@ fn irqCriticalSectionActive thumb
     bx          lr
 endfn
 
-@ extern void irqInit(IRQHandler *isr);
+@ void irqInitDefault(void)
+@
 fn irqInitDefault thumb
     ldr         r0, =irqDefaultHandler
+@ void irqInit(IRQHandler *isr);
+@
 fn irqInit
     movs        r1, #0
     mvns        r2, r1
@@ -341,6 +350,8 @@ fn irqInit
     bx          lr
 endfn
 
+@ void irqDefaultHandler(void)
+@
 @ r0    REG_BASE
 @ r1    IE & IF
 @ r2    <tmp>

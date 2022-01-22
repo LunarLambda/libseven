@@ -17,6 +17,8 @@
 .set TIMER_CASCADE, 0x4
 .set TIMER_ENABLE, 0x80
 
+@ u32 profileFunction(void (*f)(void), u32 *return_value);
+@
 fn profileFunction arm
     push        {r4, r5, r6, lr}
 

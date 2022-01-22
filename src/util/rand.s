@@ -15,26 +15,30 @@ data XOSHIRO_STATE
     .word 0, 0, 0, 1
 endd
 
+@ void randSetSeed(u32 seed)
+@
 fn randSetSeed thumb
     ldr         r1, =XOSHIRO_STATE
     str         r0, [r1]
     bx          lr
 endfn
 
+@ u32 randNext(void)
+@
 @ Implementation of the Xoshiro128++ PRNG.
 @
 @ Excellent speed, entropy, and periodicity.
 @
 @ Code from https://xoshiro.di.unimi.it/xoshiro128plusplus.c
 @
-@ r0 = return
-@ r1 = s[0]
-@ r2 = s[1]
-@ r3 = s[2]
-@ r4 = s[3]
-@ r5 = t
-@ r6 = &XOSHIRO_STATE
-@ r7 = ROR immediate
+@ r0    return
+@ r1    s[0]
+@ r2    s[1]
+@ r3    s[2]
+@ r4    s[3]
+@ r5    t
+@ r6    &XOSHIRO_STATE
+@ r7    ROR immediate
 fn randNext thumb
     push        {r4, r5, r6, r7}
 

@@ -11,12 +11,7 @@
 
 .set MEM_SRAM,          0x0E000000
 .set MEM_SRAM_SIZE,     0x8000
-
-.macro fnsize name:req
-    .size       \name,.-\name
-    .type       \name STT_FUNC
-.endm
-
+.set MEM_SRAM_SIZE64,   0x10000
 
 @ TODO: Make all functions return a byte count
 

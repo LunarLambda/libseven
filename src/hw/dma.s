@@ -9,14 +9,17 @@
 
 .include        "macros.s"
 
-.set REG_DMA0, 0x040000B0
-.set REG_DMA1, 0x040000BC
-.set REG_DMA2, 0x040000C8
-.set REG_DMA3, 0x040000D4
+.set REG_DMA0,          0x040000B0
+.set REG_DMA1,          0x040000BC
+.set REG_DMA2,          0x040000C8
+.set REG_DMA3,          0x040000D4
+.set REG_DMACNT,        0x040000BA
+.set SOUND_FIFO_A,      0x040000A0
+.set SOUND_FIFO_B,      0x040000A4
 
-.set REG_DMACNT, 0x040000BA
-
-@ r0: num
+@ void dmaEnable(u32 num)
+@
+@ r0    num
 fn dmaEnable thumb
     cmp         r0, #3
     bgt         .Leout
@@ -42,6 +45,9 @@ fn dmaEnable thumb
     bx          lr
 endfn
 
+@ void dmaDisable(u32 num)
+@
+@ r0    num
 fn dmaDisable thumb
     cmp         r0, #3
 
@@ -67,8 +73,11 @@ fn dmaDisable thumb
     bx          lr
 endfn
 
-@ r0: src
-@ r1: dst
+@ void dmaCopy16(const void *src, void *dst, u32 len)
+@
+@ r0    src
+@ r1    dst
+@ r2    len
 fn dmaCopy16 thumb
     @ DMA_ENABLE
     movs        r3, #0x80
@@ -82,8 +91,11 @@ fn dmaCopy16 thumb
     bx          lr
 endfn
 
-@ r0: src
-@ r1: dst
+@ void dmaCopy32(const void *src, void *dst, u32 len)
+@
+@ r0    src
+@ r1    dst
+@ r2    len
 fn dmaCopy32 thumb
     @ DMA_ENABLE | DMA_32BIT
     movs        r3, #0x84
@@ -97,11 +109,12 @@ fn dmaCopy32 thumb
     bx          lr
 endfn
 
-@ r0: src
-@ r1: flags
+@ void dmaSoundFifoATransfer(const void *src)
+@
+@ r0    src
 fn dmaSoundFifoATransfer thumb
     lsls        r3, r1, #16
-    ldr         r1, =0x040000A0
+    ldr         r1, =SOUND_FIFO_A
     @ DMA_REPEAT | DMA_START_SOUND
     movs        r2, #0x32
     lsls        r2, r2, #24
@@ -111,11 +124,12 @@ fn dmaSoundFifoATransfer thumb
     bx          lr
 endfn
 
-@ r0: src
-@ r1: flags
+@ void dmaSoundFifoBTransfer(const void *src)
+@
+@ r0    src
 fn dmaSoundFifoBTransfer thumb
     lsls        r3, r1, #16
-    ldr         r1, =0x040000A4
+    ldr         r1, =SOUND_FIFO_B
     movs        r2, #0x32
     lsls        r2, r2, #24
     orrs        r2, r2, r3
@@ -124,10 +138,12 @@ fn dmaSoundFifoBTransfer thumb
     bx          lr
 endfn
 
-@ r0: src
-@ r1: dst
-@ r2: count
-@ r3: flags
+@ void dmaHBlankTransfer(const void *src, void *dst, u32 len, u16 flags);
+@
+@ r0    src
+@ r1    dst
+@ r2    len
+@ r3    flags
 fn dmaHBlankTransfer thumb
     @ Clear DMA_START flags
     mov         r12, r4
@@ -154,11 +170,13 @@ fn dmaHBlankTransfer thumb
     bx          lr
 endfn
 
-@ r0: num
-@ r1: src
-@ r2: dst
-@ r3: len
-@ [sp]: flags
+@ void dmaAtomicSet(u32 num, const void *src, void *dst, u32 len, u16 flags);
+@
+@ r0    num
+@ r1    src
+@ r2    dst
+@ r3    len
+@ [sp]  flags
 fn dmaAtomicSet thumb
     cmp         r0, #3
     bgt         .Lsout

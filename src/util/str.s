@@ -8,3 +8,5 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
+
+@ vim: ft=armv4 et sta sw=4 sts=8
