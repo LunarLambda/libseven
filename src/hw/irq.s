@@ -130,7 +130,7 @@ endfn
     .hword (0x04000000 + \val) - REG_IE
 .endm
 
-rdata IRQ_SOURCES
+rodata IRQ_SOURCES
     .hword 0x0008; reg_ie_offset 0x0004 @ LCD V-Blank, DISPSTAT
     .hword 0x0010; reg_ie_offset 0x0004 @ LCD H-Blank, DISPSTAT
     .hword 0x0020; reg_ie_offset 0x0004 @ LCD V-Count, DISPSTAT
@@ -320,7 +320,7 @@ endfn
 @ extern void irqInit(IRQHandler *isr);
 fn irqInitDefault thumb
     ldr         r0, =irqDefaultHandler
-sfn irqInit
+fn irqInit
     movs        r1, #0
     mvns        r2, r1
     ldr         r3, =REG_IE
@@ -339,7 +339,6 @@ sfn irqInit
     @ REG_IME = 1
     strh        r2, [r3, #8]
     bx          lr
-endsfn
 endfn
 
 @ r0    REG_BASE

@@ -4,66 +4,92 @@
 @ file, You can obtain one at https://mozilla.org/MPL/2.0/.
 @
 
-@ Declares a function.
-@
-@ THUMB Code (ROM):
-@       fn MyFunction thumb [local]
-@
-@ ARM Code (IWRAM):
-@       fn MyFunction arm [local]
-@
-@ fn add thumb
-@     adds      r0, r0, r1
-@     bx        lr
-@ endfn
-@
-.macro fn name:req code:req local
-    .macro      endfn
-        .size   \name,.-\name
-        \name\()_pool:
-        .pool
-        .previous
-        .purgem endfn
-    .endm
-
-    .ifnc               \local,local
-        .global         \name
+.macro fn .name:req .code .linkage=global .section
+    @ Setup
+    .ifndef .L__FN__
+        .set .L__FN__, 0
     .endif
 
-    .type               \name STT_FUNC
+    @ Code type and section (only on parent function)
+    .ifeq .L__FN__
+        .ifc \.code,arm
+            .ifnb \.section
+                .section \.section,"ax",%progbits
+            .else
+                @ Default to .iwram.<fn> for ARM
+                .section .iwram.\.name,"ax",%progbits
+            .endif
+            .align 2
+            .arm
+        .else
+            .ifc \.code,thumb
+                .ifnb \.section
+                    .section \.section,"ax",%progbits
+                .else
+                    @ Default to .text.<fn> for THUMB
+                    .section .text.\.name,"ax",%progbits
+                .endif
+                .align 1
+                .thumb_func
+            .else
+                .error "please specify function \.name as `arm` or `thumb` code"
+            .endif
+        .endif
+    .endif
 
-    .ifc                \code,arm
-        .section        .iwram.\name,"ax",%progbits
-        .align          2
-        .arm
+    @ Symbol visibility
+    .ifc \.linkage,global
+        .global \.name
     .else
-        .section        .text.\name,"ax",%progbits
-        .align          1
-        .thumb_func
+        .ifc \.linkage,local
+            .local \.name
+        .else
+            .error "please specify function \.name as `local` or `global` linkage"
+        .endif
     .endif
 
-    \name\():
+    @ Symbol type
+    .type \.name STT_FUNC
+
+    @ !!!
+    .altmacro
+    @ End function to set symbol size on `endfn`
+    .macro __mkendfn n=%.L__FN__
+        .macro __endfn\n
+            .size \.name,.-\.name
+            .purgem __endfn\n
+        .endm
+        .purgem __mkendfn
+    .endm
+    .noaltmacro
+
+    __mkendfn
+
+    @ Increase nested function counter
+    .set .L__FN__, .L__FN__ + 1
+
+    @ Create label
+    \.name :
 .endm
 
-@ Declares a function inside another function.
-@
-@ Inherits section and code type from a previous `fn`.
-@
-@ Doesn't support nesting due to lack of a macro stack.
-@
-.macro sfn name:req local
-    .macro      endsfn
-        .size   \name,.-\name
-        .purgem endsfn
+.macro endfn
+    @ !!!
+    .altmacro
+    .macro __endfn from=0 to=.L__FN__
+        .if \to-\from
+            __endfn\from
+            __endfn %(\from+1)
+        .endif
     .endm
 
-    .ifnc       \local,local
-        .global \name
-    .endif
+    __endfn
+    .purgem __endfn
+    .noaltmacro
 
-    .type       \name STT_FUNC
-
-    \name\():
+    @ Reset nested function counter
+    .set .L__FN__, 0
+    .pool
+    .previous
 .endm
 
 @ Declares read-writable data.
@@ -76,11 +102,11 @@
 
     .section            .data.\name,"aw",%progbits
     .type               \name STT_OBJECT
-    \name\():
+    \name :
 .endm
 
 @ Declares read-only data.
-.macro rdata name:req
+.macro rodata name:req
     .macro              endr
         .size           \name,.-\name
         .previous
@@ -89,7 +115,7 @@
 
     .section            .rodata.\name,"a",%progbits
     .type               \name STT_OBJECT
-    \name\():
+    \name :
 .endm
 
 @ Declares zero-initialized data.

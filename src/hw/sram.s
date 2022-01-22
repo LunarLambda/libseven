@@ -28,17 +28,15 @@ fn sramReadCore arm local
     bx          lr
 endfn
 
-.global sramReadAt64, sramRead, sramReadAt
-
 fn sramRead64 thumb
     movs        r2, #0
-sramReadAt64:
+fn sramReadAt64
     movs        r3, #64
     lsls        r3, r3, #10
     b           .Lsra_main
-sramRead:
+fn sramRead
     movs        r2, #0
-sramReadAt:
+fn sramReadAt
     movs        r3, #32
     lsls        r3, r3, #10
 .Lsra_main:
@@ -65,23 +63,18 @@ sramReadAt:
     bx          r3
 .Lsra_ret:
     bx          lr
-fnsize sramReadAt64
-fnsize sramRead
-fnsize sramReadAt
 endfn
-
-.global sramWriteAt64, sramWrite, sramWriteAt
 
 @ void sramWriteAt(const void *src, u32 len, u32 off);
 fn sramWrite64 thumb
     movs        r2, #0
-sramWriteAt64:
+fn sramWriteAt64
     movs        r3, #64
     lsls        r3, r3, #10
     b           .Lswa_main
-sramWrite:
+fn sramWrite
     movs        r2, #0
-sramWriteAt:
+fn sramWriteAt
     movs        r3, #64
     lsls        r3, r3, #10
 .Lswa_main:
@@ -112,9 +105,6 @@ sramWriteAt:
 
 .Lswa_ret:
     bx          lr
-fnsize sramWriteAt64
-fnsize sramWrite
-fnsize sramWriteAt
 endfn
 
 @ src, offset, sram/temp2, counter, temp
@@ -152,18 +142,16 @@ fn sramCompareCore arm local
     bx          lr
 endfn
 
-.global sramCompareAt64, sramCompare, sramCompareAt
-
 @ void sramCompareAt(const void *src, u32 len, u32 off);
 fn sramCompare64 thumb
     movs        r2, #0
-sramCompareAt64:
+fn sramCompareAt64
     movs        r3, #64
     lsls        r3, r3, #10
     b           .Lswc_main
-sramCompare:
+fn sramCompare
     movs        r2, #0
-sramCompareAt:
+fn sramCompareAt
     movs        r3, #64
     lsls        r3, r3, #10
 .Lswc_main:
@@ -190,22 +178,17 @@ sramCompareAt:
     bx          r3
 .Lswc_ret:
     bx          lr
-fnsize sramCompareAt64
-fnsize sramCompare
-fnsize sramCompareAt
 endfn
-
-.global sramClearAt64, sramClear, sramClearAt
 
 fn sramClear64 thumb
     movs        r1, #0
-sramClearAt64:
+fn sramClearAt64
     movs        r3, #64
     lsls        r3, r3, #10
     b           .Lsza_main
-sramClear:
+fn sramClear
     movs        r1, #0
-sramClearAt:
+fn sramClearAt
     movs        r3, #32
     lsls        r3, r3, #10
     @ Length check
@@ -239,9 +222,6 @@ sramClearAt:
 
 .Lsza_oob:
     bx          lr
-fnsize sramClearAt64
-fnsize sramClear
-fnsize sramClearAt
 endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8
