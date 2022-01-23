@@ -102,6 +102,6 @@ extern i32 inputAxisLR(void);
 //  1: A
 extern i32 inputAxisAB(void);
 
-_LIBSEVEN_EXTERN_C
+_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_HW_INPUT_H */
