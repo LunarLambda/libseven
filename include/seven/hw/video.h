@@ -236,6 +236,8 @@ enum BlendControl
 #define RGB8(r, g, b) \
     RGB5((r) >> 3, (g) >> 3, (b) >> 3)
 
+typedef u16 Color;
+
 #define BG_PALETTE      (*(Color(*)[256])(MEM_PALETTE))
 #define OBJ_PALETTE     (*(Color(*)[256])(MEM_PALETTE + 256))
 
