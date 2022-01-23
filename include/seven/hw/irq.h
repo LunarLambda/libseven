@@ -84,6 +84,7 @@ typedef void IRQHandler(void);
 
 extern void irqInit(IRQHandler *isr);
 extern void irqInitDefault(void);
+extern void irqInitStub(void);
 
 extern bool irqMasterEnable(void);
 extern bool irqMasterDisable(void);

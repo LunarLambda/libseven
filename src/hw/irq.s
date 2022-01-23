@@ -321,9 +321,14 @@ fn irqCriticalSectionActive thumb
     bx          lr
 endfn
 
+@ void irqInitStub(void)
+@
+fn irqInitStub thumb
+    ldr         r0, =irqStubHandler
+    b           irqInit
 @ void irqInitDefault(void)
 @
-fn irqInitDefault thumb
+fn irqInitDefault
     ldr         r0, =irqDefaultHandler
 @ void irqInit(IRQHandler *isr);
 @
@@ -355,7 +360,7 @@ endfn
 @ r2    <tmp>
 @ r3    <tmp>
 @ r12   IME
-fn irqDefaultHandler arm
+fn irqDefaultHandler arm local
     @ Theoretically this is redundant because
     @ the BIOS IRQ vector already puts 0x04000000 in r0...
     @ But I doubt (m)any emulators HLE-ing the BIOS would get this right, lol
@@ -406,6 +411,24 @@ fn irqDefaultHandler arm
 
 .Lexit:
     strh        r12, [r1, #8]
+    bx          lr
+endfn
+
+fn irqStubHandler arm local
+    mov         r1, #0x04000000
+
+    @ Get IE & IF
+    ldr         r0, [r1, #0x200]!
+    and         r0, r0, r0, lsr #16
+
+    @ Ack IF
+    strh        r0, [r1, #2]
+
+    @ Ack IFBIOS
+    ldr         r2, [r1, #-0x208]
+    orr         r2, r2, r0
+    str         r2, [r1, #-0x208]
+
     bx          lr
 endfn
 
