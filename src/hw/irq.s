@@ -25,43 +25,6 @@ endb
 .set REG_IME,     0x04000208
 .set IRQ_HANDLER, 0x03007FFC
 
-@ bool irqMasterEnable(void)
-@
-@ r0    REG_IME
-@ r1    &REG_IME
-@ r2    #1
-fn irqMasterEnable thumb
-    movs        r2, #1
-    ldr         r1, =REG_IME
-    ldrh        r0, [r1]
-    strh        r2, [r1]
-    bx          lr
-endfn
-
-@ bool irqMasterDisable(void)
-@
-@ r0    REG_IME
-@ r1    &REG_IME
-fn irqMasterDisable thumb
-    ldr         r1, =REG_IME
-    ldrh        r0, [r1]
-    strh        r1, [r1]
-    bx          lr
-endfn
-
-@ bool irqMasterSetEnabled(bool enable)
-@
-@ r0    REG_IME
-@ r1    &REG_IME
-@ r2    enable
-fn irqMasterSetEnabled thumb
-    movs        r2, r0
-    ldr         r1, =REG_IME
-    ldrh        r0, [r1]
-    strh        r2, [r1]
-    bx          lr
-endfn
-
 @ u16 irqEnable(u16 irqs)
 @
 @ r0    REG_IE (previous)
@@ -100,26 +63,6 @@ fn irqDisable thumb
     ands        r3, r3, r0
     strh        r3, [r1]
     @ REG_IME = old_ime
-    strh        r2, [r1, #8]
-    bx          lr
-endfn
-
-@ u16 irqSetEnabled(u16 irqs)
-@
-@ r0    REG_IE (new)
-@ r1    &REG_IE
-@ r2    REG_IME
-@ r3    irqs, REG_IE (old)
-fn irqSetEnabled thumb
-    @ REG_IME = 0;
-    ldr         r1, =REG_IE
-    ldrh        r2, [r1, #8]
-    strh        r1, [r1, #8]
-    @ REG_IE = irqs;
-    movs        r3, r0
-    ldrh        r0, [r1]
-    strh        r3, [r1]
-    @ REG_IME = old_ime;
     strh        r2, [r1, #8]
     bx          lr
 endfn
@@ -326,13 +269,27 @@ endfn
 fn irqInitStub thumb
     ldr         r0, =irqStubHandler
     b           irqInit
+endfn
+
 @ void irqInitDefault(void)
 @
-fn irqInitDefault
+fn irqInitDefault thumb
     ldr         r0, =irqDefaultHandler
+    b           irqInit
+endfn
+
+@ void irqInitSwitchboard(void (*switchboard_fn)(u16))
+@
+fn irqInitSwitchboard thumb
+    ldr         r1, =IRQ_SWITCHBOARD_FN
+    str         r0, [r1]
+    ldr         r0, =irqSwitchboardHandler
+    b           irqInit
+endfn
+
 @ void irqInit(IRQHandler *isr);
 @
-fn irqInit
+fn irqInit thumb
     movs        r1, #0
     mvns        r2, r1
     ldr         r3, =REG_IE
@@ -430,6 +387,45 @@ fn irqStubHandler arm local
     str         r2, [r1, #-0x208]
 
     bx          lr
+endfn
+
+fn irqSwitchboardHandler arm local
+    mov         r1, #0x04000000
+
+    @ Disable IME (r12)
+    ldr         r12, [r1, #0x208]
+    str         r1, [r1, #0x208]
+
+    @ Get IE & IF (r0, can be read by subsequent handler)
+    ldr         r0, [r1, #0x200]!
+    and         r0, r0, r0, lsr #16
+
+    @ Ack IF
+    strh        r0, [r1, #2]
+
+    @ Ack IFBIOS (r2)
+    ldr         r2, [r1, #-0x208]
+    orr         r2, r2, r0
+    str         r2, [r1, #-0x208]
+
+    ldr         r2, IRQ_SWITCHBOARD_FN
+
+    mrs         r3, spsr
+    msr         cpsr_c, #0x5F
+    push        {r1, r3, r12, lr}
+
+    mov         lr, pc
+    bx          r2
+
+    pop         {r1, r3, r12, lr}
+    msr         cpsr_c, #0xD2
+    msr         spsr, r3
+
+.Lexit:
+    strh        r12, [r1, #8]
+    bx          lr
+IRQ_SWITCHBOARD_FN:
+    .word       0
 endfn
 
 @ vim:ft=armv4 et sta sw=4 sts=8
