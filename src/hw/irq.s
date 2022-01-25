@@ -278,9 +278,9 @@ fn irqInitDefault thumb
     b           irqInit
 endfn
 
-@ void irqInitSwitchboard(void (*switchboard_fn)(u16))
+@ void irqInitSimple(void (*switchboard_fn)(u16))
 @
-fn irqInitSwitchboard thumb
+fn irqInitSimple thumb
     ldr         r1, =IRQ_SWITCHBOARD_FN
     str         r0, [r1]
     ldr         r0, =irqSwitchboardHandler

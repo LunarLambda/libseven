@@ -81,11 +81,11 @@ enum IRQIndex
 #define REG_IFBIOS      REG16(0x03FFFFF8)
 
 typedef void IRQHandler(void);
-typedef void SwitchboardFn(u16);
+typedef void DispatcherFn(u16);
 
 extern void irqInit(IRQHandler *isr);
 extern void irqInitDefault(void);
-extern void irqInitSwitchboard(SwitchboardFn *sfn);
+extern void irqInitSimple(DispatcherFn *dfn);
 extern void irqInitStub(void);
 
 extern u16 irqEnable(u16 irqs);
