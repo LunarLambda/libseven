@@ -11,7 +11,24 @@
 
 _LIBSEVEN_EXTERN_C
 
-// Used with IE, IF and IFBIOS registers, and IntrWait functions.
+// Attribute for compiling functions in a way that is suitable for IRQ handlers.
+//
+#define IRQ_HANDLER     IWRAM_CODE ARM_CODE
+
+// Interrupt Enable
+//
+#define REG_IE          REG16(0x04000200)
+
+// Interrupt Flags
+//
+#define REG_IF          REG16(0x04000202)
+
+// Interrupt Master Enable
+//
+#define REG_IME         REG16(0x04000208)
+
+// IRQ bitflags
+//
 enum IRQ
 {
     IRQ_VBLANK          = BIT(0),
@@ -30,77 +47,135 @@ enum IRQ
     IRQ_CARTRIDGE       = BIT(13),
 };
 
-// TODO: Naming
+// Common sets of IRQs
+//
 enum IRQGroup
 {
-    // Video blanking IRQs.
     IRQS_BLANK          = IRQ_VBLANK  | IRQ_HBLANK,
-
-    // Timers.
     IRQS_TIMER          = IRQ_TIMER_0 | IRQ_TIMER_1 | IRQ_TIMER_2 | IRQ_TIMER_3,
-
-    // DMA.
     IRQS_DMA            = IRQ_DMA_0   | IRQ_DMA_1   | IRQ_DMA_2   | IRQ_DMA_3,
-
-    // IRQs triggered by external hardware events.
     // IRQs in this group can wake up the GBA from a svcStop() call.
     IRQS_EXTERNAL       = IRQ_SERIAL  | IRQ_KEYPAD  | IRQ_CARTRIDGE,
-
     IRQS_ALL            = BITS(14),
 };
 
+// Bit indices of IRQs
 enum IRQIndex
 {
-    IRQINDEX_VBLANK,
-    IRQINDEX_HBLANK,
-    IRQINDEX_VCOUNT,
-    IRQINDEX_TIMER_0,
-    IRQINDEX_TIMER_1,
-    IRQINDEX_TIMER_2,
-    IRQINDEX_TIMER_3,
-    IRQINDEX_SERIAL,
-    IRQINDEX_DMA_0,
-    IRQINDEX_DMA_1,
-    IRQINDEX_DMA_2,
-    IRQINDEX_DMA_3,
-    IRQINDEX_KEYPAD,
-    IRQINDEX_CARTRIDGE,
-    IRQINDEX_MAX,
+    IRQ_INDEX_VBLANK,
+    IRQ_INDEX_HBLANK,
+    IRQ_INDEX_VCOUNT,
+    IRQ_INDEX_TIMER_0,
+    IRQ_INDEX_TIMER_1,
+    IRQ_INDEX_TIMER_2,
+    IRQ_INDEX_TIMER_3,
+    IRQ_INDEX_SERIAL,
+    IRQ_INDEX_DMA_0,
+    IRQ_INDEX_DMA_1,
+    IRQ_INDEX_DMA_2,
+    IRQ_INDEX_DMA_3,
+    IRQ_INDEX_KEYPAD,
+    IRQ_INDEX_CARTRIDGE,
+    IRQ_INDEX_MAX,
 };
 
-// Interrupt Enable
-#define REG_IE          REG16(0x04000200)
+// Function type for interrupt service routines (ISRs)
+//
+// Function must be ARM code, and ideally be placed in IWRAM.
+//
+// Use the IRQ_HANDLER attribute to mark the function appropriately.
+typedef void IrqHandlerFn(void);
 
-// Interrupt Flags
-#define REG_IF          REG16(0x04000202)
+// Function type for interrupt callbacks.
+//
+// The function receives the triggered IRQs as the first parameter.
+typedef void IrqCallbackFn(u16);
 
-// Interrupt Master Enable
-#define REG_IME         REG16(0x04000208)
+// Initialize interrupt handling with a user-provided function.
+//
+extern void irqInit(IrqHandlerFn *isr);
 
-// Interrupt Flags (for BIOS IntrWait functions)
-#define REG_IFBIOS      REG16(0x03FFFFF8)
-
-typedef void IRQHandler(void);
-typedef void DispatcherFn(u16);
-
-extern void irqInit(IRQHandler *isr);
+// Initialize interrupt handling using a callback system.
+//
 extern void irqInitDefault(void);
-extern void irqInitSimple(DispatcherFn *dfn);
+
+// Initialize interrupt handling using a single callback function.
+//
+// irqInitSimple(my_callback) is roughly similar to
+// irqCallbackSet(IRQS_ALL, my_callback, 0),
+// but has a lower overhead.
+//
+extern void irqInitSimple(IrqCallbackFn *fn);
+
+// Initialize interrupt handling using a stub handler
+// that only acknowledges the IRQs and returns.
+//
+// This is enough for svcHalt, svcIntrWait, and svcVBlankIntrWait to work.
+//
 extern void irqInitStub(void);
 
+// Set the callback associated with the specified irqs.
+//
+// The priority argument is used to set the search order.
+// A lower value specifies a higher priority.
+//
+// Fails if any of the irqs already have a callback set.
+//
+extern bool irqCallbackSet(u16 irqs, IrqCallbackFn *fn, u16 priority);
+
+// Delete the callback associated with the specified irqs.
+//
+// Fails if the irqs don't share a slot, or any of the irqs don't have a slot.
+//
+extern bool irqCallbackDelete(u16 irqs);
+
+// Gets the highest priority callback function matching the specified irqs,
+// or NULL if none is found.
+//
+// This function is placed in IWRAM so that it can be called quickly from
+// a user-provided IRQ handler.
+extern IrqCallbackFn* irqCallbackLookup(u16 irqs);
+
+// Enable the specified IRQs.
+//
+// Returns the old value of the IE register.
+//
 extern u16 irqEnable(u16 irqs);
+
+// Disable the specified IRQs.
+//
+// Returns the old value of the IE register.
+//
 extern u16 irqDisable(u16 irqs);
 
+// Enable the specified IRQs and set the matching I/O registers.
+//
+// Returns the old value of the IE register.
+//
 extern u16 irqEnableFull(u16 irqs);
+
+// Disable the specified IRQs and set the matching I/O registers.
+//
+// Returns the old value of the IE register.
+//
 extern u16 irqDisableFull(u16 irqs);
 
-// Saves the current value of IME and disables IME.
-// Nested calls are possible, only the outermost call has any effect.
+// Saves the current value of the IME register and disables it until
+// a call to irqCriticalSectionExit.
+//
+// Calls can be nested. Only the outermost call affects IME.
+//
 extern void irqCriticalSectionEnter(void);
-// Restores the value in IME saved by a previous call to EnterCriticalSection.
+
+// Restores the value of IME saved by a
+// previous call to irqCriticalSectionEnter.
+//
+// Only the outermost call affects IME.
+//
 extern void irqCriticalSectionExit(void);
 
-// Returns true if inside a critical section
+// Returns true if currently inside a critical section.
+//
 extern bool irqCriticalSectionActive(void);
 
 _LIBSEVEN_EXTERN_C_END
