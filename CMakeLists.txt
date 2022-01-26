@@ -4,7 +4,7 @@ project(libseven C ASM)
 
 add_library(seven STATIC
     src/hw/dma.s
-    src/hw/input.c
+    src/hw/input.s
     src/hw/irq.s
     src/hw/lcd.s
     src/hw/sram.s
@@ -20,12 +20,8 @@ add_library(seven STATIC
 target_include_directories(seven PUBLIC include/)
 target_include_directories(seven PRIVATE src/)
 
-if(NOT CMAKE_C_COMPILER_ID STREQUAL "Clang") # Clang does not support -mthumb-interwork
-    set(flagInterwork -mthumb-interwork)
-endif()
-
 target_compile_options(seven PRIVATE
-    $<$<COMPILE_LANGUAGE:C>:-Os -g -ffunction-sections -fdata-sections -ffreestanding -std=c99 -Wall -Wpedantic -mcpu=arm7tdmi -mthumb ${flagInterwork}>
+    $<$<COMPILE_LANGUAGE:C>:-Os -g -ffunction-sections -fdata-sections -ffreestanding -std=c99 -Wall -Wpedantic -mabi=aapcs -mcpu=arm7tdmi -mthumb>
 )
 
 # Allow the string "libseven" as a parameter for target_link_libraries

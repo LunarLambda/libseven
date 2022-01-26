@@ -3,7 +3,7 @@ AR = arm-none-eabi-ar
 
 SOURCES = \
 	src/hw/dma.s \
-	src/hw/input.c \
+	src/hw/input.s \
 	src/hw/irq.s \
 	src/hw/lcd.s \
 	src/hw/sram.s \
@@ -28,8 +28,9 @@ CFLAGS = \
 	-std=c99 \
 	-Wall \
 	-Wpedantic \
+	-mabi=aapcs \
 	-mcpu=arm7tdmi \
-	-mthumb -mthumb-interwork \
+	-mthumb \
 	$(INCLUDES:%=-I%)
 
 BUILD = build

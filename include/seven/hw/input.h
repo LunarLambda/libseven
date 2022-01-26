@@ -12,8 +12,11 @@
 _LIBSEVEN_EXTERN_C
 
 // Keypad input register. Reports held keys as active-low bits.
+//
 #define REG_KEYINPUT    REG16(0x04000130)
+
 // Keypad control register. Allows configuring the keypad IRQ.
+//
 #define REG_KEYCNT      REG16(0x04000132)
 
 // Key bits as used by KEYINPUT and KEYCNT.
@@ -47,16 +50,16 @@ enum KeyGroup
 // Bit indices of keys bits.
 enum KeyIndex
 {
-    KEYINDEX_A,
-    KEYINDEX_B,
-    KEYINDEX_SELECT,
-    KEYINDEX_START,
-    KEYINDEX_RIGHT,
-    KEYINDEX_LEFT,
-    KEYINDEX_UP,
-    KEYINDEX_DOWN,
-    KEYINDEX_R,
-    KEYINDEX_L,
+    KEY_INDEX_A,
+    KEY_INDEX_B,
+    KEY_INDEX_SELECT,
+    KEY_INDEX_START,
+    KEY_INDEX_RIGHT,
+    KEY_INDEX_LEFT,
+    KEY_INDEX_UP,
+    KEY_INDEX_DOWN,
+    KEY_INDEX_R,
+    KEY_INDEX_L,
 };
 
 enum KeyIRQ
@@ -69,6 +72,10 @@ enum KeyIRQ
 // Updates the internal keypad state. Should be called once per frame.
 extern void inputPoll(void);
 
+// Gets the internal keypad state. The lower halfword contains the current
+// input state, the upper halfword contains the last input state.
+extern u32 inputState(void);
+
 // Returns the keys that were pressed this frame. ("Rising egde")
 extern u16 inputKeysPressed(u16 keys);
 
@@ -77,6 +84,9 @@ extern u16 inputKeysReleased(u16 keys);
 
 // Returns the keys that are being held this frame.
 extern u16 inputKeysDown(u16 keys);
+
+// Returns the keys that are not being held this frame.
+extern u16 inputKeysUp(u16 keys);
 
 // Gets the state of the Dpad X-axis.
 // -1: Left
