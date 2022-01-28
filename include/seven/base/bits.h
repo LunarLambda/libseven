@@ -14,6 +14,9 @@ _LIBSEVEN_EXTERN_C
 #define BIT(n)                          (1 << (n))
 #define BITS(n)                         (BIT(n) - 1)
 
+#define ROR(x, a)                       ((u32)(x) >> (a) | (u32)(x) << (32-(a)))
+#define ROL(x, a)                       ((u32)(x) << (a) | (u32)(x) >> (32-(a)))
+
 #define BIT_TRISTATE(val, m, p)         \
     (((val)>>(p)&1)-((val)>>(m)&1))
 
@@ -24,6 +27,15 @@ _LIBSEVEN_EXTERN_C
 #define BF_ORR(lhs, name, rhs)          ((lhs) |  BITFIELD(name, (rhs)))
 #define BF_EOR(lhs, name, rhs)          ((lhs) ^  BITFIELD(name, (rhs)))
 #define BF_BIC(lhs, name, rhs)          ((lhs) & ~BITFIELD(name, (rhs)))
+
+#define BF_ADD(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) + (rhs)))
+#define BF_SUB(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) - (rhs)))
+#define BF_MUL(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) * (rhs)))
+#define BF_DIV(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) / (rhs)))
+#define BF_MOD(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) % (rhs)))
+
+#define BF_SHL(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) >> (rhs)))
+#define BF_SHR(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) << (rhs)))
 
 #define BF_MASK(name)                   \
     (BITS((BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
