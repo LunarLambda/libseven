@@ -55,6 +55,13 @@ typedef volatile u32    reg32;
 #define ISIZE_MAX       PTRDIFF_MAX
 #define IPTR_MAX        INTPTR_MAX
 
+#define I8_BITS         8
+#define I16_BITS        16
+#define I32_BITS        32
+#define I64_BITS        64
+#define ISIZE_BITS      (CHAR_BIT * sizeof(isize))
+#define IPTR_BITS       (CHAR_BIT * sizeof(iptr))
+
 #define S8_MIN          INT8_MIN
 #define S16_MIN         INT16_MIN
 #define S32_MIN         INT32_MIN
@@ -69,6 +76,13 @@ typedef volatile u32    reg32;
 #define SSIZE_MAX       PTRDIFF_MAX
 #define SPTR_MAX        INTPTR_MAX
 
+#define S8_BITS         8
+#define S16_BITS        16
+#define S32_BITS        32
+#define S64_BITS        64
+#define SSIZE_BITS      (CHAR_BIT * sizeof(ssize))
+#define SPTR_BITS       (CHAR_BIT * sizeof(sptr))
+
 #define U8_MIN          0
 #define U16_MIN         0
 #define U32_MIN         0
@@ -82,6 +96,13 @@ typedef volatile u32    reg32;
 #define U64_MAX         UINT64_MAX
 #define USIZE_MAX       SIZE_MAX
 #define UPTR_MAX        UINTPTR_MAX
+
+#define U8_BITS         8
+#define U16_BITS        16
+#define U32_BITS        32
+#define U64_BITS        64
+#define USIZE_BITS      (CHAR_BIT * sizeof(usize))
+#define UPTR_BITS       (CHAR_BIT * sizeof(uptr))
 
 _LIBSEVEN_EXTERN_C_END
 
