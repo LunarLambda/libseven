@@ -9,7 +9,7 @@ add_library(seven STATIC
     src/hw/lcd.s
     src/hw/sram.s
     src/hw/svc.s
-    src/hw/timer.c
+    src/hw/timer.s
     src/util/log.c
     src/util/mem.s
     src/util/profile.s
