@@ -8,14 +8,7 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
-
-.set REG_TM2VAL, 0x04000108
-.set REG_TM2CNT, 0x0400010A
-.set REG_TM3VAL, 0x0400010C
-.set REG_TM3CNT, 0x0400010E
-
-.set TIMER_CASCADE, 0x4
-.set TIMER_ENABLE, 0x80
+.include        "seven/asm/hw/timer.s"
 
 @ u32 profileFunction(void (*f)(void), u32 *return_value);
 @
@@ -31,7 +24,7 @@ fn profileFunction arm
     strh        r5, [r4]
     strh        r5, [r4, #4]
     @ REG_TM3CNT
-    mov         r2, TIMER_CASCADE
+    mov         r2, TIMER_FREQ_CASCADE
     strh        r2, [r4, #6]
     @ REG_TM2CNT
     mov         r2, TIMER_ENABLE
@@ -59,4 +52,4 @@ fn profileFunction arm
     bx          lr
 endfn
 
-@ vim: ft=armv4
+@ vim: ft=armv4 et sta sw=4 sts=8
