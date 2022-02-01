@@ -8,17 +8,7 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
-
-.equiv REG_KEYINPUT,    0x04000130
-
-.equiv KEYINDEX_A,      0
-.equiv KEYINDEX_B,      1
-.equiv KEYINDEX_RIGHT,  4
-.equiv KEYINDEX_LEFT,   5
-.equiv KEYINDEX_UP,     6
-.equiv KEYINDEX_DOWN,   7
-.equiv KEYINDEX_R,      8
-.equiv KEYINDEX_L,      9
+.include        "seven/asm/hw/input.s"
 
 bss KEYINPUT
     .word 0
@@ -81,7 +71,7 @@ fn inputAxisX thumb
     ldr         r1, =KEYINPUT
     ldrh        r1, [r1]
     movs        r0, #0
-    lsls        r1, r1, #31 - KEYINDEX_LEFT
+    lsls        r1, r1, #31 - KEY_INDEX_LEFT
     @ C = RIGHT, r1 = -1 if LEFT, else 0
     asrs        r1, r1, #31
     @ 0 - LEFT + RIGHT
@@ -94,7 +84,7 @@ fn inputAxisY thumb
     ldrh        r1, [r1]
     movs        r0, #0
     @ C = UP, r1 = -1 if DOWN, else 0
-    lsls        r1, r1, #31 - KEYINDEX_DOWN
+    lsls        r1, r1, #31 - KEY_INDEX_DOWN
     asrs        r1, r1, #31
     @ r0 = 0 + -DOWN + UP
     adcs        r0, r0, r1
@@ -107,7 +97,7 @@ fn inputAxisLR thumb
     ldrh        r1, [r1]
     movs        r0, #0
     @ C = R, r1 = -1 if L, else 0
-    lsls        r1, r1, #31 - KEYINDEX_L
+    lsls        r1, r1, #31 - KEY_INDEX_L
     asrs        r1, r1, #31
     @ r0 = 0 + -L + R
     adcs        r0, r0, r1
@@ -119,7 +109,7 @@ fn inputAxisAB thumb
     ldrh        r1, [r1]
     movs        r0, #0
     @ C = A, r1 = -1 if B, else 0
-    lsls        r1, r1, #31 - KEYINDEX_B
+    lsls        r1, r1, #31 - KEY_INDEX_B
     asrs        r1, r1, #31
     @ r0 = 0 + -B + A
     adcs        r0, r0, r1
