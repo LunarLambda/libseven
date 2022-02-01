@@ -11,6 +11,8 @@
 
 _LIBSEVEN_EXTERN_C
 
+#error "seven/video/object.h is a stub header"
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_OBJECT_H */

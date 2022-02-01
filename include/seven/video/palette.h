@@ -11,6 +11,8 @@
 
 _LIBSEVEN_EXTERN_C
 
+#error "seven/video/palette.h is a stub header"
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_PALETTE_H */
