@@ -45,4 +45,6 @@ typedef Mode5Line Mode5Frame[MODE5_HEIGHT];
 
 extern void* lcdInitMode5(void);
 
+extern void* lcdSwapBuffers(void);
+
 _LIBSEVEN_EXTERN_C_END

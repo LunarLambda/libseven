@@ -9,6 +9,9 @@
 
 #include <seven/base.h>
 
+#define LCD_WIDTH       240
+#define LCD_HEIGHT      160
+
 _LIBSEVEN_EXTERN_C
 
 // Display Control
@@ -132,140 +135,12 @@ enum BackgroundControl
 #define BG_GFX_BASE(n)  BITFIELD(BG_GFX_BASE, n)
 #define BG_MAP_BASE(n)  BITFIELD(BG_MAP_BASE, n)
 
-
-// Background Scroll
-
-#define REG_BG0HOFS     REG16(0x04000010)
-#define REG_BG0VOFS     REG16(0x04000012)
-#define REG_BG1HOFS     REG16(0x04000014)
-#define REG_BG1VOFS     REG16(0x04000016)
-#define REG_BG2HOFS     REG16(0x04000018)
-#define REG_BG2VOFS     REG16(0x0400001A)
-#define REG_BG3HOFS     REG16(0x0400001C)
-#define REG_BG3VOFS     REG16(0x0400001E)
-
-
-// Background Affine Transform Parameters
-
-#define REG_BG2PA       REG16(0x04000020)
-#define REG_BG2PB       REG16(0x04000022)
-#define REG_BG2PC       REG16(0x04000024)
-#define REG_BG2PD       REG16(0x04000026)
-
-#define REG_BG2X        REG32(0x04000028)
-#define REG_BG2Y        REG32(0x0400002C)
-
-#define REG_BG3PA       REG16(0x04000030)
-#define REG_BG3PB       REG16(0x04000032)
-#define REG_BG3PC       REG16(0x04000034)
-#define REG_BG3PD       REG16(0x04000036)
-
-#define REG_BG3X        REG32(0x04000038)
-#define REG_BG3Y        REG32(0x0400003C)
-
-
-// Windows
-
-#define REG_WIN0H       REG16(0x04000040)
-#define REG_WIN1H       REG16(0x04000042)
-#define REG_WIN0V       REG16(0x04000044)
-#define REG_WIN1V       REG16(0x04000046)
-
-#define REG_WIN0IN      REG8(0x04000048)
-#define REG_WIN1IN      REG8(0x04000049)
-#define REG_WIN0OUT     REG8(0x0400004A)
-#define REG_WIN1OUT     REG8(0x0400004B)
-
-enum WindowControl
-{
-    WIN_BG0_ENABLE       = BIT(0),
-    WIN_BG1_ENABLE       = BIT(1),
-    WIN_BG2_ENABLE       = BIT(2),
-    WIN_BG3_ENABLE       = BIT(3),
-    WIN_OBJ_ENABLE       = BIT(4),
-    WIN_BLEND_ENABLE     = BIT(5),
-};
-
-#define WINDOW_DIM(l, h)        ((((l) & 255) << 8) | ((h) & 255))
-
-
-// Mosaic
-
-#define BF_MOSAIC_BG_H_OFFSET  0
-#define BF_MOSAIC_BG_H_LENGTH  4
-
-#define BF_MOSAIC_BG_V_OFFSET  4
-#define BF_MOSAIC_BG_V_LENGTH  4
-
-#define BF_MOSAIC_OBJ_H_OFFSET 8
-#define BF_MOSAIC_OBJ_H_LENGTH 4
-
-#define BF_MOSAIC_OBJ_V_OFFSET 12
-#define BF_MOSAIC_OBJ_V_LENGTH 4
-
-#define MOSAIC_BG_H(v)  BITFIELD(MOSAIC_BG_H,  v)
-#define MOSAIC_BG_V(v)  BITFIELD(MOSAIC_BG_V,  v)
-#define MOSAIC_OBJ_H(v) BITFIELD(MOSAIC_OBJ_H, v)
-#define MOSAIC_OBJ_V(v) BITFIELD(MOSAIC_OBJ_V, v)
-
-#define REG_MOSAIC      REG16(0x0400004C)
-
-
-// Blending
-
-#define REG_BLDCNT      REG16(0x04000050)
-
-#define BF_BLD_MODE_OFFSET 6
-#define BF_BLD_MODE_LENGTH 2
-
-enum BlendControl
-{
-    BLD_TARGET_BG0      = BIT(0),
-    BLD_TARGET_BG1      = BIT(1),
-    BLD_TARGET_BG2      = BIT(2),
-    BLD_TARGET_BG3      = BIT(3),
-    BLD_TARGET_OBJ      = BIT(4),
-    BLD_TARGET_BD       = BIT(5),
-
-    BLD_MODE_NONE       = BITFIELD(BLD_MODE, 0),
-    BLD_MODE_ALPHA      = BITFIELD(BLD_MODE, 1),
-    BLD_MODE_WHITE      = BITFIELD(BLD_MODE, 2),
-    BLD_MODE_BLACK      = BITFIELD(BLD_MODE, 3),
-
-    // Only used with BLD_MODE_ALPHA
-    BLD_TARGET2_BG0      = BIT(8),
-    BLD_TARGET2_BG1      = BIT(9),
-    BLD_TARGET2_BG2      = BIT(10),
-    BLD_TARGET2_BG3      = BIT(11),
-    BLD_TARGET2_OBJ      = BIT(12),
-    BLD_TARGET2_BD       = BIT(13),
-};
-
-// TODO: BLDALPHA defines
-#define REG_BLDALPHA    REG16(0x04000052)
-#define REG_BLDCOEFF    REG16(0x04000054)
-
-#define REG_GREENSWP    REG16(0x04000002)
-
-#define BF_COLOR_R_OFFSET 0
-#define BF_COLOR_R_LENGTH 5
-#define BF_COLOR_G_OFFSET 5
-#define BF_COLOR_G_LENGTH 5
-#define BF_COLOR_B_OFFSET 10
-#define BF_COLOR_B_LENGTH 5
-
-#define RGB5(r, g, b) \
-    ((u16)(BITFIELD(COLOR_R, (r)) | BITFIELD(COLOR_G, (g)) | BITFIELD(COLOR_B, (b))))
-
-#define RGB8(r, g, b) \
-    RGB5((r) >> 3, (g) >> 3, (b) >> 3)
-
 typedef u16 Color;
+typedef Color Palette[256];
+typedef Color PaletteBank[16];
 
-#define BG_PALETTE      (*(Color(*)[256])(MEM_PALETTE))
-#define OBJ_PALETTE     (*(Color(*)[256])(MEM_PALETTE + 256))
-
-extern void* lcdSwapBuffers(void);
+#define BG_PALETTE      (*(Palette)(MEM_PALETTE))
+#define OBJ_PALETTE     (*(Palette)(MEM_PALETTE + 256))
 
 _LIBSEVEN_EXTERN_C_END
 
