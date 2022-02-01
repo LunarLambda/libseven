@@ -8,8 +8,9 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
+.include        "seven/asm/hw/svc.s"
 
-.macro simple_svc name:req num:req noreturn
+.macro svc_impl name:req num:req noreturn
     fn \name thumb
         svc     #\num
         .ifnc \noreturn,noreturn
@@ -18,45 +19,45 @@
     endfn
 .endm
 
-simple_svc svcSoftReset                   0 noreturn
-simple_svc svcRegisterRamReset            1
-simple_svc svcHalt                        2
-simple_svc svcStop                        3
-simple_svc svcIntrWait                    4
-simple_svc svcVBlankIntrWait              5
-simple_svc svcSqrt                        8
-simple_svc svcArcTan                      9
-simple_svc svcArcTan2                    10
-simple_svc svcCpuSet                     11
-simple_svc svcCpuFastSet                 12
-simple_svc svcBiosChecksum               13
-simple_svc svcBgAffineSet                14
-simple_svc svcObjAffineSet               15
-simple_svc svcBitUnPack                  16
-simple_svc svcLZ77UnCompWram             17
-simple_svc svcLZ77UnCompVram             18
-simple_svc svcHuffUnComp                 19
-simple_svc svcRLUnCompWram               20
-simple_svc svcRLUnCompVram               21
-simple_svc svcDiff8bitUnFilterWram       22
-simple_svc svcDiff8bitUnFilterVram       23
-simple_svc svcDiff16bitUnFilter          24
-simple_svc svcSoundBiasChange            25
-simple_svc svcSoundDriverInit            26
-simple_svc svcSoundDriverMode            27
-simple_svc svcSoundDriverMain            28
-simple_svc svcSoundDriverVSync           29
-simple_svc svcSoundChannelClear          30
-simple_svc svcMidiKey2Freq               31
-simple_svc svcMusicPlayerOpen            32
-simple_svc svcMusicPlayerStart           33
-simple_svc svcMusicPlayerStop            34
-simple_svc svcMusicPlayerContinue        35
-simple_svc svcMusicPlayerFadeOut         36
-simple_svc svcMultiBoot                  37
-simple_svc svcHardReset                  38 noreturn
-simple_svc svcSoundDriverVSyncOff        40
-simple_svc svcSoundDriverVSyncOn         41
+svc_impl svcSoftReset             0 noreturn
+svc_impl svcRegisterRamReset      1
+svc_impl svcHalt                  2
+svc_impl svcStop                  3
+svc_impl svcIntrWait              4
+svc_impl svcVBlankIntrWait        5
+svc_impl svcSqrt                  8
+svc_impl svcArcTan                9
+svc_impl svcArcTan2              10
+svc_impl svcCpuSet               11
+svc_impl svcCpuFastSet           12
+svc_impl svcBiosChecksum         13
+svc_impl svcBgAffineSet          14
+svc_impl svcObjAffineSet         15
+svc_impl svcBitUnPack            16
+svc_impl svcLZ77UnCompWram       17
+svc_impl svcLZ77UnCompVram       18
+svc_impl svcHuffUnComp           19
+svc_impl svcRLUnCompWram         20
+svc_impl svcRLUnCompVram         21
+svc_impl svcDiff8bitUnFilterWram 22
+svc_impl svcDiff8bitUnFilterVram 23
+svc_impl svcDiff16bitUnFilter    24
+svc_impl svcSoundBiasChange      25
+svc_impl svcSoundDriverInit      26
+svc_impl svcSoundDriverMode      27
+svc_impl svcSoundDriverMain      28
+svc_impl svcSoundDriverVSync     29
+svc_impl svcSoundChannelClear    30
+svc_impl svcMidiKey2Freq         31
+svc_impl svcMusicPlayerOpen      32
+svc_impl svcMusicPlayerStart     33
+svc_impl svcMusicPlayerStop      34
+svc_impl svcMusicPlayerContinue  35
+svc_impl svcMusicPlayerFadeOut   36
+svc_impl svcMultiBoot            37
+svc_impl svcHardReset            38 noreturn
+svc_impl svcSoundDriverVSyncOff  40
+svc_impl svcSoundDriverVSyncOn   41
 
 fn svcSoftResetEx thumb
     ldr         r2, =0x04000208
@@ -70,8 +71,8 @@ fn svcSoftResetEx thumb
     strb        r1, [r2]
     subs        r2, #0xFA
     mov         sp, r2
-    svc         #1
-    svc         #0
+    svc         #SVC_REGISTERRAMRESET
+    svc         #SVC_SOFTRESET
 endfn
 
 @ extern void svcIntrWaitEx(u8 op, u16 intr_flags);
@@ -94,8 +95,7 @@ fn svcIntrWaitEx thumb
     @ Set IE
     mov         r12, r3
     strh        r1, [r3]
-    @ IntrWait()
-    svc         #4
+    svc         #SVC_INTRWAIT
     mov         r3, r12
     @ Restore IE
     strh        r2, [r3]
@@ -107,7 +107,7 @@ fn svcDiv thumb
     movs        r0, r1
     movs        r1, r2
     movs        r2, r3
-    svc         #6
+    svc         #SVC_DIV
     stmia       r2!, {r0, r1}
     bx          lr
 endfn
@@ -119,7 +119,7 @@ fn svcCpuSetFixed thumb
     movs        r3, #1
     lsls        r3, r3, #24
     orrs        r2, r2, r3
-    svc         #11
+    svc         #SVC_CPUSET
     add         sp, #8
     bx          lr
 endfn
@@ -131,13 +131,13 @@ fn svcCpuFastSetFixed thumb
     movs        r3, #1
     lsls        r3, r3, #24
     orrs        r2, r2, r3
-    svc         #12
+    svc         #SVC_CPUFASTSET
     add         sp, #8
     bx          lr
 endfn
 
 fn svcIsSystemDS thumb
-    svc         #13
+    svc         #SVC_BIOSCHECKSUM
     ldr         r1, =0x4551E780
     adds        r0, r0, r1
     rsbs        r1, r0, #0
@@ -145,4 +145,4 @@ fn svcIsSystemDS thumb
     bx          lr
 endfn
 
-@ vim:ft=armv4 et sta sw=4 sts=8
+@ vim: ft=armv4 et sta sw=4 sts=8
