@@ -8,16 +8,7 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
-
-.set REG_IME,           0x04000208
-.set REG_DISPCNT,       0x04000000
-.set REG_BG2CNT,        0x04000000
-.set MEM_VRAM,          0x06000000
-.set LCD_FRAME_SELECT,  0x10
-.set LCD_BG2_ENABLE,    0x400
-.set LCD_MODE_3,        0x3
-.set LCD_MODE_4,        0x4
-.set LCD_MODE_5,        0x5
+.include        "seven/asm/hw/video.s"
 
 @ void* lcdSwapBuffers(void)
 @
@@ -118,4 +109,4 @@ fn lcdInitMode5 thumb
     bx          lr
 endfn
 
-@ vim:ft=armv4 et sta sw=4 sts=8
+@ vim: ft=armv4 et sta sw=4 sts=8
