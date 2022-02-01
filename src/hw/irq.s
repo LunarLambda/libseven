@@ -7,26 +7,10 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
+.include        "seven/asm/hw/irq.s"
 
-.macro reg_ie_offset val
-    .hword \val - OFF_IE
-.endm
-
-.equiv REG_BASE,    0x04000000
-.equiv REG_IE,      0x04000200
-.equiv REG_IF,      0x04000202
-.equiv REG_IME,     0x04000208
-.equiv REG_IFBIOS,  0x03FFFFF8
-
-.equiv OFF_IE,      REG_IE     - REG_BASE
-.equiv OFF_IF,      REG_IF     - REG_BASE
-.equiv OFF_IME,     REG_IME    - REG_BASE
-.equiv OFF_IFBIOS,  REG_IFBIOS - REG_BASE
-
-.equiv OFF_IE_IF,   REG_IF     - REG_IE
-.equiv OFF_IE_IME,  REG_IME    - REG_IE
-
-.equiv IRQ_HANDLER, 0x03FFFFFC
+CONST OFF_IE_IF,  REG_IF  - REG_IE
+CONST OFF_IE_IME, REG_IME - REG_IE
 
 bss IRQ_TABLE
     .fill       15, 8, 0
@@ -34,12 +18,16 @@ bss IRQ_TABLE
     .word       0
 endb
 
-.equiv IRQ_TABLE_IRQSET, _IRQ_TABLE_IRQSET - IRQ_TABLE
-
 bss IRQ_CRITICAL_SECTION
     .byte       0
     .byte       0
 endb
+
+CONST IRQ_TABLE_IRQSET, _IRQ_TABLE_IRQSET - IRQ_TABLE
+
+.macro reg_ie_offset val
+    .hword \val - OFF_IE
+.endm
 
 rodata IRQ_SOURCES
     .hword 0x0008; reg_ie_offset 0x0004 @ LCD V-Blank, DISPSTAT
@@ -649,4 +637,4 @@ fn irqStubHandler arm local
     bx          lr
 endfn
 
-@ vim:ft=armv4 et sta sw=4 sts=8
+@ vim: ft=armv4 et sta sw=4 sts=8
