@@ -25,7 +25,6 @@ enum SupervisorCallNumber
     SVC_VBLANKINTRWAIT                  =  5,
 
     SVC_DIV                             =  6,
-    SVC_DIVARM                          =  7,
     SVC_SQRT                            =  8,
     SVC_ARCTAN                          =  9,
     SVC_ARCTAN2                         = 10,
@@ -33,7 +32,6 @@ enum SupervisorCallNumber
     SVC_CPUSET                          = 11,
     SVC_CPUFASTSET                      = 12,
 
-    // Undocumented
     SVC_BIOSCHECKSUM                    = 13,
 
     SVC_BGAFFINESET                     = 14,
@@ -64,17 +62,10 @@ enum SupervisorCallNumber
 
     SVC_MULTIBOOT                       = 37,
 
-    // Undocumented
     SVC_HARDRESET                       = 38,
-
-    // Undocumented
-    SVC_SETHALTREGISTER                 = 39,
 
     SVC_SOUNDDRIVERVSYNCOFF             = 40,
     SVC_SOUNDDRIVERVSYNCON              = 41,
-
-    // Undocumented
-    SVC_MUSICPLAYERJUMPTABLECOPY        = 42,
 };
 
 _LIBSEVEN_EXTERN_C_END
