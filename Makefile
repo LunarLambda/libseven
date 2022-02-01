@@ -21,7 +21,7 @@ INCLUDES = \
 
 CFLAGS = \
 	-Os \
-	-g \
+	-g3 -gdwarf-4 \
 	-ffunction-sections \
 	-fdata-sections \
 	-ffreestanding \

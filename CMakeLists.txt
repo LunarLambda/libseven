@@ -21,7 +21,7 @@ target_include_directories(seven PUBLIC include/)
 target_include_directories(seven PRIVATE src/)
 
 target_compile_options(seven PRIVATE
-    $<$<COMPILE_LANGUAGE:C>:-Os -g -ffunction-sections -fdata-sections -ffreestanding -std=c99 -Wall -Wpedantic -mabi=aapcs -mcpu=arm7tdmi -mthumb>
+    $<$<COMPILE_LANGUAGE:C>:-Os -g3 -gdwarf-4 -ffunction-sections -fdata-sections -ffreestanding -std=c99 -Wall -Wpedantic -mabi=aapcs -mcpu=arm7tdmi -mthumb>
 )
 
 # Allow the string "libseven" as a parameter for target_link_libraries
