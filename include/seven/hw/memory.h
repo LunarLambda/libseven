@@ -26,7 +26,7 @@ _LIBSEVEN_EXTERN_C
 // I/O Register Area
 #define MEM_IO                  ((volatile void*)0x04000000)
 // If you include undocumented registers, it's 0x804.
-#define MEM_IO_SIZE             ((usize)0x300)
+#define MEM_IO_SIZE             ((usize)0x20C)
 
 // Video Palette (1K)
 #define MEM_PALETTE             ((void*)0x05000000)
