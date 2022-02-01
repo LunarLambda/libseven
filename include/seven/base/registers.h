@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_REGISTERS_H
-#define _LIBSEVEN_REGISTERS_H
+#ifndef _LIBSEVEN_BASE_REGISTERS_H
+#define _LIBSEVEN_BASE_REGISTERS_H
 
 #include <seven/base.h>
 
@@ -50,4 +50,4 @@ _LIBSEVEN_EXTERN_C
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_REGISTERS_H */
+#endif /* !_LIBSEVEN_BASE_REGISTERS_H */
