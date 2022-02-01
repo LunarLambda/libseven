@@ -9,10 +9,6 @@
 
 .include        "macros.s"
 
-.set MEM_SRAM,          0x0E000000
-.set MEM_SRAM_SIZE,     0x8000
-.set MEM_SRAM_SIZE64,   0x10000
-
 @ TODO: Make all functions return a byte count
 
 fn sramReadCore arm local
@@ -219,4 +215,4 @@ fn sramClearAt
     bx          lr
 endfn
 
-@ vim:ft=armv4 et sta sw=4 sts=8
+@ vim: ft=armv4 et sta sw=4 sts=8
