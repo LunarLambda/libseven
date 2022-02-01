@@ -62,4 +62,4 @@ extern void logOutput(u8 level, const char *message);
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* _LIBSEVEN_UTIL_LOG_H */
+#endif /* !_LIBSEVEN_UTIL_LOG_H */

@@ -115,4 +115,4 @@ extern void dmaAtomicSet(u32 num, const void *src, void *dst, u32 len, u16 flags
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* _LIBSEVEN_HW_DMA_H */
+#endif /* !_LIBSEVEN_HW_DMA_H */
