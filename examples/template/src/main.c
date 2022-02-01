@@ -1,5 +1,6 @@
 #include <seven/prelude.h>
-#include <seven/video/mode3.h>
+#include <seven/video/prelude.h>
+#include <seven/video/bg_bitmap.h>
 
 int main(void)
 {

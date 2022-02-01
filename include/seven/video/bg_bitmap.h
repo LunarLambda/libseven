@@ -34,8 +34,8 @@ typedef Mode4Line Mode4Frame[MODE4_HEIGHT];
 
 extern void* lcdInitMode4(void);
 
-#define MODE3_WIDTH  160
-#define MODE3_HEIGHT 128
+#define MODE5_WIDTH  160
+#define MODE5_HEIGHT 128
 
 typedef       u16 Mode5Line[MODE5_WIDTH];
 typedef Mode5Line Mode5Frame[MODE5_HEIGHT];
@@ -48,3 +48,5 @@ extern void* lcdInitMode5(void);
 extern void* lcdSwapBuffers(void);
 
 _LIBSEVEN_EXTERN_C_END
+
+#endif /* !_LIBSEVEN_VIDEO_BG_BITMAP_H */
