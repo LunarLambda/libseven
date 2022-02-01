@@ -78,4 +78,4 @@ fn randNext thumb
     bx          lr
 endfn
 
-@ vim: ft=armv4
+@ vim: ft=armv4 et sta sw=4 sts=8
