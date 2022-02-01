@@ -8,14 +8,10 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
+.include        "seven/asm/hw/dma.s"
 
-.set REG_DMA0,          0x040000B0
-.set REG_DMA1,          0x040000BC
-.set REG_DMA2,          0x040000C8
-.set REG_DMA3,          0x040000D4
-.set REG_DMACNT,        0x040000BA
-.set SOUND_FIFO_A,      0x040000A0
-.set SOUND_FIFO_B,      0x040000A4
+CONST SOUND_FIFO_A, 0x040000A0
+CONST SOUND_FIFO_B, 0x040000A4
 
 @ void dmaEnable(u32 num)
 @
@@ -31,8 +27,8 @@ fn dmaEnable thumb
     @ = * 12
     adds        r0, r0, r1
 
-    @ Read DMACNT
-    ldr         r1, =REG_DMACNT
+    @ Read DMA0CNT
+    ldr         r1, =REG_DMA0CNT
     ldrh        r2, [r1, r0]
 
     @ Add DMA_ENABLE
@@ -59,8 +55,8 @@ fn dmaDisable thumb
     @ = * 12
     adds        r0, r0, r1
 
-    @ Read DMACNT
-    ldr         r1, =REG_DMACNT
+    @ Read DMA0CNT
+    ldr         r1, =REG_DMA0CNT
     ldrh        r2, [r1, r0]
 
     @ Remove DMA_ENABLE
@@ -86,7 +82,7 @@ fn dmaCopy16 thumb
     lsls        r2, r2, #15
     lsrs        r2, r2, #16
     orrs        r2, r2, r3
-    ldr         r3, =REG_DMA3
+    ldr         r3, =REG_DMA3SRC
     stm         r3!, {r0, r1, r2}
     bx          lr
 endfn
@@ -104,7 +100,7 @@ fn dmaCopy32 thumb
     lsls        r2, r2, #14
     lsrs        r2, r2, #16
     orrs        r2, r2, r3
-    ldr         r3, =REG_DMA3
+    ldr         r3, =REG_DMA3SRC
     stm         r3!, {r0, r1, r2}
     bx          lr
 endfn
@@ -119,7 +115,7 @@ fn dmaSoundFifoATransfer thumb
     movs        r2, #0x32
     lsls        r2, r2, #24
     orrs        r2, r2, r3
-    ldr         r3, =REG_DMA1
+    ldr         r3, =REG_DMA1SRC
     stm         r3!, {r0, r1, r2}
     bx          lr
 endfn
@@ -133,7 +129,7 @@ fn dmaSoundFifoBTransfer thumb
     movs        r2, #0x32
     lsls        r2, r2, #24
     orrs        r2, r2, r3
-    ldr         r3, =REG_DMA2
+    ldr         r3, =REG_DMA2SRC
     stm         r3!, {r0, r1, r2}
     bx          lr
 endfn
@@ -165,7 +161,7 @@ fn dmaHBlankTransfer thumb
 
     lsls        r3, r3, #16
     orrs        r2, r2, r3
-    ldr         r3, =REG_DMA0
+    ldr         r3, =REG_DMA0SRC
     stm         r3!, {r0, r1, r2}
     bx          lr
 endfn
@@ -188,7 +184,7 @@ fn dmaAtomicSet thumb
     adds        r0, r0, r4
 
     @ Final Address
-    ldr         r4, =REG_DMA0
+    ldr         r4, =REG_DMA0SRC
     adds        r0, r0, r4
 
     @ Load flags
