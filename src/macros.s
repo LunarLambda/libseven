@@ -176,4 +176,4 @@
     \.name :
 .endm
 
-@ vim:ft=armv4 et sta sw=4 sts=8
+@ vim: ft=armv4 et sta sw=4 sts=8
