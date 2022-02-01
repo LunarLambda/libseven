@@ -31,7 +31,7 @@ enum DisplayControl
     LCD_MODE_MIXED              = LCD_MODE_1,
     LCD_MODE_AFFINE             = LCD_MODE_2,
     LCD_MODE_BITMAP             = LCD_MODE_3,
-    LCD_MODE_BITMAP_INDEXED     = LCD_MODE_4,
+    LCD_MODE_BITMAP_PALETTED    = LCD_MODE_4,
     LCD_MODE_BITMAP_SMALL       = LCD_MODE_5,
 
     LCD_FRAME_SELECT            = BIT(4),
@@ -91,6 +91,9 @@ enum DisplayStatus
 #define BF_BG_SIZE_OFFSET 14
 #define BF_BG_SIZE_LENGTH 2
 
+#define BF_BG_AFF_SIZE_OFFSET 14
+#define BF_BG_AFF_SIZE_LENGTH 2
+
 enum BackgroundControl
 {
     BG_PRIO_0                   = BITFIELD(BG_PRIO, 0),
@@ -107,9 +110,7 @@ enum BackgroundControl
     BG_256_COLOR                = BIT(7),
     BG_USE_PALETTES             = !BG_256_COLOR,
 
-    // TODO: Naming
-    BG_AFF_OVERFLOW_WRAP        = BIT(13),
-    BG_AFF_OVERFLOW_TRANS       = !BG_AFF_OVERFLOW_WRAP,
+    BG_AFF_WRAP                 = BIT(13),
 
     BG_SIZE_256x256             = BITFIELD(BG_SIZE, 0),
     BG_SIZE_512x256             = BITFIELD(BG_SIZE, 1),
@@ -122,8 +123,14 @@ enum BackgroundControl
     BG_AFF_SIZE_1024x1024       = BG_SIZE_512x512,
 };
 
-#define BG_GFX_BASE(n)  BITFIELD(2, 2, n)
-#define BG_MAP_BASE(n)  BITFIELD(8, 5, n)
+#define BF_BG_GFX_BASE_OFFSET 2
+#define BF_BG_GFX_BASE_LENGTH 2
+
+#define BF_BG_MAP_BASE_OFFSET 8
+#define BF_BG_MAP_BASE_LENGTH 5
+
+#define BG_GFX_BASE(n)  BITFIELD(BG_GFX_BASE, n)
+#define BG_MAP_BASE(n)  BITFIELD(BG_MAP_BASE, n)
 
 
 // Background Scroll
@@ -184,6 +191,23 @@ enum WindowControl
 
 // Mosaic
 
+#define BF_MOSAIC_BG_H_OFFSET  0
+#define BF_MOSAIC_BG_H_LENGTH  4
+
+#define BF_MOSAIC_BG_V_OFFSET  4
+#define BF_MOSAIC_BG_V_LENGTH  4
+
+#define BF_MOSAIC_OBJ_H_OFFSET 8
+#define BF_MOSAIC_OBJ_H_LENGTH 4
+
+#define BF_MOSAIC_OBJ_V_OFFSET 12
+#define BF_MOSAIC_OBJ_V_LENGTH 4
+
+#define MOSAIC_BG_H(v)  BITFIELD(MOSAIC_BG_H,  v)
+#define MOSAIC_BG_V(v)  BITFIELD(MOSAIC_BG_V,  v)
+#define MOSAIC_OBJ_H(v) BITFIELD(MOSAIC_OBJ_H, v)
+#define MOSAIC_OBJ_V(v) BITFIELD(MOSAIC_OBJ_V, v)
+
 #define REG_MOSAIC      REG16(0x0400004C)
 
 
@@ -203,7 +227,7 @@ enum BlendControl
     BLD_TARGET_OBJ      = BIT(4),
     BLD_TARGET_BD       = BIT(5),
 
-    BLD_MODE_OFF        = BITFIELD(BLD_MODE, 0),
+    BLD_MODE_NONE       = BITFIELD(BLD_MODE, 0),
     BLD_MODE_ALPHA      = BITFIELD(BLD_MODE, 1),
     BLD_MODE_WHITE      = BITFIELD(BLD_MODE, 2),
     BLD_MODE_BLACK      = BITFIELD(BLD_MODE, 3),
