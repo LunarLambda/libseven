@@ -8,10 +8,7 @@
 .cpu            arm7tdmi
 
 .include        "macros.s"
-
-.set            REG_TM0VAL, 0x04000100
-.set            REG_TM0CNT, 0x04000102
-.set            TIMER_ENABLE, 0x80
+.include        "seven/asm/hw/timer.s"
 
 fn timerSet thumb
     cmp         r0, #3
