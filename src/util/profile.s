@@ -12,7 +12,7 @@
 
 @ u32 profileFunction(void (*f)(void), u32 *return_value);
 @
-fn profileFunction arm
+fn profileRun arm
     push        {r4, r5, r6, lr}
 
     ldr         r4, =REG_TM2VAL

@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_UTIL_PROFILER_H
-#define _LIBSEVEN_UTIL_PROFILER_H
+#ifndef _LIBSEVEN_UTIL_PROFILE_H
+#define _LIBSEVEN_UTIL_PROFILE_H
 
 #include <seven/base.h>
 
@@ -16,8 +16,8 @@ _LIBSEVEN_EXTERN_C
 //
 // If the function returns a value in r0, and return_value is not NULL,
 // the value will be stored in return_value.
-extern u32 profileFunction(u32 (*function)(void), u32 *return_value);
+extern u32 profileRun(u32 (*function)(void), u32 *return_value);
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_UTIL_PROFILER_H */
+#endif /* !_LIBSEVEN_UTIL_PROFILE_H */
