@@ -11,8 +11,8 @@
 
 _LIBSEVEN_EXTERN_C
 
-#include <seven/video/bg_tiled.h>
 #include <seven/video/bg_affine.h>
+#include <seven/video/bg_regular.h>
 
 _LIBSEVEN_EXTERN_C_END
 
