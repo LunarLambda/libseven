@@ -23,12 +23,12 @@ _LIBSEVEN_EXTERN_C
 
 enum WindowControl
 {
-    WIN_BG0_ENABLE       = BIT(0),
-    WIN_BG1_ENABLE       = BIT(1),
-    WIN_BG2_ENABLE       = BIT(2),
-    WIN_BG3_ENABLE       = BIT(3),
-    WIN_OBJ_ENABLE       = BIT(4),
-    WIN_BLEND_ENABLE     = BIT(5),
+    WINDOW_BG0_ENABLE   = BIT(0),
+    WINDOW_BG1_ENABLE   = BIT(1),
+    WINDOW_BG2_ENABLE   = BIT(2),
+    WINDOW_BG3_ENABLE   = BIT(3),
+    WINDOW_OBJ_ENABLE   = BIT(4),
+    WINDOW_BLEND_ENABLE = BIT(5),
 };
 
 #define WINDOW_DIM(l, h)        ((((l) & 255) << 8) | ((h) & 255))
