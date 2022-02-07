@@ -28,7 +28,7 @@ _LIBSEVEN_EXTERN_C
 #define BF_EOR(lhs, name, rhs)          ((lhs) ^  BITFIELD(name, (rhs)))
 #define BF_BIC(lhs, name, rhs)          ((lhs) & ~BITFIELD(name, (rhs)))
     
-#define BF_NOT(lhs, name)               ((lhs) ^ BITS((BF_##name##_LENGTH)))
+#define BF_NOT(lhs, name)               ((lhs) ^ BF_MASK(name))
 #define BF_NEG(lhs, name)               (BF_SET((lhs), name, -BF_GET((lhs), name)))
 
 #define BF_ADD(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) + (rhs)))
