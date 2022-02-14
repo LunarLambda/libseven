@@ -22,13 +22,13 @@ enum GpioDirection
 {
     GPIO_IN  = 0,
     GPIO_OUT = 1,
-}
+};
 
 enum GpioControl
 {
     GPIO_WRITEONLY = 0,
     GPIO_READWRITE = 1,
-}
+};
 
 _LIBSEVEN_EXTERN_C_END
 

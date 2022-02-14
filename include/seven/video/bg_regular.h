@@ -25,7 +25,7 @@ enum Tile
 {
     TILE_FLIP_H = BIT(10),
     TILE_FLIP_V = BIT(11),
-}
+};
 
 _LIBSEVEN_EXTERN_C_END
 
