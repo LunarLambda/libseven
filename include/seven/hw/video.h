@@ -134,8 +134,8 @@ typedef u16 Color;
 typedef Color Palette[256];
 typedef Color PaletteBank[16];
 
-#define BG_PALETTE       (*(Palette)(MEM_PALETTE))
-#define OBJ_PALETTE      (*(Palette)(MEM_PALETTE + 256))
+#define BG_PALETTE       (*(Palette*)(MEM_PALETTE))
+#define OBJ_PALETTE      (*(Palette*)(MEM_PALETTE + 256))
 
 #define BG_PALETTE_BANK  (*(PalleteBank(*)[16])(MEM_PALETTE))
 #define OBJ_PALETTE_BANK (*(PaletteBank(*)[16])(MEM_PALETTE + 256))
