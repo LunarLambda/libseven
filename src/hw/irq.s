@@ -11,6 +11,7 @@
 
 CONST OFF_IE_IF,  REG_IF  - REG_IE
 CONST OFF_IE_IME, REG_IME - REG_IE
+CONST OFF_IE_IFBIOS, REG_IFBIOS - REG_IE
 
 bss IRQ_TABLE
     .fill       15, 8, 0
@@ -29,7 +30,7 @@ CONST IRQ_TABLE_IRQSET, _IRQ_TABLE_IRQSET - IRQ_TABLE
     .hword \val - OFF_IE
 .endm
 
-rodata IRQ_SOURCES
+rodata IRQ_SOURCES .align=2
     .hword 0x0008; reg_ie_offset 0x0004 @ LCD V-Blank, DISPSTAT
     .hword 0x0010; reg_ie_offset 0x0004 @ LCD H-Blank, DISPSTAT
     .hword 0x0020; reg_ie_offset 0x0004 @ LCD V-Count, DISPSTAT
@@ -532,16 +533,16 @@ fn irqDefaultHandler arm local
     mov         r1, #REG_BASE
 
     @ Get IE & IF
-    ldr         r0, [r1, #OFF_IE]
+    ldr         r0, [r1, #OFF_IE]!
     and         r0, r0, r0, lsr #16
 
     @ Ack IF
-    strh        r0, [r1, #2]
+    strh        r0, [r1, #OFF_IE_IF]
 
     @ Ack IFBIOS
-    ldrh        r2, [r1, #OFF_IFBIOS]
+    ldr         r2, [r1, #OFF_IE_IFBIOS]
     orr         r2, r2, r0
-    strh        r2, [r1, #OFF_IFBIOS]
+    str         r2, [r1, #OFF_IE_IFBIOS]
 
     @ Check if we have a callback registered for these irqs
     ldr         r2, =IRQ_TABLE
@@ -582,21 +583,18 @@ fn irqSimpleHandler arm local
     mov         r1, #REG_BASE
 
     @ Get IE & IF
-    ldr         r0, [r1, #OFF_IE]
+    ldr         r0, [r1, #OFF_IE]!
     and         r0, r0, r0, lsr #16
 
     @ Ack IF
-    strh        r0, [r1, #2]
+    strh        r0, [r1, #OFF_IE_IF]
 
     @ Ack IFBIOS
-    ldrh        r2, [r1, #OFF_IFBIOS]
+    ldr         r2, [r1, #OFF_IE_IFBIOS]
     orr         r2, r2, r0
-    strh        r2, [r1, #OFF_IFBIOS]
+    str         r2, [r1, #OFF_IE_IFBIOS]
 
     ldr         r2, IRQ_CALLBACK_FN
-    @ Should be unnecessary, but just in case
-    cmp         r2, #0
-    bxeq        lr
 
     @ Disable IME (r12)
     ldr         r12, [r1, #OFF_IME]
@@ -623,16 +621,16 @@ fn irqStubHandler arm local
     mov         r1, #REG_BASE
 
     @ Get IE & IF
-    ldr         r0, [r1, #OFF_IE]
+    ldr         r0, [r1, #OFF_IE]!
     and         r0, r0, r0, lsr #16
 
     @ Ack IF
-    strh        r0, [r1, #2]
+    strh        r0, [r1, #OFF_IE_IF]
 
     @ Ack IFBIOS
-    ldrh        r2, [r1, #OFF_IFBIOS]
+    ldr         r2, [r1, #OFF_IE_IFBIOS]
     orr         r2, r2, r0
-    strh        r2, [r1, #OFF_IFBIOS]
+    str         r2, [r1, #OFF_IE_IFBIOS]
 
     bx          lr
 endfn

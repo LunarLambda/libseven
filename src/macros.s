@@ -93,7 +93,7 @@
 .endm
 
 @ Declares read-writable data.
-.macro data .name:req .linkage=local .section
+.macro data .name:req .linkage=local .section .align
     .macro              endd
         .size           \.name,.-\.name
         .previous
@@ -116,12 +116,16 @@
         .section        .data.\.name,"aw",%progbits
     .endif
 
+    .ifnb \.align
+        .align          \.align
+    .endif
+
     .type               \.name STT_OBJECT
     \.name :
 .endm
 
 @ Declares read-only data.
-.macro rodata .name:req .linkage=local .section
+.macro rodata .name:req .linkage=local .section .align
     .macro              endr
         .size           \.name,.-\.name
         .previous
@@ -144,12 +148,16 @@
         .section        .rodata.\.name,"a",%progbits
     .endif
 
+    .ifnb \.align
+        .align          \.align
+    .endif
+
     .type               \.name STT_OBJECT
     \.name :
 .endm
 
 @ Declares zero-initialized data.
-.macro bss .name:req .linkage=local .section
+.macro bss .name:req .linkage=local .section .align
     .macro              endb
         .size           \.name,.-\.name
         .previous
@@ -170,6 +178,10 @@
         .section        \.section,"aw",%nobits
     .else
         .section        .bss.\.name,"aw",%nobits
+    .endif
+
+    .ifnb \.align
+        .align          \.align
     .endif
 
     .type               \.name STT_OBJECT
