@@ -60,6 +60,7 @@ enum KeyIndex
     KEY_INDEX_DOWN,
     KEY_INDEX_R,
     KEY_INDEX_L,
+    KEY_INDEX_MAX,
 };
 
 enum KeyIRQ
