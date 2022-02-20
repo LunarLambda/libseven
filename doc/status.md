@@ -4,14 +4,14 @@
 
 - [x] Data Types & Limits
 - [x] Memory Map
-- [x] Video (Registers)
+- [x] Video (Definitions)
 - [ ] Sound
 - [x] Timers
 - [x] DMA
 - [ ] SIO
 - [x] Input
 - [ ] IRQ
-- [x] SRAM (32K)
+- [x] SRAM
 - [x] BIOS Functions
     - [x] Reset
     - [x] Halt and IRQ Waiting
