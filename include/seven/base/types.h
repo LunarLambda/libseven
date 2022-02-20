@@ -37,10 +37,6 @@ typedef uint64_t        u64;
 typedef size_t          usize;
 typedef uintptr_t       uptr;
 
-typedef volatile u8     reg8;
-typedef volatile u16    reg16;
-typedef volatile u32    reg32;
-
 #define I8_MIN          INT8_MIN
 #define I16_MIN         INT16_MIN
 #define I32_MIN         INT32_MIN
