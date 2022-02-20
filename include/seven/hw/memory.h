@@ -24,6 +24,7 @@ _LIBSEVEN_EXTERN_C
 #define MEM_IWRAM_SIZE          ((usize)0x8000)
 
 // I/O Register Area
+#define REG_BASE                ((volatile void*)0x04000000)
 #define MEM_IO                  ((volatile void*)0x04000000)
 // If you include undocumented registers, it's 0x804.
 #define MEM_IO_SIZE             ((usize)0x20C)

@@ -17,15 +17,15 @@ _LIBSEVEN_EXTERN_C
 
 // Interrupt Enable
 //
-#define REG_IE          REG16(0x04000200)
+#define REG_IE          VOLADDR(0x04000200, u16)
 
 // Interrupt Flags
 //
-#define REG_IF          REG16(0x04000202)
+#define REG_IF          VOLADDR(0x04000202, u16)
 
 // Interrupt Master Enable
 //
-#define REG_IME         REG16(0x04000208)
+#define REG_IME         VOLADDR(0x04000208, u16)
 
 // IRQ bitflags
 //

@@ -152,8 +152,8 @@ static void logOutputNone(u8 level, const char *message)
     (void)message;
 }
 
-#define REG_MGBA_ENABLE         REG16(0x04FFF780)
-#define REG_MGBA_FLAGS          REG16(0x04FFF700)
+#define REG_MGBA_ENABLE         VOLADDR(0x04FFF780, u16)
+#define REG_MGBA_FLAGS          VOLADDR(0x04FFF700, u16)
 #define MGBA_LOG_OUT            ((char*)0x04FFF600)
 
 static bool logInitMgba(void)
@@ -175,7 +175,7 @@ static void logOutputMgba(u8 level, const char *message)
 }
 
 #define NOCASH_SIG              ((char*)0x04FFFA00)
-#define REG_NOCASH_LOG          REG8(0x04FFFA1C)
+#define REG_NOCASH_LOG          VOLADDR(0x04FFFA1C, u8)
 
 static bool logInitNocash(void)
 {

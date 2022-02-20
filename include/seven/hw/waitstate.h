@@ -11,7 +11,7 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define REG_WAITCNT             REG16(0x04000204)
+#define REG_WAITCNT             VOLADDR(0x04000204, u16)
 
 #define BF_WAIT_SRAM_OFFSET     0
 #define BF_WAIT_SRAM_LENGTH     2

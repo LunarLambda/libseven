@@ -13,11 +13,11 @@ _LIBSEVEN_EXTERN_C
 
 // Keypad input register. Reports held keys as active-low bits.
 //
-#define REG_KEYINPUT    REG16(0x04000130)
+#define REG_KEYINPUT    VOLADDR(0x04000130, u16)
 
 // Keypad control register. Allows configuring the keypad IRQ.
 //
-#define REG_KEYCNT      REG16(0x04000132)
+#define REG_KEYCNT      VOLADDR(0x04000132, u16)
 
 // Key bits as used by KEYINPUT and KEYCNT.
 enum Key

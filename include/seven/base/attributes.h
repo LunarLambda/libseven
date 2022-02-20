@@ -11,8 +11,6 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define _LIBSEVEN_STR(s)        #s
-#define _LIBSEVEN_STR2(s)       _LIBSEVEN_STR(s)
 #define _LIBSEVEN_SECCOUNT      _LIBSEVEN_STR2(__COUNTER__)
 
 #define PACKED                  __attribute__((packed))

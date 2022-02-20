@@ -17,7 +17,7 @@ _LIBSEVEN_EXTERN_C
 typedef       u16 Mode3Line[MODE3_WIDTH];
 typedef Mode3Line Mode3Frame[MODE3_HEIGHT];
 
-#define MODE3_FRAME     MEMDEFW(Mode3Frame, MEM_VRAM)
+#define MODE3_FRAME     MEMADDR(MEM_VRAM, Mode3Frame)
 
 extern void* lcdInitMode3(void);
 
@@ -27,8 +27,8 @@ extern void* lcdInitMode3(void);
 typedef       u16 Mode4Line[MODE4_WIDTH/2];
 typedef Mode4Line Mode4Frame[MODE4_HEIGHT];
 
-#define MODE4_FRAME     MEMDEFW(Mode4Frame, MEM_VRAM)
-#define MODE4_FRAME2    MEMDEFW(Mode4Frame, MEM_VRAM + 0xA000)
+#define MODE4_FRAME     MEMADDR(MEM_VRAM, Mode4Frame)
+#define MODE4_FRAME2    MEMADDR(MEM_VRAM + 0xA000, Mode4Frame)
 
 #define M4PX(l, h) ((u16)((l) << 8 | (u8)(h)))
 
@@ -40,8 +40,8 @@ extern void* lcdInitMode4(void);
 typedef       u16 Mode5Line[MODE5_WIDTH];
 typedef Mode5Line Mode5Frame[MODE5_HEIGHT];
 
-#define MODE5_FRAME     MEMDEFW(Mode5Frame, MEM_VRAM)
-#define MODE5_FRAME2    MEMDEFW(Mode5Frame, MEM_VRAM + 0xA000)
+#define MODE5_FRAME     MEMADDR(MEM_VRAM, Mode5Frame)
+#define MODE5_FRAME2    MEMADDR(MEM_VRAM + 0xA000, Mode5Frame)
 
 extern void* lcdInitMode5(void);
 

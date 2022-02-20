@@ -18,13 +18,13 @@ enum LCDDimensions
     LCD_SCANLINES = 228,
 };
 
-#define REG_DISPCNT     REG16(0x04000000)
-#define REG_DISPSTAT    REG16(0x04000004)
-#define REG_VCOUNT      ROREG16(0x04000006)
-#define REG_BG0CNT      REG16(0x04000008)
-#define REG_BG1CNT      REG16(0x0400000A)
-#define REG_BG2CNT      REG16(0x0400000C)
-#define REG_BG3CNT      REG16(0x0400000E)
+#define REG_DISPCNT     VOLADDR(0x04000000, u16)
+#define REG_DISPSTAT    VOLADDR(0x04000004, u16)
+#define REG_VCOUNT      VOLADDR(0x04000006, const u16)
+#define REG_BG0CNT      VOLADDR(0x04000008, u16)
+#define REG_BG1CNT      VOLADDR(0x0400000A, u16)
+#define REG_BG2CNT      VOLADDR(0x0400000C, u16)
+#define REG_BG3CNT      VOLADDR(0x0400000E, u16)
 
 #define BF_LCD_MODE_OFFSET 0
 #define BF_LCD_MODE_LENGTH 3
@@ -134,11 +134,11 @@ typedef u16 Color;
 typedef Color Palette[256];
 typedef Color PaletteBank[16];
 
-#define BG_PALETTE       (*(Palette*)(MEM_PALETTE))
-#define OBJ_PALETTE      (*(Palette*)(MEM_PALETTE + 256))
+#define BG_PALETTE       MEMADDR(MEM_PALETTE, Palette)
+#define OBJ_PALETTE      MEMADDR(MEM_PALETTE + 256, Palette)
 
-#define BG_PALETTE_BANK  (*(PalleteBank(*)[16])(MEM_PALETTE))
-#define OBJ_PALETTE_BANK (*(PaletteBank(*)[16])(MEM_PALETTE + 256))
+#define BG_PALETTE_BANK  MEMBLOCK(MEM_PALETTE, PaletteBank, 16)
+#define OBJ_PALETTE_BANK MEMBLOCK(MEM_PALETTE + 256, PaletteBank, 16)
 
 _LIBSEVEN_EXTERN_C_END
 
