@@ -13,7 +13,7 @@ _LIBSEVEN_EXTERN_C
 
 // Keypad input register. Reports held keys as active-low bits.
 //
-#define REG_KEYINPUT    VOLADDR(0x04000130, u16)
+#define REG_KEYINPUT    VOLADDR(0x04000130, const u16)
 
 // Keypad control register. Allows configuring the keypad IRQ.
 //
