@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_SVC_VIDEO_H
-#define _LIBSEVEN_SVC_VIDEO_H
+#ifndef _LIBSEVEN_SVC_AFFINE_H
+#define _LIBSEVEN_SVC_AFFINE_H
 
 #include <seven/base.h>
 
@@ -54,8 +54,8 @@ struct ObjAffineDstData
 
 enum ObjAffineSetOffset
 {
-    OAS_LIKE_DSTDATA    = 2,
-    OAS_LIKE_OAM        = 8,
+    OAS_OFFSET_DSTDATA = 2,
+    OAS_OFFSET_OAM     = 8,
 };
 
 extern void svcObjAffineSet(
@@ -66,4 +66,4 @@ extern void svcObjAffineSet(
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_SVC_VIDEO_H */
+#endif /* !_LIBSEVEN_SVC_AFFINE_H */

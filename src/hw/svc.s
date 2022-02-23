@@ -136,13 +136,4 @@ fn svcCpuFastSetFixed thumb
     bx          lr
 endfn
 
-fn svcIsSystemDS thumb
-    svc         #SVC_BIOSCHECKSUM
-    ldr         r1, =0x4551E780
-    adds        r0, r0, r1
-    rsbs        r1, r0, #0
-    adcs        r0, r0, r1
-    bx          lr
-endfn
-
 @ vim: ft=armv4 et sta sw=4 sts=8

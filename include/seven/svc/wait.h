@@ -4,12 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_SVC_IRQ_H
-#define _LIBSEVEN_SVC_IRQ_H
+#ifndef _LIBSEVEN_SVC_WAIT_H
+#define _LIBSEVEN_SVC_WAIT_H
 
 #include <seven/base.h>
 
 _LIBSEVEN_EXTERN_C
+
+extern void svcHalt(void);
+extern void svcStop(void);
 
 extern void svcIntrWait(bool wait_next, u16 intr_flags);
 
@@ -26,4 +29,4 @@ extern void svcVBlankIntrWait(void);
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_SVC_IRQ_H */
+#endif /* !_LIBSEVEN_SVC_WAIT_H */

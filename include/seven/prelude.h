@@ -15,7 +15,7 @@ _LIBSEVEN_EXTERN_C
 #include <seven/hw/irq.h>
 #include <seven/hw/memory.h>
 #include <seven/hw/video.h>
-#include <seven/svc/irq.h>
+#include <seven/svc/wait.h>
 
 _LIBSEVEN_EXTERN_C_END
 

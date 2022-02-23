@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_SVC_COMPRESSION_H
-#define _LIBSEVEN_SVC_COMPRESSION_H
+#ifndef _LIBSEVEN_SVC_DECOMPRESSION_H
+#define _LIBSEVEN_SVC_DECOMPRESSION_H
 
 #include <seven/base.h>
 
@@ -36,4 +36,4 @@ extern void svcDiff16bitUnFilter(const void *src, void *dst);
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_SVC_COMPRESSION_H */
+#endif /* !_LIBSEVEN_SVC_DECOMPRESSION_H */
