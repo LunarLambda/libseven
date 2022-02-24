@@ -38,6 +38,8 @@ fn profileRun arm
     ldrh        r0, [r5]
     ldrh        r1, [r5, #4]
     orr         r0, r0, r1, lsl #16
+    @ Subtract 3 Cycles of timer start/stop delay
+    sub         r0, r0, #3
 
     pop         {r4, r5, r6, lr}
     bx          lr
