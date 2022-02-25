@@ -38,7 +38,7 @@ Address   | Size | Access | GBATEK      | libgba          | libtonc     | libsev
 0400 004C | 16   | W      | MOSAIC      | MOSAIC          | MOSAIC      | MOSAIC
 0400 0050 | 16   | R/W    | BLDCNT      | BLDCNT          | BLDCNT      | BLDCNT
 0400 0052 | 16   | R/W    | BLDALPHA    | BLDALPHA        | BLDALPHA    | BLDALPHA
-0400 0054 | 16   | W      | BLDY        | BLDY            | BLDY        | **BLDCOEFF**
+0400 0054 | 16   | W      | BLDY        | BLDY            | BLDY        | **BLDVAL**
 ​|||||||
 0400 0060 | 16   | R/W    | SOUND1CNT_L | SOUND1CNT_L     | SOUND1CNT_L | -
 0400 0062 | 16   | R/W    | SOUND1CNT_H | SOUND1CNT_H     | SOUND1CNT_H | -
