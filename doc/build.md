@@ -37,28 +37,6 @@ sudo -E make -f Makefile.dkp install
 
 Note: Windows/MSYS2 users don't need to use `sudo -E`.
 
-### PKGBUILD
-
-Systems that use pacman as the standard package manager
-(MSYS2, Arch Linux, Manjaro, etc.) can install libseven via the provided
-[PKGBUILD](./pkgbuild/PKGBUILD).
-
-```sh
-cd pkgbuild
-makepkg -si
-```
-
-If you are using `dkp-pacman` instead, you need to skip the dependency checks:
-
-```sh
-cd pkgbuild
-makepkg -sid
-```
-
-Note to MacOS users: The `libseven-git` PKGBUILD cannot be built on MacOS due to
-an incompatibility between `makepkg` and MacOS' `sed` command. Use the makefile
-installation method instead.
-
 ## Uninstallation
 
 All installed files are contained in one directory, generally
