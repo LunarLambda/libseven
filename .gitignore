@@ -1,6 +1,2 @@
 /build
-/pkgbuild/*
-!/pkgbuild/PKGBUILD
-/examples/*
-!/examples/template
 .obsidian/

@@ -12,59 +12,66 @@ endif
 LIBSEVEN := $(CURDIR)/../../
 
 # The name of your project
-TARGET   := template
+PROJECT   := example-template
 
 # All of the source files used by your project
-SOURCES  := \
-	    src/main.c
+SOURCES  := src/main.c
 
 # The include directories used by your project
 INCLUDES := include
 
 # The libraries used by your project
-LIBS     :=
+LIBS     := seven
+
+# Paths to the libraries used by your project.
+# Adds the include and lib directories to the proper search paths.
+LIBDIRS  := $(LIBSEVEN)
 
 # The build directory used for your project
-BUILD    := build
+BUILDDIR := build
 
 # Compiler, Assembler, and Linker flags
-CFLAGS   := -g -O2 -std=c99 -ffunction-sections -fdata-sections
-ASFLAGS  := -g
-LDFLAGS  := -Wl,--gc-sections
+CFLAGS   := -g3 -gdwarf-4 -O2 -std=c99 -ffunction-sections -fdata-sections
+LDFLAGS  :=
 
 #
 # You don't need to edit anything below this point!
 #
 
+ROMFILE = $(BUILDDIR)/$(PROJECT).gba
+ELFFILE = $(BUILDDIR)/$(PROJECT).elf
+MAPFILE = $(BUILDDIR)/$(PROJECT).map
+
 # Build files
-OBJECTS = $(patsubst %,$(BUILD)/obj/%.o,$(SOURCES))
-DEPENDS = $(patsubst %,$(BUILD)/dep/%.d,$(SOURCES))
+OBJECTS = $(SOURCES:%=$(BUILDDIR)/obj/%.o)
+DEPENDS = $(SOURCES:%=$(BUILDDIR)/dep/%.d)
 OBJDIRS = $(dir $(OBJECTS) $(DEPENDS))
 
 CFLAGS  += \
 	   -mcpu=arm7tdmi \
+	   -mabi=aapcs \
 	   -mthumb \
-	   -mthumb-interwork \
-	   $(INCLUDES:%=-I%)
+	   $(INCLUDES:%=-I%) \
+	   $(LIBDIRS:%=-I%/include) \
 
 LDFLAGS += \
-	   -Wl,-Map,$(BUILD)/$(TARGET).map \
-	   $(LIBS:%=-l%)
+	   -Wl,-Map,$(MAPFILE) \
+	   $(LIBS:%=-l%) \
+	   $(LIBDIRS:%=-L%/lib) \
 
 ifneq ($(strip $(LIBSEVEN)),)
-	CFLAGS  += -I$(LIBSEVEN)/include
-	LDFLAGS += -L$(LIBSEVEN)/build -lseven
 	MAKE_LIBSEVEN := libseven
+	LDFLAGS += -L$(LIBSEVEN)/build
 endif
 
-$(BUILD)/$(TARGET).gba: $(BUILD)/$(TARGET).elf
-$(BUILD)/$(TARGET).elf: $(OBJECTS) | $(MAKE_LIBSEVEN)
+$(ROMFILE): $(ELFFILE)
+$(ELFFILE): $(OBJECTS) | $(MAKE_LIBSEVEN)
 
 $(OBJECTS): | objdirs
 
-$(BUILD)/obj/%.o: %
+$(BUILDDIR)/obj/%.o: %
 	@echo "COMPILE $<"
-	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILD)/dep/$<.d $<
+	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILDDIR)/dep/$<.d $<
 
 %.gba:
 	@echo "GBAFIX  $@"
@@ -87,8 +94,8 @@ objdirs:
 	@mkdir -p $(OBJDIRS)
 
 clean:
-	@echo "CLEAN   $(BUILD)"
-	@rm -rf $(BUILD)
+	@echo "CLEAN   $(BUILDDIR)"
+	@rm -rf $(BUILDDIR)
 
 .PHONY: libseven objdirs clean
 
