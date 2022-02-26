@@ -17,16 +17,16 @@ Address   | Size | Access | GBATEK      | libgba          | libtonc     | libsev
 0400 001A | 16   | W      | BG2VOFS     | BG2VOFS [³]     | BG2VOFS     | BG2VOFS
 0400 001C | 16   | W      | BG3HOFS     | BG3HOFS [³]     | BG3HOFS     | BG3HOFS
 0400 001E | 16   | W      | BG3VOFS     | BG3VOFS [³]     | BG3VOFS     | BG3VOFS
-0400 0020 | 16   | W      | BG2PA       | BG2PA [³]       | BG2PA       | BG2PA [⁵]
-0400 0022 | 16   | W      | BG2PB       | BG2PB [³]       | BG2PB       | BG2PB [⁵]
-0400 0024 | 16   | W      | BG2PC       | BG2PC [³]       | BG2PC       | BG2PC [⁵]
-0400 0026 | 16   | W      | BG2PD       | BG2PD [³]       | BG2PD       | BG2PD [⁵]
+0400 0020 | 16   | W      | BG2PA       | BG2PA [³]       | BG2PA       | BG2PA
+0400 0022 | 16   | W      | BG2PB       | BG2PB [³]       | BG2PB       | BG2PB
+0400 0024 | 16   | W      | BG2PC       | BG2PC [³]       | BG2PC       | BG2PC
+0400 0026 | 16   | W      | BG2PD       | BG2PD [³]       | BG2PD       | BG2PD
 0400 0028 | 32   | W      | BG2X        | BG2X [³] [⁴]    | BG2X [⁴]    | BG2X
 0400 002C | 32   | W      | BG2Y        | BG2Y [³] [⁴]    | BG2Y [⁴]    | BG2Y
-0400 0030 | 16   | W      | BG3PA       | BG3PA [³]       | BG3PA       | BG3PA [⁵]
-0400 0032 | 16   | W      | BG3PB       | BG3PB [³]       | BG3PB       | BG3PB [⁵]
-0400 0034 | 16   | W      | BG3PC       | BG3PC [³]       | BG3PC       | BG3PC [⁵]
-0400 0036 | 16   | W      | BG3PD       | BG3PD [³]       | BG3PD       | BG3PD [⁵]
+0400 0030 | 16   | W      | BG3PA       | BG3PA [³]       | BG3PA       | BG3PA
+0400 0032 | 16   | W      | BG3PB       | BG3PB [³]       | BG3PB       | BG3PB
+0400 0034 | 16   | W      | BG3PC       | BG3PC [³]       | BG3PC       | BG3PC
+0400 0036 | 16   | W      | BG3PD       | BG3PD [³]       | BG3PD       | BG3PD
 0400 0038 | 32   | W      | BG3X        | BG3X [³] [⁴]    | BG3X [⁴]    | BG3X
 0400 003C | 32   | W      | BG3Y        | BG3Y [³] [⁴]    | BG3Y [⁴]    | BG3Y
 0400 0040 | 16   | W      | WIN0H       | WIN0H           | WIN0H       | WIN0H
@@ -113,10 +113,8 @@ Address   | Size | Access | GBATEK      | libgba          | libtonc     | libsev
 2. Register is not marked as read-only
 3. Register is not marked as volatile
 4. Register is marked as signed
-5. Register is marked as unsigned
 
 [¹]: #errata
 [²]: #errata
 [³]: #errata 
 [⁴]: #errata
-[⁵]: #errata
