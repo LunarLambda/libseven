@@ -6,8 +6,10 @@ Address   | Size | Access | GBATEK | libgba | libtonc | libseven
 :--------:|:----:|:------:|:-------|:-------|:--------|:--------
 0400 0200 | 16   | R/W    | IE     | IE     | IE      | IE
 
- Bits | Description                 | C Constant
------:|:----------------------------|:-----------------
+## Contents
+
+ Bits | Description                 | C Constants
+-----:|:----------------------------|:-----------
  0    | Start of V-Blank            | IRQ_VBLANK
  1    | Start of H-Blank            | IRQ_HBLANK
  2    | Scanline counter match      | IRQ_VCOUNT

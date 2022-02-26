@@ -1,5 +1,7 @@
 # I/O Register Reference - DMA Control
 
+Defined in [seven/hw/dma.h](../../include/seven/hw/dma.h)
+
 Address     | Size | Access | GBATEK    | libgba | libtonc   | libseven
 :----------:|:----:|:------:|:----------|:-------|:----------|:--------
  0400 00BA  | 16   | R/W    | DMA0CNT_H | -      | DMA0CNT_H | **DMA0CNT**
@@ -7,7 +9,7 @@ Address     | Size | Access | GBATEK    | libgba | libtonc   | libseven
  0400 00D2  | 16   | R/W    | DMA2CNT_H | -      | DMA2CNT_H | **DMA2CNT**
  0400 00DE  | 16   | R/W    | DMA3CNT_H | -      | DMA3CNT_H | **DMA3CNT**
 
----
+## Contents
 
 Bits  | Access | Description                        | C Constants
 -----:|:------:|:-----------------------------------|:-----------
@@ -21,7 +23,7 @@ Bits  | Access | Description                        | C Constants
 14    | R/W    | Trigger interrupt on completion    | DMA_IRQ_ENABLE
 15    | R/W    | Enable DMA channel                 | DMA_ENABLE
 
-# DMA_DST Bitfield
+## DMA_DST Bitfield
 
 Value | Description                                           | C Constants
 -----:|:------------------------------------------------------|:-----------
@@ -30,7 +32,7 @@ Value | Description                                           | C Constants
 2     | Do not change address                                 | DMA_DST_FIXED
 3     | Increment address and reload register upon completion | DMA_DST_RELOAD
 
-# DMA_SRC Bitfield
+## DMA_SRC Bitfield
 
 Value | Description           | C Constants
 -----:|:----------------------|:-----------
@@ -38,7 +40,7 @@ Value | Description           | C Constants
 1     | Decrement address     | DMA_SRC_DECREMENT
 2     | Do not change address | DMA_SRC_FIXED
 
-# DMA_START Bitfield
+## DMA_START Bitfield
 
 Value | Description                                         | C Constants
 -----:|:----------------------------------------------------|:-----------

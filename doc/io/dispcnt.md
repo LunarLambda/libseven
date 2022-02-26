@@ -6,8 +6,10 @@ Address     | Size | Access | GBATEK  | libgba  | libtonc     | libseven
 :----------:|:----:|:------:|:--------|:--------|:------------|:--------
  0400 0000  | 16   | R/W    | DISPCNT | DISPCNT | DISPCNT [¹] | DISPCNT
 
-Bits | Access | Description                          | C Constant
-----:|:------:|:-------------------------------------|:----------
+## Contents
+
+Bits | Access | Description                          | C Constants
+----:|:------:|:-------------------------------------|:-----------
  0-2 | R/W    | Video mode                           | LCD_MODE_\*
  3   | R/BIOS | Game Boy mode (0 = GBA, 1 = CGB)     | -
  4   | R/W    | Bitmap frame select                  | LCD_FRAME_SELECT
@@ -25,13 +27,13 @@ Bits | Access | Description                          | C Constant
 
 ## LCD_MODE Bitfield
 
-Value | C Constant
------:|:----------
-0     | LCD_MODE_REGULAR
-1     | LCD_MODE_MIXED
-2     | LCD_MODE_AFFINE
-3     | LCD_MODE_BITMAP
-4     | LCD_MODE_BITMAP_INDEXED
-5     | LCD_MODE_BITMAP_SMALL
+Value | Description                          | C Constants
+-----:|:-------------------------------------|:-----------
+0     | 4 regular backgrounds                | LCD_MODE_REGULAR
+1     | 2 regular + 1 affine background      | LCD_MODE_MIXED
+2     | 2 affine backgrounds                 | LCD_MODE_AFFINE
+3     | 1 240x160 16-bpp framebuffer         | LCD_MODE_BITMAP
+4     | 2 240x160 8-bpp indexed framebuffers | LCD_MODE_BITMAP_INDEXED
+5     | 2 160x128 16-bpp framebuffers        | LCD_MODE_BITMAP_SMALL
 
 [¹]: ../registers.md#errata
