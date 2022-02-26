@@ -84,19 +84,19 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
  0400 010C  | 16   | R/W    | TM3CNT_L    | TM3CNT_L        | TM3CNT_L    | **TM3VAL**
  0400 010E  | 16   | R/W    | TM3CNT_H    | TM3CNT_H        | TM3CNT_H    | **TM3CNT**
 ​|||||||
- 0400 0120  | 32   | R/W    | SIODATA32   | SIODATA32       | SIODATA32   | -
+ 0400 0120  | 32   | R/W    | SIODATA32   | SIODATA32       | SIODATA32   | SIODATA32
  0400 0120  | 16   | R/W    | SIOMULTI0   | SIOMULTI0       | SIOMULTI0   | -
  0400 0122  | 16   | R/W    | SIOMULTI1   | SIOMULTI1       | SIOMULTI1   | -
  0400 0124  | 16   | R/W    | SIOMULTI2   | SIOMULTI2       | SIOMULTI2   | -
  0400 0126  | 16   | R/W    | SIOMULTI3   | SIOMULTI3       | SIOMULTI3   | -
- 0400 0128  | 16   | R/W    | SIOCNT      | SIOCNT          | SIOCNT      | -
+ 0400 0128  | 16   | R/W    | SIOCNT      | SIOCNT          | SIOCNT      | SIOCNT
  0400 012A  | 16   | R/W    | SIOMLT_SEND | SIOMLT_SEND     | SIOMLT_SEND | -
- 0400 012A  | 16/8 | R/W    | SIODATA8    | SIODATA8        | SIODATA8    | -
+ 0400 012A  | 16/8 | R/W    | SIODATA8    | SIODATA8        | SIODATA8    | SIODATA8
 ​|||||||
  0400 0130  | 16   | R      | KEYINPUT    | KEYINPUT [²]    | KEYINPUT [²]| KEYINPUT
  0400 0132  | 16   | R/W    | KEYCNT      | KEYCNT          | KEYCNT      | KEYCNT
 ​|||||||
- 0400 0134  | 16   | R/W    | RCNT        | RCNT            | RCNT        | -
+ 0400 0134  | 16   | R/W    | RCNT        | RCNT            | RCNT        | **SIOMODE2**
  0400 0140  | 16   | R/W    | JOYCNT      | **HS_CTRL**     | JOYCNT      | -
  0400 0150  | 32   | R/W    | JOY_RECV    | **JOYRE**       | JOY_RECV    | -
  0400 0154  | 32   | R/W    | JOY_TRANS   | **JOYTR**       | JOY_TRANS   | -
