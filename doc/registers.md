@@ -61,19 +61,19 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
  0400 00B0  | 32   | W      | DMA0SAD     | DMA0SAD         | DMA0SAD     | **DMA0SRC**
  0400 00B4  | 32   | W      | DMA0DAD     | DMA0DAD         | DMA0DAD     | **DMA0DST**
  0400 00B8  | 16   | W      | DMA0CNT_L   | **DMA0CNT** [¹] | DMA0CNT_L   | **DMA0LEN**
- 0400 00BA  | 16   | R/W    | DMA0CNT_H   | -               | DMA0CNT_H   | **DMA0CNT**
+[0400 00BA] | 16   | R/W    | DMA0CNT_H   | -               | DMA0CNT_H   | **DMA0CNT**
  0400 00BC  | 32   | W      | DMA1SAD     | DMA1SAD         | DMA1SAD     | **DMA1SRC**
  0400 00C0  | 32   | W      | DMA1DAD     | DMA1DAD         | DMA1DAD     | **DMA1DST**
  0400 00C4  | 16   | W      | DMA1CNT_L   | **DMA1CNT** [¹] | DMA1CNT_L   | **DMA1LEN**
- 0400 00C6  | 16   | R/W    | DMA1CNT_H   | -               | DMA1CNT_H   | **DMA1CNT**
+[0400 00C6] | 16   | R/W    | DMA1CNT_H   | -               | DMA1CNT_H   | **DMA1CNT**
  0400 00C8  | 32   | W      | DMA2SAD     | DMA2SAD         | DMA2SAD     | **DMA2SRC**
  0400 00CC  | 32   | W      | DMA2DAD     | DMA2DAD         | DMA2DAD     | **DMA2DST**
  0400 00D0  | 16   | W      | DMA2CNT_L   | **DMA2CNT** [¹] | DMA2CNT_L   | **DMA2LEN**
- 0400 00D2  | 16   | R/W    | DMA2CNT_H   | -               | DMA2CNT_H   | **DMA2CNT**
+[0400 00D2] | 16   | R/W    | DMA2CNT_H   | -               | DMA2CNT_H   | **DMA2CNT**
  0400 00D4  | 32   | W      | DMA3SAD     | DMA3SAD         | DMA3SAD     | **DMA3SRC**
  0400 00D8  | 32   | W      | DMA3DAD     | DMA3DAD         | DMA3DAD     | **DMA3DST**
  0400 00DC  | 16   | W      | DMA3CNT_L   | **DMA3CNT** [¹] | DMA3CNT_L   | **DMA3LEN**
- 0400 00DE  | 16   | R/W    | DMA3CNT_H   | -               | DMA3CNT_H   | **DMA3CNT**
+[0400 00DE] | 16   | R/W    | DMA3CNT_H   | -               | DMA3CNT_H   | **DMA3CNT**
 ​|||||||
  0400 0100  | 16   | R/W    | TM0CNT_L    | TM0CNT_L        | TM0CNT_L    | **TM0VAL**
  0400 0102  | 16   | R/W    | TM0CNT_H    | TM0CNT_H        | TM0CNT_H    | **TM0CNT**
@@ -120,4 +120,8 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
 [⁴]: #errata
 
 [0400 0000]: io/dispcnt.md
+[0400 00BA]: io/dmacnt.h
+[0400 00C6]: io/dmacnt.h
+[0400 00D2]: io/dmacnt.h
+[0400 00DE]: io/dmacnt.h
 [0400 0200]: io/ie.md
