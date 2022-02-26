@@ -8,6 +8,7 @@
 #define _LIBSEVEN_VIDEO_BG_AFFINE_H
 
 #include <seven/base.h>
+#include <seven/hw/video.h>
 
 _LIBSEVEN_EXTERN_C
 
