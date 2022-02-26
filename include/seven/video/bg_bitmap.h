@@ -8,6 +8,7 @@
 #define _LIBSEVEN_VIDEO_BG_BITMAP_H
 
 #include <seven/base.h>
+#include <seven/hw/memory.h>
 
 _LIBSEVEN_EXTERN_C
 
