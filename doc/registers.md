@@ -2,7 +2,7 @@
 
 Address     | Size | Access | GBATEK      | libgba          | libtonc     | libseven
 :----------:|:----:|:------:|:------------|:----------------|:------------|:--------
- 0400 0000  | 16   | R/W    | DISPCNT     | DISPCNT         | DISPCNT [¹] | DISPCNT
+[0400 0000] | 16   | R/W    | DISPCNT     | DISPCNT         | DISPCNT [¹] | DISPCNT
  0400 0004  | 16   | R/W    | DISPSTAT    | DISPSTAT        | DISPSTAT    | DISPSTAT
  0400 0006  | 16/8 | R      | VCOUNT      | VCOUNT [²]      | VCOUNT [²]  | VCOUNT
  0400 0008  | 16   | R/W    | BG0CNT      | BG0CNT          | BG0CNT      | BG0CNT
@@ -119,4 +119,5 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
 [³]: #errata 
 [⁴]: #errata
 
+[0400 0000]: io/dispcnt.md
 [0400 0200]: io/ie.md
