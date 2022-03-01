@@ -1,103 +1,83 @@
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+
 .SUFFIXES:
 
-ifeq ($(strip $(DEVKITPRO)),)
-	$(error "Please set DEVKITPRO in your environment.")
-endif
+LIBSEVEN	:= $(CURDIR)/../../
+
+PROJECT		:= example-template
+
+SOURCES		:= rt/crt0.s src/main.c
+
+INCLUDES	:=
+
+LIBDIRS		:= $(LIBSEVEN)
+
+LIBS		:= seven
+
+BUILDDIR	:= build
+
+CFLAGS		:= -g3 -gdwarf-4 -O2 -std=c99 -ffunction-sections -fdata-sections
+LDFLAGS		:= -mthumb -nostartfiles -specs=nano.specs -Wl,-T,rt/rom.ld -L$(LIBSEVEN)/build
 
 #
-# Change these to match your project!
+# Internal
 #
 
-# Path to libseven's source directory.
-LIBSEVEN := $(CURDIR)/../../
+CC 	= arm-none-eabi-gcc
+OBJCOPY = arm-none-eabi-objcopy
 
-# The name of your project
-PROJECT   := example-template
-
-# All of the source files used by your project
-SOURCES  := src/main.c
-
-# The include directories used by your project
-INCLUDES := include
-
-# The libraries used by your project
-LIBS     := seven
-
-# Paths to the libraries used by your project.
-# Adds the include and lib directories to the proper search paths.
-LIBDIRS  := $(LIBSEVEN)
-
-# The build directory used for your project
-BUILDDIR := build
-
-# Compiler, Assembler, and Linker flags
-CFLAGS   := -g3 -gdwarf-4 -O2 -std=c99 -ffunction-sections -fdata-sections
-LDFLAGS  :=
-
-#
-# You don't need to edit anything below this point!
-#
-
-ROMFILE = $(BUILDDIR)/$(PROJECT).gba
 ELFFILE = $(BUILDDIR)/$(PROJECT).elf
+ROMFILE = $(BUILDDIR)/$(PROJECT).gba
 MAPFILE = $(BUILDDIR)/$(PROJECT).map
 
-# Build files
 OBJECTS = $(SOURCES:%=$(BUILDDIR)/obj/%.o)
 DEPENDS = $(SOURCES:%=$(BUILDDIR)/dep/%.d)
-OBJDIRS = $(dir $(OBJECTS) $(DEPENDS))
+OBJDIRS = $(dir $(BUILDDIR) $(OBJECTS) $(DEPENDS))
 
-CFLAGS  += \
-	   -mcpu=arm7tdmi \
-	   -mabi=aapcs \
-	   -mthumb \
-	   $(INCLUDES:%=-I%) \
-	   $(LIBDIRS:%=-I%/include) \
+CFLAGS += \
+	  -mcpu=arm7tdmi \
+	  -mabi=aapcs \
+	  -mthumb \
+	  $(LIBDIRS:%=-I%/include) \
+	  $(INCLUDES:%=-I%) \
 
 LDFLAGS += \
+	   -Wl,--gc-sections \
 	   -Wl,-Map,$(MAPFILE) \
-	   $(LIBS:%=-l%) \
 	   $(LIBDIRS:%=-L%/lib) \
-
-ifneq ($(strip $(LIBSEVEN)),)
-	MAKE_LIBSEVEN := libseven
-	LDFLAGS += -L$(LIBSEVEN)/build
-endif
+	   $(LIBS:%=-l%) \
 
 $(ROMFILE): $(ELFFILE)
-$(ELFFILE): $(OBJECTS) | $(MAKE_LIBSEVEN)
-
-$(OBJECTS): | objdirs
-
-$(BUILDDIR)/obj/%.o: %
-	@echo "COMPILE $<"
-	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILDDIR)/dep/$<.d $<
+$(ELFFILE): $(OBJECTS) | libseven
+$(OBJECTS): | builddirs
 
 %.gba:
-	@echo "GBAFIX  $@"
+	@echo "$@"
 	@$(OBJCOPY) -O binary $< $@
-	@gbafix $@ >/dev/null
-
-%_mb.elf:
-	@echo "LINK    $@ (multiboot)"
-	@$(CC) -o $@ -specs=gba_mb.specs $^ $(LDFLAGS)
 
 %.elf:
-	@echo "LINK    $@ (cartridge)"
-	@$(CC) -o $@ -specs=gba.specs $^ $(LDFLAGS)
+	@echo "$@"
+	@$(CC) -o $@ $^ $(LDFLAGS)
+
+$(BUILDDIR)/obj/%.o: %
+	@echo "$<"
+	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILDDIR)/dep/$<.d $<
 
 libseven:
-	@echo "BUILD   $@"
-	@$(MAKE) --no-print-directory -C $(LIBSEVEN) -f Makefile.dkp
+	@echo "libseven"
+	@$(MAKE) --no-print-directory -C $(LIBSEVEN) -f Makefile
 
-objdirs:
+builddirs:
 	@mkdir -p $(OBJDIRS)
 
 clean:
-	@echo "CLEAN   $(BUILDDIR)"
+	@echo "clean"
 	@rm -rf $(BUILDDIR)
 
-.PHONY: libseven objdirs clean
+.PHONY: libseven builddirs clean
 
 -include $(DEPENDS)
-include $(DEVKITARM)/base_tools

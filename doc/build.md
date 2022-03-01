@@ -3,8 +3,6 @@
 libseven itself can be built with a standard arm-none-eabi GCC toolchain and
 GNU make.
 
-The examples require use of a devkitARM toolchain.
-
 ## Build
 
 Using a standard toolchain:
