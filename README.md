@@ -36,7 +36,7 @@ You can also reach out to us in the `#libseven` channel in the
 
 All source code in this project is licensed under the
 Mozilla Public License Version 2.0.\
-See [LICENSE\_SRC.txt](./LICENSE\_SRC.txt) for more information.
+See [LICENSE.txt](./LICENSE.txt) for more information.
 
 All documentation in this project is licensed under the
 CC0 1.0 Universal license.\
