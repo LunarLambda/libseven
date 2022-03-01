@@ -34,6 +34,7 @@ CFLAGS = \
 	$(INCLUDES:%=-I%)
 
 BUILD = build
+LIB   = lib
 
 TARGET = libseven.a
 
@@ -45,7 +46,7 @@ OBJECTS = $(patsubst %,$(BUILD)/obj/%.o,$(SOURCES))
 DEPENDS = $(patsubst %,$(BUILD)/dep/%.d,$(SOURCES))
 OBJDIRS = $(dir $(OBJECTS) $(DEPENDS))
 
-$(BUILD)/$(TARGET): $(OBJECTS)
+$(LIB)/$(TARGET): $(OBJECTS)
 	@echo "AR      $@"
 	@$(AR) rcs $@ $^
 
@@ -57,17 +58,17 @@ $(BUILD)/obj/%.o: %
 
 objdirs:
 	@echo "OUTDIR  $(BUILD)"
-	@mkdir -p $(OBJDIRS)
+	@mkdir -p $(OBJDIRS) $(LIB)
 
 clean:
 	@echo "CLEAN   $(BUILD)"
-	@rm -rf $(BUILD)
+	@rm -rf $(BUILD) $(LIB)
 
 install: $(BUILD)/$(TARGET)
 	@echo "INSTALL $(DESTDIR)$(DEVKITPRO)"
-	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/lib
-	@cp -rv include $(DESTDIR)$(DEVKITPRO)/libseven/include
-	@cp -v $(BUILD)/$(TARGET) $(DESTDIR)$(DEVKITPRO)/libseven/lib
+	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/
+	@cp -rv include $(DESTDIR)$(DEVKITPRO)/libseven/
+	@cp -rv lib $(DESTDIR)$(DEVKITPRO)/libseven/
 
 .PHONY: objdirs clean install
 
