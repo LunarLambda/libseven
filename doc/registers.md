@@ -115,7 +115,7 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
 
 [¹]: #errata
 [²]: #errata
-[³]: #errata 
+[³]: #errata
 
 [0400 0000]: io/dispcnt.md
 [0400 00BA]: io/dmacnt.h
