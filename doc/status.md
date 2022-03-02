@@ -1,18 +1,16 @@
 # libseven - Implementation Status
 
-## GBA Hardware Features
+## GBA Hardware
 
-- [x] Data Types & Limits
-- [x] Memory Map
-- [x] Video (Definitions)
-- [ ] Sound
-- [x] Timers
 - [x] DMA
-- [ ] SIO
+- [x] IRQ
 - [x] Input
-- [ ] IRQ
+- [ ] SIO
+- [ ] Sound
 - [x] SRAM
-- [x] BIOS Functions
+- [x] Timers
+- [x] Video
+- [x] BIOS Calls
     - [x] Reset
     - [x] Halt and IRQ Waiting
     - [x] Math
