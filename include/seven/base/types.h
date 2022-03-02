@@ -8,13 +8,12 @@
 #define _LIBSEVEN_BASE_TYPES_H
 
 #include <seven/base.h>
-
-_LIBSEVEN_EXTERN_C
-
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+
+_LIBSEVEN_EXTERN_C
 
 typedef int8_t          i8;
 typedef int16_t         i16;

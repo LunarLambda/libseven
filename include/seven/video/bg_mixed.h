@@ -8,13 +8,7 @@
 #define _LIBSEVEN_VIDEO_BG_MIXED_H
 
 #include <seven/base.h>
-#include <seven/hw/video.h>
-
-_LIBSEVEN_EXTERN_C
-
 #include <seven/video/bg_affine.h>
 #include <seven/video/bg_regular.h>
-
-_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_BG_MIXED_H */

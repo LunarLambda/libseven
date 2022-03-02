@@ -7,6 +7,12 @@
 #ifndef _LIBSEVEN_BASE_H
 #define _LIBSEVEN_BASE_H
 
+#include <seven/base/addresses.h>
+#include <seven/base/attributes.h>
+#include <seven/base/bits.h>
+#include <seven/base/types.h>
+#include <seven/base/version.h>
+
 #ifdef __cplusplus
 #define _LIBSEVEN_EXTERN_C extern "C" {
 #define _LIBSEVEN_EXTERN_C_END }
@@ -17,15 +23,5 @@
 
 #define _LIBSEVEN_STR(s) #s
 #define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
-
-_LIBSEVEN_EXTERN_C
-
-#include <seven/base/addresses.h>
-#include <seven/base/attributes.h>
-#include <seven/base/bits.h>
-#include <seven/base/types.h>
-#include <seven/base/version.h>
-
-_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_BASE_H */

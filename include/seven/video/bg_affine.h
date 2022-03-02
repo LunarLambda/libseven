@@ -9,6 +9,7 @@
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
+#include <seven/video/matrix.h>
 
 _LIBSEVEN_EXTERN_C
 
@@ -17,6 +18,8 @@ _LIBSEVEN_EXTERN_C
 #define REG_BG2PC       VOLADDR(0x04000024, i16)
 #define REG_BG2PD       VOLADDR(0x04000026, i16)
 
+#define REG_BG2MAT      VOLADDR(0x04000020, struct Matrix)
+
 #define REG_BG2X        VOLADDR(0x04000028, u32)
 #define REG_BG2Y        VOLADDR(0x0400002C, u32)
 
@@ -24,6 +27,8 @@ _LIBSEVEN_EXTERN_C
 #define REG_BG3PB       VOLADDR(0x04000032, i16)
 #define REG_BG3PC       VOLADDR(0x04000034, i16)
 #define REG_BG3PD       VOLADDR(0x04000036, i16)
+
+#define REG_BG3MAT      VOLADDR(0x04000030, struct Matrix)
 
 #define REG_BG3X        VOLADDR(0x04000038, u32)
 #define REG_BG3Y        VOLADDR(0x0400003C, u32)

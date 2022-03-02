@@ -12,7 +12,12 @@
 
 _LIBSEVEN_EXTERN_C
 
-#error "seven/video/object.h is a stub header"
+struct Object
+{
+    u16 attr0;
+    u16 attr1;
+    u16 attr2;
+} ALIGN(8);
 
 _LIBSEVEN_EXTERN_C_END
 

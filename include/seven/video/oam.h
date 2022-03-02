@@ -4,14 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_PRELUDE_H
-#define _LIBSEVEN_PRELUDE_H
+#ifndef _LIBSEVEN_VIDEO_OAM_H
+#define _LIBSEVEN_VIDEO_OAM_H
 
 #include <seven/base.h>
-#include <seven/hw/input.h>
-#include <seven/hw/irq.h>
-#include <seven/hw/memory.h>
-#include <seven/hw/video.h>
-#include <seven/svc/wait.h>
+#include <seven/video/matrix.h>
+#include <seven/video/object.h>
 
-#endif /* !_LIBSEVEN_PRELUDE_H */
+_LIBSEVEN_EXTERN_C
+
+_LIBSEVEN_EXTERN_C_END
+
+#endif /* !_LIBSEVEN_VIDEO_OAM_H */

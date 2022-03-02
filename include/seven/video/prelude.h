@@ -8,14 +8,9 @@
 #define _LIBSEVEN_VIDEO_PRELUDE_H
 
 #include <seven/base.h>
-
-_LIBSEVEN_EXTERN_C
-
 #include <seven/hw/video.h>
 #include <seven/video/bg_regular.h>
 #include <seven/video/color.h>
 #include <seven/video/scroll.h>
-
-_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_PRELUDE_H */
