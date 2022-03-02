@@ -10,9 +10,9 @@
 .include        "macros.s"
 .include        "seven/asm/hw/video.s"
 
-@ void* lcdSwapBuffers(void)
+@ void* bmpSwapBuffers(void)
 @
-fn lcdSwapBuffers thumb
+fn bmpSwapBuffers thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_FRAME_SELECT
     movs        r1, LCD_FRAME_SELECT
@@ -40,9 +40,9 @@ fn lcdSwapBuffers thumb
     bx          lr
 endfn
 
-@ void* lcdInitMode3(void)
+@ void* bmpInitMode3(void)
 @
-fn lcdInitMode3 thumb
+fn bmpInitMode3 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
     movs        r0, #4
@@ -63,9 +63,9 @@ fn lcdInitMode3 thumb
     bx          lr
 endfn
 
-@ void* lcdInitMode4(void)
+@ void* bmpInitMode4(void)
 @
-fn lcdInitMode4 thumb
+fn bmpInitMode4 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
     movs        r0, #4
@@ -86,9 +86,9 @@ fn lcdInitMode4 thumb
     bx          lr
 endfn
 
-@ void* lcdInitMode5(void)
+@ void* bmpInitMode5(void)
 @
-fn lcdInitMode5 thumb
+fn bmpInitMode5 thumb
     @ r0 = REG_DISCPNT
     @ r1 = LCD_BG2_ENABLE
     movs        r0, #4

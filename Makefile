@@ -11,7 +11,6 @@ SOURCES = \
 	src/hw/dma.s \
 	src/hw/input.s \
 	src/hw/irq.s \
-	src/hw/lcd.s \
 	src/hw/sram.s \
 	src/hw/svc.s \
 	src/hw/timer.s \
@@ -20,6 +19,7 @@ SOURCES = \
 	src/util/profile.s \
 	src/util/rand.s \
 	src/util/str.s \
+	src/video/bmp.s \
 
 INCLUDES = \
 	src \

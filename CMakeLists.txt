@@ -12,7 +12,6 @@ add_library(seven STATIC
     src/hw/dma.s
     src/hw/input.s
     src/hw/irq.s
-    src/hw/lcd.s
     src/hw/sram.s
     src/hw/svc.s
     src/hw/timer.s
@@ -21,6 +20,7 @@ add_library(seven STATIC
     src/util/profile.s
     src/util/rand.s
     src/util/str.s
+    src/video/bmp.s
 )
 
 target_include_directories(seven PUBLIC include/)
