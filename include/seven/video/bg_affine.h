@@ -20,8 +20,8 @@ _LIBSEVEN_EXTERN_C
 
 #define REG_BG2MAT      VOLADDR(0x04000020, struct Matrix)
 
-#define REG_BG2X        VOLADDR(0x04000028, u32)
-#define REG_BG2Y        VOLADDR(0x0400002C, u32)
+#define REG_BG2X        VOLADDR(0x04000028, i32)
+#define REG_BG2Y        VOLADDR(0x0400002C, i32)
 
 #define REG_BG3PA       VOLADDR(0x04000030, i16)
 #define REG_BG3PB       VOLADDR(0x04000032, i16)
@@ -30,8 +30,8 @@ _LIBSEVEN_EXTERN_C
 
 #define REG_BG3MAT      VOLADDR(0x04000030, struct Matrix)
 
-#define REG_BG3X        VOLADDR(0x04000038, u32)
-#define REG_BG3Y        VOLADDR(0x0400003C, u32)
+#define REG_BG3X        VOLADDR(0x04000038, i32)
+#define REG_BG3Y        VOLADDR(0x0400003C, i32)
 
 _LIBSEVEN_EXTERN_C_END
 

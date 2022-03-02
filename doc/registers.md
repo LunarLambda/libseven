@@ -21,14 +21,14 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
  0400 0022  | 16   | W      | BG2PB       | BG2PB [³]       | BG2PB       | BG2PB
  0400 0024  | 16   | W      | BG2PC       | BG2PC [³]       | BG2PC       | BG2PC
  0400 0026  | 16   | W      | BG2PD       | BG2PD [³]       | BG2PD       | BG2PD
- 0400 0028  | 32   | W      | BG2X        | BG2X [³] [⁴]    | BG2X [⁴]    | BG2X
- 0400 002C  | 32   | W      | BG2Y        | BG2Y [³] [⁴]    | BG2Y [⁴]    | BG2Y
+ 0400 0028  | 32   | W      | BG2X        | BG2X [³]        | BG2X [⁴]    | BG2X
+ 0400 002C  | 32   | W      | BG2Y        | BG2Y [³]        | BG2Y [⁴]    | BG2Y
  0400 0030  | 16   | W      | BG3PA       | BG3PA [³]       | BG3PA       | BG3PA
  0400 0032  | 16   | W      | BG3PB       | BG3PB [³]       | BG3PB       | BG3PB
  0400 0034  | 16   | W      | BG3PC       | BG3PC [³]       | BG3PC       | BG3PC
  0400 0036  | 16   | W      | BG3PD       | BG3PD [³]       | BG3PD       | BG3PD
- 0400 0038  | 32   | W      | BG3X        | BG3X [³] [⁴]    | BG3X [⁴]    | BG3X
- 0400 003C  | 32   | W      | BG3Y        | BG3Y [³] [⁴]    | BG3Y [⁴]    | BG3Y
+ 0400 0038  | 32   | W      | BG3X        | BG3X [³]        | BG3X [⁴]    | BG3X
+ 0400 003C  | 32   | W      | BG3Y        | BG3Y [³]        | BG3Y [⁴]    | BG3Y
  0400 0040  | 16   | W      | WIN0H       | WIN0H           | WIN0H       | WIN0H
  0400 0042  | 16   | W      | WIN1H       | WIN1H           | WIN1H       | WIN1H
  0400 0044  | 16   | W      | WIN0V       | WIN0V           | WIN0V       | WIN0V
@@ -109,15 +109,13 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
 
 ## Errata
 
-1. Register is marked as 32-bit
+1. Register is not marked as 16-bit
 2. Register is not marked as read-only
 3. Register is not marked as volatile
-4. Register is marked as signed
 
 [¹]: #errata
 [²]: #errata
 [³]: #errata 
-[⁴]: #errata
 
 [0400 0000]: io/dispcnt.md
 [0400 00BA]: io/dmacnt.h
