@@ -7,6 +7,8 @@
 CC = arm-none-eabi-gcc
 AR = arm-none-eabi-ar
 
+PROJECT = seven
+
 SOURCES = \
 	src/hw/dma.s \
 	src/hw/input.s \
@@ -42,39 +44,40 @@ CFLAGS = \
 BUILD = build
 LIB   = lib
 
-TARGET = libseven.a
 
 #
 # You don't need to touch anything below this point!
 #
 
-OBJECTS = $(patsubst %,$(BUILD)/obj/%.o,$(SOURCES))
-DEPENDS = $(patsubst %,$(BUILD)/dep/%.d,$(SOURCES))
+TARGET  = $(LIB)/lib$(PROJECT).a
+
+OBJECTS = $(SOURCES:%=$(BUILD)/obj/%.o)
+DEPENDS = $(SOURCES:%=$(BUILD)/dep/%.d)
 OBJDIRS = $(dir $(OBJECTS) $(DEPENDS))
 
-$(LIB)/$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS)
 	@echo "$@"
 	@$(AR) rcs $@ $^
 
-$(OBJECTS): | objdirs
+$(OBJECTS): | builddirs
 
 $(BUILD)/obj/%.o: %
 	@echo "$<"
 	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILD)/dep/$<.d $<
 
-objdirs:
+builddirs:
 	@mkdir -p $(OBJDIRS) $(LIB)
 
 clean:
-	@echo "$(BUILD)"
+	@echo "clean: $(BUILD) $(LIB)"
 	@rm -rf $(BUILD) $(LIB)
 
-install: $(BUILD)/$(TARGET)
-	@echo "$(DESTDIR)$(DEVKITPRO)"
+install: $(TARGET)
+	@echo "install: $(DESTDIR)$(DEVKITPRO)"
 	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/
-	@cp -rv include $(DESTDIR)$(DEVKITPRO)/libseven/
-	@cp -rv lib $(DESTDIR)$(DEVKITPRO)/libseven/
+	@cp -r include $(DESTDIR)$(DEVKITPRO)/libseven/
+	@cp -r lib $(DESTDIR)$(DEVKITPRO)/libseven/
 
-.PHONY: objdirs clean install
+.PHONY: builddirs clean install
 
 -include $(DEPENDS)
