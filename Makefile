@@ -53,25 +53,24 @@ DEPENDS = $(patsubst %,$(BUILD)/dep/%.d,$(SOURCES))
 OBJDIRS = $(dir $(OBJECTS) $(DEPENDS))
 
 $(LIB)/$(TARGET): $(OBJECTS)
-	@echo "AR      $@"
+	@echo "$@"
 	@$(AR) rcs $@ $^
 
 $(OBJECTS): | objdirs
 
 $(BUILD)/obj/%.o: %
-	@echo "COMPILE $<"
+	@echo "$<"
 	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILD)/dep/$<.d $<
 
 objdirs:
-	@echo "OUTDIR  $(BUILD)"
 	@mkdir -p $(OBJDIRS) $(LIB)
 
 clean:
-	@echo "CLEAN   $(BUILD)"
+	@echo "$(BUILD)"
 	@rm -rf $(BUILD) $(LIB)
 
 install: $(BUILD)/$(TARGET)
-	@echo "INSTALL $(DESTDIR)$(DEVKITPRO)"
+	@echo "$(DESTDIR)$(DEVKITPRO)"
 	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/
 	@cp -rv include $(DESTDIR)$(DEVKITPRO)/libseven/
 	@cp -rv lib $(DESTDIR)$(DEVKITPRO)/libseven/
