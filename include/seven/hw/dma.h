@@ -11,46 +11,31 @@
 
 _LIBSEVEN_EXTERN_C
 
-// RAM Only
-#define DMA_INTERNAL_MEMORY     0x07FFFFFF
-// Except SRAM due to 8-bit only bus
-#define DMA_ALL_MEMORY          0x0FFFFFFF
+//        RAM  ROM  Transfer limit
+// DMA 0  R/W   -   16K
+// DMA 1  R/W   R   16K
+// DMA 2  R/W   R   16K
+// DMA 3  R/W  R/W  64K
 
 #define REG_DMA0SRC     VOLADDR(0x040000B0, const void *)
 #define REG_DMA0DST     VOLADDR(0x040000B4, void *)
 #define REG_DMA0LEN     VOLADDR(0x040000B8, u16)
 #define REG_DMA0CNT     VOLADDR(0x040000BA, u16)
 
-#define DMA0SRC_MAX     DMA_INTERNAL_MEMORY
-#define DMA0DST_MAX     DMA_INTERNAL_MEMORY
-#define DMA0LEN_MAX     0x4000
-
 #define REG_DMA1SRC     VOLADDR(0x040000BC, const void *)
 #define REG_DMA1DST     VOLADDR(0x040000C0, void *)
 #define REG_DMA1LEN     VOLADDR(0x040000C4, u16)
 #define REG_DMA1CNT     VOLADDR(0x040000C6, u16)
-
-#define DMA1SRC_MAX     DMA_ALL_MEMORY
-#define DMA1DST_MAX     DMA_INTERNAL_MEMORY
-#define DMA1LEN_MAX     0x4000
 
 #define REG_DMA2SRC     VOLADDR(0x040000C8, const void *)
 #define REG_DMA2DST     VOLADDR(0x040000CC, void *)
 #define REG_DMA2LEN     VOLADDR(0x040000D0, u16)
 #define REG_DMA2CNT     VOLADDR(0x040000D2, u16)
 
-#define DMA2SRC_MAX     DMA_ALL_MEMORY
-#define DMA2DST_MAX     DMA_INTERNAL_MEMORY
-#define DMA2LEN_MAX     0x4000
-
 #define REG_DMA3SRC     VOLADDR(0x040000D4, const void *)
 #define REG_DMA3DST     VOLADDR(0x040000D8, void *)
 #define REG_DMA3LEN     VOLADDR(0x040000DC, u16)
 #define REG_DMA3CNT     VOLADDR(0x040000DE, u16)
-
-#define DMA3SRC_MAX     DMA_ALL_MEMORY
-#define DMA3DST_MAX     DMA_ALL_MEMORY
-#define DMA3LEN_MAX     0x10000
 
 #define BF_DMA_DST_OFFSET 5
 #define BF_DMA_DST_LENGTH 2
