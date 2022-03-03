@@ -1,14 +1,17 @@
 # Header Reference
 
 ## [seven](../include/seven)
+
 - ### [base.h](../include/seven/base.h)
 - ### [prelude.h](../include/seven/prelude.h)
+
 - ### [base](../include/seven/base)
     - [addresses.h](../include/seven/base/addresses.h)
     - [attributes.h](../include/seven/base/attributes.h)
     - [bits.h](../include/seven/base/bits.h)
     - [types.h](../include/seven/base/types.h)
     - [version.h](../include/seven/base/version.h)
+
 - ### [hw](../include/seven/hw)
     - [cpu.h](../include/seven/hw/cpu.h)
     - [dma.h](../include/seven/hw/dma.h)
@@ -23,11 +26,13 @@
     - [timer.h](../include/seven/hw/timer.h)
     - [video.h](../include/seven/hw/video.h)
     - [waitstate.h](../include/seven/hw/waitstate.h)
+
 - ### [serial](../include/seven/serial)
     - [joybus.h](../include/seven/serial/joybus.h)
     - [multiplayer.h](../include/seven/serial/multiplayer.h)
     - [raw.h](../include/seven/serial/raw.h)
     - [uart.h](../include/seven/serial/uart.h)
+
 - ### [svc](../include/seven/svc)
     - [affine.h](../include/seven/svc/affine.h)
     - [decompression.h](../include/seven/svc/decompression.h)
@@ -37,6 +42,7 @@
     - [sound.h](../include/seven/svc/sound.h)
     - [system.h](../include/seven/svc/system.h)
     - [wait.h](../include/seven/svc/wait.h)
+
 - ### [util](../include/seven/util)
     - [log.h](../include/seven/util/log.h)
     - [math.h](../include/seven/util/math.h)
@@ -45,6 +51,7 @@
     - [profile.h](../include/seven/util/profile.h)
     - [random.h](../include/seven/util/random.h)
     - [string.h](../include/seven/util/string.h)
+
 - ### [video](../include/seven/video)
     - [bg_affine.h](../include/seven/video/bg_affine.h)
     - [bg_bitmap.h](../include/seven/video/bg_bitmap.h)
