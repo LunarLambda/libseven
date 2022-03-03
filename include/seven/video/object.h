@@ -17,7 +17,8 @@ struct Object
     u16 attr0;
     u16 attr1;
     u16 attr2;
-} ALIGN(8);
+    u16 prio;
+} ALIGN(4);
 
 _LIBSEVEN_EXTERN_C_END
 
