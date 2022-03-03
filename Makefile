@@ -22,6 +22,7 @@ SOURCES = \
 	src/util/rand.s \
 	src/util/str.s \
 	src/video/bmp.s \
+	src/video/oam.s \
 
 INCLUDES = \
 	src \

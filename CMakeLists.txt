@@ -21,6 +21,7 @@ add_library(seven STATIC
     src/util/rand.s
     src/util/str.s
     src/video/bmp.s
+    src/video/oam.s
 )
 
 target_include_directories(seven PUBLIC include/)

@@ -13,6 +13,12 @@
 
 _LIBSEVEN_EXTERN_C
 
+usize oamWriteObjects(usize oam_index, struct Object *objs, usize n_objs);
+usize oamWriteObjectsUnchecked(usize oam_index, struct Object *objs, usize n_objs);
+
+usize oamWriteMatrices(usize oam_index, struct Matrix *mats, usize n_mats);
+usize oamWriteMatricesUnchecked(usize oam_index, struct Matrix *mats, usize n_mats);
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_OAM_H */
