@@ -137,10 +137,10 @@ dma_zero:
     .word       0
 
 dma_copy:
-    @ NOTE: This checks against a non-zero section size
+    @ NOTE: This checks against a non-zero section size.
     @ In the case of an EWRAM section spanning all of EWRAM (256K),
     @ The lower 16-bit will be zero. This works fine for the DMA,
-    @ Since luckily, the lower 5 bit of DMACNT are unused
+    @ since the lower 5 bit of DMACNT are unused.
     @ That's why we shift 15, not 16.
     lsls        r4, r2, #15
     beq         dma_skip

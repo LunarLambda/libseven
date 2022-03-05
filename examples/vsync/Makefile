@@ -21,7 +21,7 @@ LIBS		:= seven
 BUILDDIR	:= build
 
 CFLAGS		:= -g3 -gdwarf-4 -O2 -std=c99 -ffunction-sections -fdata-sections
-LDFLAGS		:= -mthumb -nostartfiles -specs=nano.specs -Wl,-T,rt/rom.ld
+LDFLAGS		:= -mthumb -nostartfiles -specs=nano.specs -specs=nosys.specs -Wl,-Trom.ld -Lrt
 
 #
 # Internal
