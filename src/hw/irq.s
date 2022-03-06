@@ -13,7 +13,7 @@ CONST OFF_IE_IF,  REG_IF  - REG_IE
 CONST OFF_IE_IME, REG_IME - REG_IE
 CONST OFF_IE_IFBIOS, REG_IFBIOS - REG_IE
 
-bss IRQ_TABLE
+bss IRQ_TABLE .align=2
     .fill       15, 8, 0
     _IRQ_TABLE_IRQSET:
     .word       0
@@ -130,7 +130,7 @@ fn irqCallbackSet thumb
 
     @ Merge irqs+prio
     lsls        r6, r2, #16
-    orrs        r0, r0, r2
+    orrs        r0, r0, r6
 
 1:
     @ Load irqs+prio of current slot
@@ -530,6 +530,8 @@ endfn
 @ r3    <tmp>
 @ r12   IME
 fn irqDefaultHandler arm local
+    @ Give the mGBA debugger a harmless instruction to replace with bkpt
+    nop
     mov         r1, #REG_BASE
 
     @ Get IE & IF
@@ -554,7 +556,7 @@ fn irqDefaultHandler arm local
 1:
     ldr         r3, [r2], #8
     tst         r0, r3
-    bne         1b
+    beq         1b
 
 .Ldispatch:
     @ Disable IME (r12)
