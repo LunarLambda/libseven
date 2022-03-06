@@ -1,0 +1,3 @@
+[submodule "gba-minrt"]
+	path = gba-minrt
+	url = https://github.com/LunarLambda/gba-minrt

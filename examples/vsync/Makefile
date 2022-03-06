@@ -6,7 +6,8 @@
 
 .SUFFIXES:
 
-LIBSEVEN	:= $(CURDIR)/../../
+LIBSEVEN	:= ../../
+MINRT		:= ../../gba-minrt
 
 PROJECT		:= example-vsync
 
@@ -21,11 +22,13 @@ LIBS		:= seven
 BUILDDIR	:= build
 
 CFLAGS		:= -g3 -gdwarf-4 -O2 -std=c99 -ffunction-sections -fdata-sections
-LDFLAGS		:= -mthumb -nostartfiles -specs=nano.specs -specs=nosys.specs -Wl,-Trom.ld -Lrt
+LDFLAGS		:= -mthumb -nostartfiles -specs=nano.specs -specs=nosys.specs -Wl,-Trom.ld -L$(MINRT)/rt
 
 #
 # Internal
 #
+
+vpath rt/% $(MINRT)
 
 CC 	= arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
@@ -33,6 +36,8 @@ OBJCOPY = arm-none-eabi-objcopy
 ELFFILE = $(BUILDDIR)/$(PROJECT).elf
 ROMFILE = $(BUILDDIR)/$(PROJECT).gba
 MAPFILE = $(BUILDDIR)/$(PROJECT).map
+
+LIBSEVEN_LIB = $(LIBSEVEN)/lib/libseven.a
 
 OBJECTS = $(SOURCES:%=$(BUILDDIR)/obj/%.o)
 DEPENDS = $(SOURCES:%=$(BUILDDIR)/dep/%.d)
@@ -52,7 +57,7 @@ LDFLAGS += \
 	   $(LIBS:%=-l%) \
 
 $(ROMFILE): $(ELFFILE)
-$(ELFFILE): $(OBJECTS) | libseven
+$(ELFFILE): $(OBJECTS) $(LIBSEVEN_LIB)
 $(OBJECTS): | builddirs
 
 %.gba:
@@ -67,9 +72,8 @@ $(BUILDDIR)/obj/%.o: %
 	@echo "$<"
 	@$(CC) -c -o $@ $(CFLAGS) -MMD -MP -MF $(BUILDDIR)/dep/$<.d $<
 
-libseven:
-	@echo "libseven"
-	@$(MAKE) --no-print-directory -C $(LIBSEVEN) -f Makefile
+$(LIBSEVEN_LIB):
+	@$(MAKE) -C $(LIBSEVEN)
 
 builddirs:
 	@mkdir -p $(OBJDIRS)
