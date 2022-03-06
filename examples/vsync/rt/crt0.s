@@ -75,11 +75,10 @@ entrypoint:
     bl          dma_copy
 
     @ .iwram_bss section
-    ldr         r0, =dma_zero
+    mov         r0, sp
     ldr         r1, =__iwram_bss_vma
     ldr         r2, =__iwram_bss_dma
-    @ bl          dma_copy
-    svc         #SVC_CPUSET
+    bl          dma_copy
 
     @ .ewram section
     ldr         r0, =__ewram_lma
@@ -94,11 +93,10 @@ entrypoint:
     bl          dma_copy
 
     @ .ewram_bss section
-    ldr         r0, =dma_zero
+    mov         r0, sp
     ldr         r1, =__ewram_bss_vma
     ldr         r2, =__ewram_bss_dma
-    @ bl          dma_copy
-    svc         #SVC_CPUSET
+    bl          dma_copy
 
     @ .preinit_array section
     ldr         r4, =__preinit_array_start
@@ -133,10 +131,6 @@ _exit:
     ldr         r3, =REG_IME
     strh        r3, [r3]
     1: b        1b
-
-.align 2
-dma_zero:
-    .word       0
 
 dma_copy:
     @ NOTE: This checks against a non-zero section size.
