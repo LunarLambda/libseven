@@ -78,7 +78,8 @@ entrypoint:
     ldr         r0, =dma_zero
     ldr         r1, =__iwram_bss_vma
     ldr         r2, =__iwram_bss_dma
-    bl          dma_copy
+    @ bl          dma_copy
+    svc         #SVC_CPUSET
 
     @ .ewram section
     ldr         r0, =__ewram_lma
@@ -96,7 +97,8 @@ entrypoint:
     ldr         r0, =dma_zero
     ldr         r1, =__ewram_bss_vma
     ldr         r2, =__ewram_bss_dma
-    bl          dma_copy
+    @ bl          dma_copy
+    svc         #SVC_CPUSET
 
     @ .preinit_array section
     ldr         r4, =__preinit_array_start
@@ -182,6 +184,7 @@ pool: .pool
 
 .equiv          REG_DMA3,       0x040000D4
 .equiv          REG_IME,        0x04000208
+.equiv          SVC_CPUSET,     11
 
 .global         _start, _exit, _boot_type, _boot_client
 
