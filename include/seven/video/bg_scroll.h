@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_VIDEO_SCROLL_H
-#define _LIBSEVEN_VIDEO_SCROLL_H
+#ifndef _LIBSEVEN_VIDEO_BG_SCROLL_H
+#define _LIBSEVEN_VIDEO_BG_SCROLL_H
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
@@ -23,4 +23,4 @@ _LIBSEVEN_EXTERN_C
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_VIDEO_SCROLL_H */
+#endif /* !_LIBSEVEN_VIDEO_BG_SCROLL_H */

@@ -9,6 +9,8 @@
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
+#include <seven/hw/bg_scroll.h>
+#include <seven/hw/bg_tiled.h>
 
 _LIBSEVEN_EXTERN_C
 

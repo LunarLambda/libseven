@@ -4,16 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_VIDEO_BG_AFFINE_H
-#define _LIBSEVEN_VIDEO_BG_AFFINE_H
+#ifndef _LIBSEVEN_VIDEO_BG_TILED_H
+#define _LIBSEVEN_VIDEO_BG_TILED_H
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
-#include <seven/hw/bg_tiled.h>
-#include <seven/hw/bg_transform.h>
 
 _LIBSEVEN_EXTERN_C
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_VIDEO_BG_AFFINE_H */
+#endif /* !_LIBSEVEN_VIDEO_BG_TILED_H */

@@ -9,6 +9,7 @@
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
+#include <seven/video/bg_transform.h>
 
 _LIBSEVEN_EXTERN_C
 
