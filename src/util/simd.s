@@ -36,11 +36,11 @@ fn simdAdd thumb
     bics        r5, r5, r0
     @ a = (a + b) ^ s
     adds        r4, r4, r5
-    eors        r4, r4, r0
+    eors        r4, r4, r6
 
     stm         r1!, {r4}
     cmp         r1, r3
-    bne         1b
+    blt         1b
 2:
     pop         {r4, r5, r6, r7}
     bx          lr
@@ -67,11 +67,11 @@ fn simdSub thumb
     bics        r5, r5, r0
     @ a = (a - b) ^ s
     subs        r4, r4, r5
-    eors        r4, r4, r0
+    eors        r4, r4, r6
 
     stm         r1!, {r4}
     cmp         r1, r3
-    bne         1b
+    blt         1b
 
 2:
     pop         {r4, r5, r6, r7}
