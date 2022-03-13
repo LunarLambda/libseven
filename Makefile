@@ -20,6 +20,7 @@ SOURCES = \
 	src/util/mem.s \
 	src/util/profile.s \
 	src/util/rand.s \
+	src/util/simd.s \
 	src/util/str.s \
 	src/video/bmp.s \
 	src/video/oam.s \
