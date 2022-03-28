@@ -6,25 +6,25 @@ replace existing libraries like libgba or libtonc.
 Reach out to us in the `#libseven` channel in the
 [gbadev discord](https://discord.io/gbadev).
 
-## Goals
+### Goals
 
 - Intuitive, consistent, and well organized API
 - Optimized code with minimal RAM and ROM size
 - Correctness without compromises
 - High-quality, understandable documentation
 
-## [Implementation Status](./doc/status.md)
+### [Implementation Status](./doc/status.md)
 
-## [Build, Installation, and Linking](./doc/build.md)
+### [Build, Installation, and Linking](./doc/build.md)
 
-## [Documentation](./doc)
+### [Documentation](./doc)
 
-## Support
+### Support
 
 Development of libseven and other GBA homebrew projects such as gba-minrt
 can be supported through [Patreon](https://patreon.com/LunarLambda).
 
-# License
+### License
 
 All source code in this project is licensed under the
 Mozilla Public License Version 2.0.\
