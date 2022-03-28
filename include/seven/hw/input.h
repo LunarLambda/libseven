@@ -113,11 +113,6 @@ extern i32 inputAxisLR(void);
 //  1: A
 extern i32 inputAxisAB(void);
 
-extern void inputRepeatEnable(u16 keys);
-extern void inputRepeatDisable(u16 keys);
-extern void inputRepeatDelay(u16 delay, u16 repeat);
-extern void inputRepeat(struct Repeat *r);
-
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_HW_INPUT_H */
