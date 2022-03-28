@@ -15,6 +15,7 @@ _LIBSEVEN_EXTERN_C
 #define REG_DISPCNT     VOLADDR(0x04000000, u16)
 #define REG_DISPSTAT    VOLADDR(0x04000004, u16)
 #define REG_VCOUNT      VOLADDR(0x04000006, const u16)
+#define REG_BGCNT       VOLBLOCK(0x04000008, u16, 4)
 #define REG_BG0CNT      VOLADDR(0x04000008, u16)
 #define REG_BG1CNT      VOLADDR(0x0400000A, u16)
 #define REG_BG2CNT      VOLADDR(0x0400000C, u16)
@@ -130,6 +131,9 @@ enum BackgroundControl
     BG_AFFINE_SIZE_512x512   = BG_AFFINE_SIZE(2),
     BG_AFFINE_SIZE_1024x1024 = BG_AFFINE_SIZE(3),
 };
+
+#define GFX_BASE_ADDR(n) (MEM_VRAM + (n) << 14)
+#define MAP_BASE_ADDR(n) (MEM_VRAM + (n) << 11)
 
 // TODO: Move these?
 typedef u16 Color;

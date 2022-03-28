@@ -6,17 +6,35 @@
 - [x] IRQ
 - [x] Input
 - [ ] SIO
+    - [x] Normal mode
+    - [ ] UART mode
+    - [ ] Multiplayer mode
+    - [ ] Raw mode
+    - [ ] JOY Bus mode
 - [ ] Sound
 - [x] SRAM
 - [x] Timers
 - [x] Video
+    - [x] Control and Status Registers
+    - [x] Affine Backgrounds
+    - [x] Bitmap Backgrounds
+    - [x] Regular Backgrounds
+    - [x] Blending Effects
+    - [x] Colors
+    - [x] Affine Matrices
+    - [x] Mosaic Effects
+    - [x] OAM Management
+    - [x] Objects
+    - [ ] Pallete Management
+    - [x] Scrolling Effects
+    - [x] Windowing Effects
 - [x] BIOS Calls
     - [x] Reset
-    - [x] Halt and IRQ Waiting
+    - [x] IRQ Waiting
     - [x] Math
     - [x] Memory Copy
-    - [x] BIOS Checksum & Checksum-based DS detection
-    - [x] AffineSet
+    - [x] BIOS Checksum
+    - [x] Affine Functions
     - [x] Decompression
     - [ ] Sound/MP2000
     - [ ] Multiboot

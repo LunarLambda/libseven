@@ -11,6 +11,5 @@
 #include <seven/hw/video.h>
 #include <seven/video/bg_regular.h>
 #include <seven/video/color.h>
-#include <seven/video/scroll.h>
 
 #endif /* !_LIBSEVEN_VIDEO_PRELUDE_H */

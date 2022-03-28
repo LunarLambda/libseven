@@ -21,6 +21,10 @@ _LIBSEVEN_EXTERN_C
 #define REG_BG3HOFS     VOLADDR(0x0400001C, u16)
 #define REG_BG3VOFS     VOLADDR(0x0400001E, u16)
 
+extern void bgScroll(usize bg, i32 x, i32 y);
+
+extern void bgScrollSet(usize bg, u32 x, u32 y);
+
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_VIDEO_BG_SCROLL_H */

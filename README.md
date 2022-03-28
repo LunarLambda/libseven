@@ -3,34 +3,21 @@
 A fully from-scratch library for GBA development, meant to
 replace existing libraries like libgba or libtonc.
 
-It has the following key goals:
-
-- A straightforward, consistent API covering the most common functionality
-of the GBA hardware, as well as commonly needed utility functions.
-- Optimize for speed where it matters, optimize for size everywhere else.
-- Avoid pitfalls and hard to find bugs by being solid.
-- Provide high-quality, accessible documentation.
-
-## Implementation Status
-
-See [here](./doc/status.md) for an overview of which things are implemented.
-
-## Build, Installation, Linking
-
-See [here](./doc/build.md).
-
-## Documentation
-
-See the `doc` folder. Note that documentation from the `old` directory
-is highly outdated as of now.
-
-# Contributing
-
-Bug reports and pull requests are welcome! Feature requests are as well but as
-of now there are zero guarantees of anything.
-
-You can also reach out to us in the `#libseven` channel in the
+Reach out to us in the `#libseven` channel in the
 [gbadev discord](https://discord.io/gbadev).
+
+## Goals
+
+- Intuitive, consistent, and well organized API
+- Optimized code with minimal RAM and ROM size
+- Correctness without compromises
+- High-quality, understandable documentation
+
+## [Implementation Status](./doc/status.md)
+
+## [Build, Installation, and Linking](./doc/build.md)
+
+## [Documentation](./doc)
 
 # License
 
