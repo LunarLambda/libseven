@@ -7,6 +7,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(libseven C ASM)
+set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I")
 
 add_library(seven STATIC
     src/hw/dma.s
