@@ -41,7 +41,8 @@ CFLAGS = \
 	-mabi=aapcs \
 	-mcpu=arm7tdmi \
 	-mthumb \
-	$(INCLUDES:%=-I%)
+	$(INCLUDES:%=-I%) \
+	$(INCLUDES:%=-Wa,-I%)
 
 BUILD = build
 LIB   = lib
