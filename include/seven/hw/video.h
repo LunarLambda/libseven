@@ -141,10 +141,10 @@ typedef Color Palette[256];
 typedef Color PaletteBank[16];
 
 #define BG_PALETTE       MEMADDR(MEM_PALETTE, Palette)
-#define OBJ_PALETTE      MEMADDR(MEM_PALETTE + 256, Palette)
+#define OBJ_PALETTE      MEMADDR(MEM_PALETTE + 512, Palette)
 
 #define BG_PALETTE_BANK  MEMBLOCK(MEM_PALETTE, PaletteBank, 16)
-#define OBJ_PALETTE_BANK MEMBLOCK(MEM_PALETTE + 256, PaletteBank, 16)
+#define OBJ_PALETTE_BANK MEMBLOCK(MEM_PALETTE + 512, PaletteBank, 16)
 
 _LIBSEVEN_EXTERN_C_END
 
