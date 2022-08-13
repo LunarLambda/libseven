@@ -49,7 +49,7 @@ _LIBSEVEN_EXTERN_C
     ((lhs) >> ((BF_##name##_OFFSET)) & BITS((BF_##name##_LENGTH)))
 
 #define BF_SET(lhs, name, rhs)          \
-    (BF_ORR((lhs) & ~BF_MASK(name)), name, (rhs))
+    (BF_ORR((lhs) & ~BF_MASK(name), name, (rhs)))
 
 #define BF_ESET(lhs, name, enum)        \
     (((lhs) & ~BF_MASK(name)) | (name##_##enum))
