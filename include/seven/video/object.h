@@ -113,7 +113,7 @@ enum ObjectAttribute1
 #define BF_OBJ_PALETTE_ID_OFFSET 12
 #define BF_OBJ_PALETTE_ID_LENGTH 4
 
-#define OBJ_PALETTE_ID(n) BITFIELD(OBJ_PALETTE_BANK, (n))
+#define OBJ_PALETTE_ID(n) BITFIELD(OBJ_PALETTE_ID, (n))
 
 enum ObjectAttribute2
 {
