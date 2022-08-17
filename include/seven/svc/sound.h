@@ -19,4 +19,4 @@ extern void svcSoundDriverVSyncOn(void);
 
 _LIBSEVEN_EXTERN_C_END
 
-#undef /* !_LIBSEVEN_SVC_SOUND_H */
+#endif /* !_LIBSEVEN_SVC_SOUND_H */

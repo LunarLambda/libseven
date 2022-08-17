@@ -31,4 +31,4 @@ extern void svcCpuFastSetFixed(u32 value, void *dst, u32 ctrl);
 
 _LIBSEVEN_EXTERN_C_END
 
-#undef /* !_LIBSEVEN_SVC_MEMORY_H */
+#endif /* !_LIBSEVEN_SVC_MEMORY_H */
