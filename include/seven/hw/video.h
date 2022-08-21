@@ -132,8 +132,8 @@ enum BackgroundControl
     BG_AFFINE_SIZE_1024X1024 = BG_AFFINE_SIZE(3),
 };
 
-#define GFX_BASE_ADDR(n) (MEM_VRAM + (n) << 14)
-#define MAP_BASE_ADDR(n) (MEM_VRAM + (n) << 11)
+#define GFX_BASE_ADDR(n) (MEM_VRAM + ((n) << 14))
+#define MAP_BASE_ADDR(n) (MEM_VRAM + ((n) << 11))
 
 // TODO: Move these?
 typedef u16 Color;
