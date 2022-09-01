@@ -560,8 +560,8 @@ fn irqDefaultHandler arm local
 
 .Ldispatch:
     @ Disable IME (r12)
-    ldr         r12, [r1, #OFF_IME]
-    str         r1, [r1, #OFF_IME]
+    ldr         r12, [r1, #OFF_IE_IME]
+    str         r1, [r1, #OFF_IE_IME]
 
     mrs         r3, spsr
     msr         cpsr_c, #0x5F
@@ -576,7 +576,7 @@ fn irqDefaultHandler arm local
     msr         cpsr_c, #0xD2
     msr         spsr, r3
 
-    str         r12, [r1, #OFF_IME]
+    str         r12, [r1, #OFF_IE_IME]
 
     bx          lr
 endfn
@@ -599,8 +599,8 @@ fn irqSimpleHandler arm local
     ldr         r2, IRQ_CALLBACK_FN
 
     @ Disable IME (r12)
-    ldr         r12, [r1, #OFF_IME]
-    str         r1, [r1, #OFF_IME]
+    ldr         r12, [r1, #OFF_IE_IME]
+    str         r1, [r1, #OFF_IE_IME]
 
     mrs         r3, spsr
     msr         cpsr_c, #0x5F
@@ -613,7 +613,7 @@ fn irqSimpleHandler arm local
     msr         cpsr_c, #0xD2
     msr         spsr, r3
 
-    str         r12, [r1, #OFF_IME]
+    str         r12, [r1, #OFF_IE_IME]
     bx          lr
 IRQ_CALLBACK_FN:
     .word       0
