@@ -125,7 +125,7 @@ clean:
 	@echo "clean   $(BUILDDIR)"
 	@rm -rf $(BUILDDIR)
 
-run:
+run: $(ELFFILE)
 	@mgba-qt $(ELFFILE)
 
 .PHONY: default dirs clean run
