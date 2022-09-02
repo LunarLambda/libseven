@@ -19,7 +19,7 @@
     endfn
 .endm
 
-svc_impl svcSoftReset             0 noreturn
+@ svc_impl svcSoftReset             0 noreturn
 svc_impl svcRegisterRamReset      1
 svc_impl svcHalt                  2
 svc_impl svcStop                  3
@@ -55,10 +55,29 @@ svc_impl svcMusicPlayerStop      34
 svc_impl svcMusicPlayerContinue  35
 svc_impl svcMusicPlayerFadeOut   36
 svc_impl svcMultiBoot            37
-svc_impl svcHardReset            38 noreturn
+@ svc_impl svcHardReset            38 noreturn
 svc_impl svcSoundDriverVSyncOff  40
 svc_impl svcSoundDriverVSyncOn   41
 
+@ We do not need to fix the stack pointer here. Even if the stacks are
+@ completely trashed, since SoftReset is noreturn, and the first thing it does
+@ is reset the stack pointers, it's fine even if the SVC handler couldn't
+@ correctly return.
+@
+@ We do disable IRQs however, since during the time the BIOS clears the upper
+@ 512 bytes of IWRAM, including the IRQ handler pointer, interrupts aren't
+@ being masked in the CPSR.
+fn svcSoftReset thumb
+    ldr         r2, =0x40000208
+    str         r2, [r2]
+    svc         #SVC_SOFTRESET
+endfn
+
+@ Here we do fix the system mode stack pointer, since RegisterRamReset uses the
+@ the stack. We assume in good faith that the SVC-mode stack pointer is fine,
+@ since under any normal circumstances, including total program failure,
+@ it really shouldn't be modified from it's defaults. Maybe if minrt ever
+@ supports relocating the stack pointers.
 fn svcSoftResetEx thumb
     ldr         r2, =0x04000208
     strh        r2, [r2]
@@ -73,6 +92,12 @@ fn svcSoftResetEx thumb
     mov         sp, r2
     svc         #SVC_REGISTERRAMRESET
     svc         #SVC_SOFTRESET
+endfn
+
+fn svcHardReset thumb
+    ldr         r2, =0x04000208
+    str         r2, [r2]
+    svc         #SVC_HARDRESET
 endfn
 
 @ extern void svcIntrWaitEx(u8 op, u16 intr_flags);
