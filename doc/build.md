@@ -11,6 +11,13 @@ Using a standard toolchain:
 make
 ```
 
+Or with meson:
+
+```sh
+meson --cross-file gba.txt build-meson
+meson compile -C build-meson
+```
+
 Using a devkitARM toolchain:
 
 ```sh

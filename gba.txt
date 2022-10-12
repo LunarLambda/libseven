@@ -1,0 +1,35 @@
+[constants]
+prefix          = 'arm-none-eabi-'
+mcpu            = '-mcpu=arm7tdmi'
+mabi            = '-mabi=aapcs'
+march           = '-mthumb'
+
+cflags          = [mcpu, mabi, march]
+ldflags         = ['-nostartfiles', '-specs=nano.specs', '-specs=nosys.specs', march]
+
+[binaries]
+c               = prefix + 'gcc'
+cpp             = prefix + 'g++'
+ar              = prefix + 'gcc-ar'
+strip           = prefix + 'strip'
+objcopy         = prefix + 'objcopy'
+
+[built-in options]
+default_library = 'static'
+b_staticpic     = false
+
+c_args          = cflags
+c_link_args     = ldflags
+
+cpp_args        = cflags
+cpp_eh          = 'none'
+cpp_rtti        = false
+cpp_link_args   = ldflags
+
+[host_machine]
+system          = 'none'
+cpu_family      = 'arm'
+cpu             = 'arm7tdmi'
+endian          = 'little'
+
+# vim: ft=conf
