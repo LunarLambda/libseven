@@ -19,15 +19,15 @@ _LIBSEVEN_EXTERN_C
 
 #define MODE4_WIDTH  240
 #define MODE4_HEIGHT 160
-#define MODE4_FRAME  MEMADDR(MEM_VRAM, Mode4Frame)
-#define MODE4_FRAME2 MEMADDR(MEM_VRAM + 0xA000, Mode4Frame)
+#define MODE4_FRAME_1  MEMADDR(MEM_VRAM, Mode4Frame)
+#define MODE4_FRAME_2 MEMADDR(MEM_VRAM + 0xA000, Mode4Frame)
 
 #define M4PX(l, h) ((u16)((l) << 8 | (u8)(h)))
 
 #define MODE5_WIDTH  160
 #define MODE5_HEIGHT 128
-#define MODE5_FRAME  MEMADDR(MEM_VRAM, Mode5Frame)
-#define MODE5_FRAME2 MEMADDR(MEM_VRAM + 0xA000, Mode5Frame)
+#define MODE5_FRAME_1  MEMADDR(MEM_VRAM, Mode5Frame)
+#define MODE5_FRAME_2 MEMADDR(MEM_VRAM + 0xA000, Mode5Frame)
 
 typedef u16 Mode3Frame[MODE3_HEIGHT][MODE3_WIDTH];
 typedef u16 Mode4Frame[MODE4_HEIGHT][MODE4_WIDTH/2];
