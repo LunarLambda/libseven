@@ -1,6 +1,8 @@
-project('libseven', 'c',
+project(
+  'libseven', 'c',
+  version: '0.6.0',
   license: 'MPL-2.0',
-  default_options: ['c_std=c99', 'buildtype=debugoptimized'])
+  default_options: ['c_std=c99'],)
 
 sources = [
   'src/hw/dma.s',
@@ -24,10 +26,10 @@ libseven = static_library(
   'seven',
   sources,
   include_directories: ['include', 'src'],
-  c_args: ['-ffunction-sections', '-fdata-sections', '-ffreestanding'],
-)
+  c_args: ['-ffunction-sections', '-fdata-sections', '-ffreestanding'],)
 
 libseven_dep = declare_dependency(
   include_directories: ['include'],
-  link_with: libseven,
-)
+  link_with: libseven,)
+
+meson.override_dependency('libseven', libseven_dep)
