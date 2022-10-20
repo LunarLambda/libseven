@@ -2,7 +2,9 @@ project(
   'libseven', 'c',
   version: '0.6.0',
   license: 'MPL-2.0',
-  default_options: ['c_std=c99'])
+  default_options: ['c_std=c99', 'c_link_args=-Wl,--no-warn-rwx-segments'])
+
+subproject('minrt')
 
 sources = [
   'src/hw/dma.s',
@@ -33,3 +35,5 @@ libseven_dep = declare_dependency(
   link_with: libseven)
 
 meson.override_dependency('libseven', libseven_dep)
+
+subdir('examples')
