@@ -45,8 +45,8 @@ enum DisplayControl
 
     VIDEO_FRAME_SELECT        = BIT(4),
 
-    VIDEO_OBJ_MAPPING_1D      = BIT(6),
-    VIDEO_OBJ_MAPPING_2D      = !VIDEO_OBJ_MAPPING_1D,
+    VIDEO_OBJ_LAYOUT_1D       = BIT(6),
+    VIDEO_OBJ_LAYOUT_2D       = !VIDEO_OBJ_LAYOUT_1D,
 
     VIDEO_FORCE_BLANK         = BIT(7),
 
