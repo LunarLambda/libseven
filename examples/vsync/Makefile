@@ -7,7 +7,7 @@
 .SUFFIXES:
 
 # Path to gba-minrt
-MINRT		:= ../../gba-minrt
+MINRT		:= ../../subprojects/minrt
 
 # Path to libseven
 LIBSEVEN	:= ../..
